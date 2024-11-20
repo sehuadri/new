@@ -315,20 +315,20 @@ wget https://raw.githubusercontent.com/sehuadri/new/main/install/bbr.sh && chmod
 
 
 #run_ip
-#apt install iptables-persistent netfilter-persistent
+apt install iptables-persistent netfilter-persistent
 
-#rm -f /etc/iptables.rules && wget -cO - https://pastebin.com/raw/7yc33jRK > /etc/iptables.rules
+rm -f /etc/iptables.rules && wget -cO - https://pastebin.com/raw/7yc33jRK > /etc/iptables.rules
 
-#iptables -A INPUT -p tcp --tcp-flags ALL NONE -j DROP
+iptables -A INPUT -p tcp --tcp-flags ALL NONE -j DROP
 
-#iptables -A INPUT -p tcp ! --syn -m state --state NEW -j DROP
+iptables -A INPUT -p tcp ! --syn -m state --state NEW -j DROP
 
-#iptables -I INPUT -p tcp --dport 80 -m state --state NEW -m recent --set
-#iptables -I INPUT -p tcp --dport 80 -m state --state NEW -m recent --update --seconds 20 --hitcount 10 -j DROP
+iptables -I INPUT -p tcp --dport 80 -m state --state NEW -m recent --set
+iptables -I INPUT -p tcp --dport 80 -m state --state NEW -m recent --update --seconds 20 --hitcount 10 -j DROP
 
 
-#iptables -I INPUT -p tcp --dport 81 -m state --state NEW -m recent --set
-#iptables -I INPUT -p tcp --dport 81 -m state --state NEW -m recent --update --seconds 20 --hitcount 10 -j DROP
+iptables -I INPUT -p tcp --dport 81 -m state --state NEW -m recent --set
+iptables -I INPUT -p tcp --dport 81 -m state --state NEW -m recent --update --seconds 20 --hitcount 10 -j DROP
 
 
 #dpkg-reconfigure iptables-persistent
