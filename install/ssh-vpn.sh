@@ -200,7 +200,7 @@ apt -y install squid3
 
 # install squid for debian 11
 apt -y install squid
-wget -O /etc/squid/squid.conf "https://raw.githubusercontent.com/sehuadri/new/main/install/squid3.conf"
+#wget -O /etc/squid/squid.conf "https://raw.githubusercontent.com/sehuadri/new/main/install/squid3.conf"
 sed -i $MYIP2 /etc/squid/squid.conf
 
 # setting vnstat
