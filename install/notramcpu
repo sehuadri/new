@@ -10,7 +10,7 @@ usmem="$(free | awk '{print $3}' | head -2 | tail -n 1 )"
 cpu1="$(mpstat | awk '{print $4}' | head -4 |tail -n 1)"
 cpu2="$(mpstat | awk '{print $6}' | head -4 |tail -n 1)"
 
-persenmemori="$(echo "$usmem*100/$tomem" | bc)"
+persenmemori="$(echo "$usmem*80/$tomem" | bc)"
 #persencpu=
 persencpu="$(echo "scale=2; $cpu1+$cpu2" | bc)"
 kirimtele=`cat<<EOF   
