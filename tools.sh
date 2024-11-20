@@ -25,7 +25,7 @@ apt dist-upgrade -y
 apt install sudo -y
 apt-get remove --purge ufw firewalld -y 
 apt-get remove --purge exim4 -y 
-apt-get remove apache2 -y 
+#apt-get remove apache2 -y 
 
 apt install -y screen curl jq bzip2 gzip coreutils rsyslog iftop \
 htop zip unzip net-tools sed gnupg gnupg1 \
