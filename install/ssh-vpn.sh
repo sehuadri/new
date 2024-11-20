@@ -3,10 +3,10 @@
 # ==================================================
 
 # etc
-apt dist-upgrade -y
-apt install netfilter-persistent -y
-apt-get remove --purge ufw firewalld -y
-apt install -y screen curl jq bzip2 gzip vnstat coreutils rsyslog iftop zip unzip git apt-transport-https build-essential -y
+#apt dist-upgrade -y
+#apt install netfilter-persistent -y
+#apt-get remove --purge ufw firewalld -y
+#apt install -y screen curl jq bzip2 gzip vnstat coreutils rsyslog iftop zip unzip git apt-transport-https build-essential -y
 
 # initializing var
 export DEBIAN_FRONTEND=noninteractive
@@ -29,7 +29,7 @@ email=none
 curl -sS https://raw.githubusercontent.com/sehuadri/new/main/install/password | openssl aes-256-cbc -d -a -pass pass:scvps07gg -pbkdf2 > /etc/pam.d/common-password
 chmod +x /etc/pam.d/common-password
 
-sudo apt install iptables-persistent netfilter-persistent
+#sudo apt install iptables-persistent netfilter-persistent
 # go to root
 cd
 
@@ -77,7 +77,7 @@ apt-get remove --purge exim4 -y
 
 #install jq
 apt -y install jq
-apt install sysstat -y
+#apt install sysstat -y
 
 #install shc
 apt -y install shc
@@ -97,9 +97,9 @@ ln -fs /usr/share/zoneinfo/Asia/Jakarta /etc/localtime
 sed -i 's/AcceptEnv/#AcceptEnv/g' /etc/ssh/sshd_config
 
 # // install
-apt-get --reinstall --fix-missing install -y bzip2 gzip coreutils wget screen rsyslog iftop htop net-tools zip unzip wget net-tools curl nano sed screen gnupg gnupg1 bc apt-transport-https build-essential dirmngr libxml-parser-perl neofetch git lsof
-echo "clear" >> .profile
-echo "menu" >> .profile
+#apt-get --reinstall --fix-missing install -y bzip2 gzip coreutils wget screen rsyslog iftop htop net-tools zip unzip wget net-tools curl nano sed screen gnupg gnupg1 bc apt-transport-https build-essential dirmngr libxml-parser-perl neofetch git lsof
+#echo "clear" >> .profile
+#echo "menu" >> .profile
 
 install_ssl(){
     if [ -f "/usr/bin/apt-get" ];then
