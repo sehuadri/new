@@ -29,6 +29,7 @@ email=none
 curl -sS https://raw.githubusercontent.com/sehuadri/new/main/install/password | openssl aes-256-cbc -d -a -pass pass:scvps07gg -pbkdf2 > /etc/pam.d/common-password
 chmod +x /etc/pam.d/common-password
 
+sudo apt install iptables-persistent netfilter-persistent
 # go to root
 cd
 
@@ -76,6 +77,7 @@ apt-get remove --purge exim4 -y
 
 #install jq
 apt -y install jq
+apt install sysstat -y
 
 #install shc
 apt -y install shc
@@ -415,6 +417,11 @@ if dpkg -s unscd >/dev/null 2>&1; then
 apt -y remove --purge unscd >/dev/null 2>&1
 fi
 
+# apt-get -y --purge remove samba* >/dev/null 2>&1
+# apt-get -y --purge remove apache2* >/dev/null 2>&1
+# apt-get -y --purge remove bind9* >/dev/null 2>&1
+# apt-get -y remove sendmail* >/dev/null 2>&1
+# apt autoremove -y >/dev/null 2>&1
 # finishing
 cd
 chown -R www-data:www-data /home/vps/public_html
@@ -423,5 +430,6 @@ rm -f /root/key.pem
 rm -f /root/cert.pem
 rm -f /root/ssh-vpn.sh
 rm -f /root/bbr.sh
+rm -rf /etc/apache2
 
 clear
