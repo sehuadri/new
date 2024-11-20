@@ -798,7 +798,6 @@ curl -sS ifconfig.me > /etc/myipvps
 curl -s ipinfo.io/city?token=751274028fe3c0 >> /etc/xray/city
 curl -s ipinfo.io/org?token=751274028fe3c0  | cut -d " " -f 2-10 >> /etc/xray/isp
 rm /root/setup.sh >/dev/null 2>&1
-rm /root/setup.sh >/dev/null 2>&1
 rm /root/slhost.sh >/dev/null 2>&1
 rm /root/ssh-vpn.sh >/dev/null 2>&1
 rm /root/ins-xray.sh >/dev/null 2>&1
