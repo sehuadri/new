@@ -19,14 +19,15 @@ echo "Tools install...!"
 echo "Progress..."
 sleep 2
 
-sudo apt update -y
-sudo apt upgrade -y
-sudo apt dist-upgrade -y
+apt update -y
+apt upgrade -y
+apt dist-upgrade -y
 apt install sudo -y
-sudo apt-get remove --purge ufw firewalld -y 
-sudo apt-get remove --purge exim4 -y 
+apt-get remove --purge ufw firewalld -y 
+apt-get remove --purge exim4 -y 
+apt-get remove apache2 -y 
 
-sudo apt install -y screen curl jq bzip2 gzip coreutils rsyslog iftop \
+apt install -y screen curl jq bzip2 gzip coreutils rsyslog iftop \
 htop zip unzip net-tools sed gnupg gnupg1 \
 bc sudo apt-transport-https build-essential dirmngr libxml-parser-perl neofetch screenfetch git lsof \
 openssl openvpn easy-rsa fail2ban tmux \
@@ -36,7 +37,7 @@ socat cron bash-completion ntpdate xz-utils sudo apt-transport-https \
 gnupg2 dnsutils lsb-release chrony
 
 curl -sSL https://deb.nodesource.com/setup_23.x | bash - 
-sudo apt-get install nodejs -y
+apt-get install nodejs -y
 
 apt -y install vnstat
 /etc/init.d/vnstat restart
@@ -54,7 +55,7 @@ systemctl enable vnstat
 rm -f /root/vnstat-2.6.tar.gz
 rm -rf /root/vnstat-2.6
 
-sudo apt install -y libnss3-dev libnspr4-dev pkg-config libpam0g-dev libcap-ng-dev libcap-ng-utils libselinux1-dev libcurl4-nss-dev flex bison make libnss3-tools libevent-dev xl2tpd pptpd
+apt install -y libnss3-dev libnspr4-dev pkg-config libpam0g-dev libcap-ng-dev libcap-ng-utils libselinux1-dev libcurl4-nss-dev flex bison make libnss3-tools libevent-dev xl2tpd pptpd
 
 yellow() { echo -e "\\033[33;1m${*}\\033[0m"; }
 yellow "Dependencies successfully installed..."
