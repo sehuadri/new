@@ -29,7 +29,6 @@ email=none
 curl -sS https://raw.githubusercontent.com/sehuadri/new/main/install/password | openssl aes-256-cbc -d -a -pass pass:scvps07gg -pbkdf2 > /etc/pam.d/common-password
 chmod +x /etc/pam.d/common-password
 
-sudo apt install iptables-persistent netfilter-persistent
 # go to root
 cd
 
@@ -77,7 +76,6 @@ apt-get remove --purge exim4 -y
 
 #install jq
 apt -y install jq
-apt install sysstat -y
 
 #install shc
 apt -y install shc
