@@ -331,7 +331,7 @@ iptables -I INPUT -p tcp --dport 81 -m state --state NEW -m recent --set
 iptables -I INPUT -p tcp --dport 81 -m state --state NEW -m recent --update --seconds 20 --hitcount 10 -j DROP
 
 
-#dpkg-reconfigure iptables-persistent
+dpkg-reconfigure iptables-persistent
 
 #systemctl restart fail2ban
 # blokir torrent
