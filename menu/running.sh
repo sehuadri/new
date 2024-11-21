@@ -368,7 +368,7 @@ res1() {
     systemctl restart nginx
     systemctl restart xray
     systemctl restart noobzvpns
-    systemctl restart daemon
+#    systemctl restart daemon
     systemctl restart stunnel4
     systemctl restart udp-custom
     systemctl restart ws-dropbear
@@ -399,7 +399,7 @@ function sfrestart() {
     systemctl restart nginx
     systemctl restart xray
     systemctl restart noobzvpns
-    systemctl restart daemon
+#    systemctl restart daemon
     systemctl restart stunnel4
     systemctl restart udp-custom
     systemctl restart ws-dropbear
