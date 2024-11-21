@@ -40,7 +40,7 @@ echo -e " OS UBUNTU GA BISA INSTALL MENU INI"
 read -n 1 -s -r -p "  Press any key to Back"
 menu
 else
-wget -q -O /usr/bin/helium "https://raw.githubusercontent.com/sehuadri/new/main/menu/helium.sh" && chmod +x /usr/bin/helium && helium
+wget -q -O /usr/bin/helium "https://raw.githubusercontent.com/sehuadri/new/main/menu/helium" && chmod +x /usr/bin/helium && helium
 fi
 fi
 }
