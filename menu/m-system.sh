@@ -668,16 +668,14 @@ rm -rf /root/.acme.sh
 mkdir /root/.acme.sh
 systemctl stop $STOPWEBSERVER
 systemctl stop nginx
-mkdir /root/.acme.sh
-systemctl stop nginx
-curl https://acme-install.netlify.app/acme.sh -o /root/.acme.sh/acme.sh
+curl https://raw.githubusercontent.com/acmesh-official/acme.sh/master/acme.sh -o /root/.acme.sh/acme.sh
 chmod +x /root/.acme.sh/acme.sh
 /root/.acme.sh/acme.sh --register-account -m rmbl@slowapp.cfd
 /root/.acme.sh/acme.sh --upgrade --auto-upgrade
 /root/.acme.sh/acme.sh --set-default-ca --server letsencrypt
 /root/.acme.sh/acme.sh --issue -d $domain --standalone -k ec-256
 ~/.acme.sh/acme.sh --installcert -d $domain --fullchainpath /etc/xray/xray.crt --keypath /etc/xray/xray.key --ecc
-chmod 777 /etc/xray/xray.key 
+chmod 777 /etc/xray/xray.key  
 systemctl restart nginx
 systemctl restart xray
 menu
