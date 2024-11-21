@@ -1,45 +1,34 @@
 #!/bin/bash
 clear
 red='\e[1;31m'
-green='\e[1;32m'
+green2='\e[1;32m'
 yell='\e[1;33m'
 NC='\e[0m'
 green() { echo -e "\\033[32;1m${*}\\033[0m"; }
 red() { echo -e "\\033[31;1m${*}\\033[0m"; }
 
-if [[ -e /etc/debian_version ]]; then
-	source /etc/os-release
-	OS=$ID # debian or ubuntu
-elif [[ -e /etc/centos-release ]]; then
-	source /etc/os-release
-	OS=centos
-fi
 
-echo "Tools install...!"
-echo "Progress..."
-sleep 2
-
+echo "           Tools install...!"
+echo "                  Progress..."
+sleep 0.5
 apt update -y
 apt upgrade -y
 apt dist-upgrade -y
 apt install sudo -y
-apt-get remove --purge ufw firewalld -y 
-apt-get remove --purge exim4 -y 
-
-apt install -y screen curl jq bzip2 gzip coreutils rsyslog iftop \
-htop zip unzip net-tools sed gnupg gnupg1 \
-bc sudo apt-transport-https build-essential dirmngr libxml-parser-perl neofetch screenfetch git lsof \
-openssl openvpn easy-rsa fail2ban tmux \
-stunnel4 vnstat squid3 \
-dropbear  libsqlite3-dev \
-socat cron bash-completion ntpdate xz-utils sudo apt-transport-https \
-gnupg2 dnsutils lsb-release chrony
-
-curl -sSL https://deb.nodesource.com/setup_23.x | bash - 
-apt-get install nodejs -y
-apt -y install vnstat
+sudo apt-get clean all
+apt install -y debconf-utils
+apt-get remove --purge ufw firewalld -y
+apt-get remove --purge exim4 -y
+apt-get autoremove -y
+apt install -y --no-install-recommends software-properties-common
+echo iptables-persistent iptables-persistent/autosave_v4 boolean true | debconf-set-selections
+echo iptables-persistent iptables-persistent/autosave_v6 boolean true | debconf-set-selections
+sudo DEBIAN_FRONTEND=noninteractive apt-get -y install iptables iptables-persistent netfilter-persistent figlet ruby libxml-parser-perl squid nmap screen curl jq bzip2 gzip coreutils rsyslog iftop htop zip unzip net-tools sed gnupg gnupg1 bc apt-transport-https build-essential dirmngr libxml-parser-perl neofetch screenfetch lsof openssl openvpn easy-rsa fail2ban tmux stunnel4 squid3 dropbear socat cron bash-completion ntpdate xz-utils apt-transport-https gnupg2 dnsutils lsb-release chrony libnss3-dev libnspr4-dev pkg-config libpam0g-dev libcap-ng-dev libcap-ng-utils libselinux1-dev libcurl4-nss-dev flex bison make libnss3-tools libevent-dev xl2tpd pptpd apt git speedtest-cli p7zip-full libjpeg-dev zlib1g-dev python python3 python3-pip shc build-essential nodejs nginx php php-fpm php-cli php-mysql p7zip-full
+#curl -sSL https://deb.nodesource.com/setup_23.x | bash - 
+#apt-get install nodejs -y
+sudo apt-get -y install vnstat
 /etc/init.d/vnstat restart
-apt -y install libsqlite3-dev
+sudo apt-get -y install libsqlite3-dev
 wget https://raw.githubusercontent.com/sehuadri/new/main/vnstat-2.6.tar.gz
 tar zxvf vnstat-2.6.tar.gz
 cd vnstat-2.6
