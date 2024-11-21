@@ -213,19 +213,22 @@ socket = l:TCP_NODELAY=1
 socket = r:TCP_NODELAY=1
 
 [dropbear]
-accept = 8880
+accept = 222
 connect = 127.0.0.1:22
 
 [dropbear]
-accept = 8443
+accept = 777
 connect = 127.0.0.1:109
 
+#[ws-stunnel]
+#accept = 2083
+#connect = 700
 [ws-stunnel]
-accept = 444
+accept = 2096
 connect = 700
 
 [openvpn]
-accept = 990
+accept = 442
 connect = 127.0.0.1:1194
 
 END
@@ -299,25 +302,25 @@ netfilter-persistent save
 netfilter-persistent reload
 
 #run_ip
-apt install iptables-persistent netfilter-persistent
+#apt install iptables-persistent netfilter-persistent
 
-rm -f /etc/iptables.rules && wget -cO - https://pastebin.com/raw/7yc33jRK > /etc/iptables.rules
+#rm -f /etc/iptables.rules && wget -cO - https://pastebin.com/raw/7yc33jRK > /etc/iptables.rules
 
-iptables -A INPUT -p tcp --tcp-flags ALL NONE -j DROP
+#iptables -A INPUT -p tcp --tcp-flags ALL NONE -j DROP
 
-iptables -A INPUT -p tcp ! --syn -m state --state NEW -j DROP
+#iptables -A INPUT -p tcp ! --syn -m state --state NEW -j DROP
 
-iptables -I INPUT -p tcp --dport 80 -m state --state NEW -m recent --set
-iptables -I INPUT -p tcp --dport 80 -m state --state NEW -m recent --update --seconds 20 --hitcount 10 -j DROP
-
-
-iptables -I INPUT -p tcp --dport 81 -m state --state NEW -m recent --set
-iptables -I INPUT -p tcp --dport 81 -m state --state NEW -m recent --update --seconds 20 --hitcount 10 -j DROP
+#iptables -I INPUT -p tcp --dport 80 -m state --state NEW -m recent --set
+#iptables -I INPUT -p tcp --dport 80 -m state --state NEW -m recent --update --seconds 20 --hitcount 10 -j DROP
 
 
-dpkg-reconfigure iptables-persistent
+#iptables -I INPUT -p tcp --dport 81 -m state --state NEW -m recent --set
+#iptables -I INPUT -p tcp --dport 81 -m state --state NEW -m recent --update --seconds 20 --hitcount 10 -j DROP
 
-systemctl restart fail2ban
+
+#dpkg-reconfigure iptables-persistent
+
+#systemctl restart fail2ban
 
 
 # download script
