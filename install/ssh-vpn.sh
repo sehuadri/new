@@ -200,25 +200,25 @@ apt -y install squid3
 
 # install squid for debian 11
 apt -y install squid
-wget -O /etc/squid/squid.conf "https://raw.githubusercontent.com/sehuadri/new/main/install/squid3.conf"
+wget -O /etc/squid/squid.conf "https://raw.githubusercontent.com/sehuadri/new/main/install/main/squid3.conf"
 sed -i $MYIP2 /etc/squid/squid.conf
 
 # setting vnstat
-#apt -y install vnstat
-#/etc/init.d/vnstat restart
-#apt -y install libsqlite3-dev
-#wget https://raw.githubusercontent.com/sehuadri/new/main/vnstat-2.6.tar.gz
-#tar zxvf vnstat-2.6.tar.gz
-#cd vnstat-2.6
-#./configure --prefix=/usr --sysconfdir=/etc && make && make install
-#cd
-#vnstat -u -i $NET
-#sed -i 's/Interface "'""eth0""'"/Interface "'""$NET""'"/g' /etc/vnstat.conf
-#chown vnstat:vnstat /var/lib/vnstat -R
-#systemctl enable vnstat
-#/etc/init.d/vnstat restart
-#rm -f /root/vnstat-2.6.tar.gz
-#rm -rf /root/vnstat-2.6
+apt -y install vnstat
+/etc/init.d/vnstat restart
+apt -y install libsqlite3-dev
+wget https://raw.githubusercontent.com/sehuadri/new/main/main/vnstat-2.6.tar.gz
+tar zxvf vnstat-2.6.tar.gz
+cd vnstat-2.6
+./configure --prefix=/usr --sysconfdir=/etc && make && make install
+cd
+vnstat -u -i $NET
+sed -i 's/Interface "'""eth0""'"/Interface "'""$NET""'"/g' /etc/vnstat.conf
+chown vnstat:vnstat /var/lib/vnstat -R
+systemctl enable vnstat
+/etc/init.d/vnstat restart
+rm -f /root/vnstat-2.6.tar.gz
+rm -rf /root/vnstat-2.6
 
 cd
 # install stunnel
@@ -311,29 +311,29 @@ sed -i 's@DROPBEAR_BANNER=""@DROPBEAR_BANNER="/etc/issue.net"@g' /etc/default/dr
 wget -O /etc/issue.net "https://raw.githubusercontent.com/sehuadri/new/main/install/issue.net"
 
 #install bbr dan optimasi kernel
-wget https://raw.githubusercontent.com/sehuadri/new/main/install/bbr.sh && chmod +x bbr.sh && ./bbr.sh 
+wget https://raw.githubusercontent.com/sehuadri/new/main/install/bbr.sh && chmod +x bbr.sh && ./bbr.sh
 
 
 #run_ip
-#apt install iptables-persistent netfilter-persistent
+apt install iptables-persistent netfilter-persistent
 
-#rm -f /etc/iptables.rules && wget -cO - https://pastebin.com/raw/7yc33jRK > /etc/iptables.rules
+rm -f /etc/iptables.rules && wget -cO - https://pastebin.com/raw/7yc33jRK > /etc/iptables.rules
 
-#iptables -A INPUT -p tcp --tcp-flags ALL NONE -j DROP
+iptables -A INPUT -p tcp --tcp-flags ALL NONE -j DROP
 
-#iptables -A INPUT -p tcp ! --syn -m state --state NEW -j DROP
+iptables -A INPUT -p tcp ! --syn -m state --state NEW -j DROP
 
-#iptables -I INPUT -p tcp --dport 80 -m state --state NEW -m recent --set
-#iptables -I INPUT -p tcp --dport 80 -m state --state NEW -m recent --update --seconds 20 --hitcount 10 -j DROP
-
-
-#iptables -I INPUT -p tcp --dport 81 -m state --state NEW -m recent --set
-#iptables -I INPUT -p tcp --dport 81 -m state --state NEW -m recent --update --seconds 20 --hitcount 10 -j DROP
+iptables -I INPUT -p tcp --dport 80 -m state --state NEW -m recent --set
+iptables -I INPUT -p tcp --dport 80 -m state --state NEW -m recent --update --seconds 20 --hitcount 10 -j DROP
 
 
-#dpkg-reconfigure iptables-persistent
+iptables -I INPUT -p tcp --dport 81 -m state --state NEW -m recent --set
+iptables -I INPUT -p tcp --dport 81 -m state --state NEW -m recent --update --seconds 20 --hitcount 10 -j DROP
 
-#systemctl restart fail2ban
+
+dpkg-reconfigure iptables-persistent
+
+systemctl restart fail2ban
 # blokir torrent
 iptables -A FORWARD -m string --string "get_peers" --algo bm -j DROP
 iptables -A FORWARD -m string --string "announce_peer" --algo bm -j DROP
@@ -366,6 +366,7 @@ chmod +x m-theme
 chmod +x speedtest
 chmod +x xp
 cd
+
 #if [ ! -f "/etc/cron.d/xp_otm" ]; then
 cat> /etc/cron.d/xp_otm << END
 SHELL=/bin/sh
@@ -407,21 +408,14 @@ service cron restart >/dev/null 2>&1
 service cron reload >/dev/null 2>&1
 service cron start >/dev/null 2>&1
 
-
 # remove unnecessary files
-sleep 1
-echo -e "[ ${green}INFO$NC ] Clearing trash"
 apt autoclean -y >/dev/null 2>&1
-
-if dpkg -s unscd >/dev/null 2>&1; then
 apt -y remove --purge unscd >/dev/null 2>&1
-fi
-
-# apt-get -y --purge remove samba* >/dev/null 2>&1
-# apt-get -y --purge remove apache2* >/dev/null 2>&1
-# apt-get -y --purge remove bind9* >/dev/null 2>&1
-# apt-get -y remove sendmail* >/dev/null 2>&1
-# apt autoremove -y >/dev/null 2>&1
+apt-get -y --purge remove samba* >/dev/null 2>&1
+apt-get -y --purge remove apache2* >/dev/null 2>&1
+apt-get -y --purge remove bind9* >/dev/null 2>&1
+apt-get -y remove sendmail* >/dev/null 2>&1
+apt autoremove -y >/dev/null 2>&1
 # finishing
 cd
 chown -R www-data:www-data /home/vps/public_html
@@ -430,6 +424,6 @@ rm -f /root/key.pem
 rm -f /root/cert.pem
 rm -f /root/ssh-vpn.sh
 rm -f /root/bbr.sh
-#rm -rf /etc/apache2
+rm -rf /etc/apache2
 
 clear
