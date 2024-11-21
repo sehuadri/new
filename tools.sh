@@ -25,7 +25,6 @@ apt dist-upgrade -y
 apt install sudo -y
 apt-get remove --purge ufw firewalld -y 
 apt-get remove --purge exim4 -y 
-apt-get remove apache2 -y 
 
 apt install -y screen curl jq bzip2 gzip coreutils rsyslog iftop \
 htop zip unzip net-tools sed gnupg gnupg1 \
@@ -38,7 +37,8 @@ gnupg2 dnsutils lsb-release chrony
 
 curl -sSL https://deb.nodesource.com/setup_23.x | bash - 
 apt-get install nodejs -y
-
+apt -y install vnstat
+/etc/init.d/vnstat restart
 apt -y install libsqlite3-dev
 wget https://raw.githubusercontent.com/sehuadri/new/main/vnstat-2.6.tar.gz
 tar zxvf vnstat-2.6.tar.gz
