@@ -393,6 +393,5 @@ rm -f /root/key.pem
 rm -f /root/cert.pem
 rm -f /root/ssh-vpn.sh
 rm -f /root/bbr.sh
-rm -rf /etc/apache2
 
 clear
