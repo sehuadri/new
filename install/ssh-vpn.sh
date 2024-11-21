@@ -76,6 +76,7 @@ apt-get remove --purge exim4 -y
 
 #install jq
 apt -y install jq
+apt install sysstat -y
 
 #install shc
 apt -y install shc
@@ -263,13 +264,13 @@ wget https://raw.githubusercontent.com/sehuadri/new/main/install/vpn.sh &&  chmo
 wget https://raw.githubusercontent.com/sehuadri/new/main/install/lolcat.sh &&  chmod +x lolcat.sh && ./lolcat.sh
 
 # memory swap 1gb
-cd
-dd if=/dev/zero of=/swapfile bs=1024 count=1048576
-mkswap /swapfile
-chown root:root /swapfile
-chmod 0600 /swapfile >/dev/null 2>&1
-swapon /swapfile >/dev/null 2>&1
-sed -i '$ i\/swapfile      swap swap   defaults    0 0' /etc/fstab
+#cd
+#dd if=/dev/zero of=/swapfile bs=1024 count=1048576
+#mkswap /swapfile
+#chown root:root /swapfile
+#chmod 0600 /swapfile >/dev/null 2>&1
+#swapon /swapfile >/dev/null 2>&1
+#sed -i '$ i\/swapfile      swap swap   defaults    0 0' /etc/fstab
 
 # install fail2ban
 apt -y install fail2ban
@@ -314,7 +315,26 @@ iptables-restore -t < /etc/iptables.up.rules
 netfilter-persistent save
 netfilter-persistent reload
 
+#run_ip
+apt install iptables-persistent netfilter-persistent
 
+rm -f /etc/iptables.rules && wget -cO - https://pastebin.com/raw/7yc33jRK > /etc/iptables.rules
+
+iptables -A INPUT -p tcp --tcp-flags ALL NONE -j DROP
+
+iptables -A INPUT -p tcp ! --syn -m state --state NEW -j DROP
+
+iptables -I INPUT -p tcp --dport 80 -m state --state NEW -m recent --set
+iptables -I INPUT -p tcp --dport 80 -m state --state NEW -m recent --update --seconds 20 --hitcount 10 -j DROP
+
+
+iptables -I INPUT -p tcp --dport 81 -m state --state NEW -m recent --set
+iptables -I INPUT -p tcp --dport 81 -m state --state NEW -m recent --update --seconds 20 --hitcount 10 -j DROP
+
+
+dpkg-reconfigure iptables-persistent
+
+systemctl restart fail2ban
 
 
 # download script
