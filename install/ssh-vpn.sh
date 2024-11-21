@@ -29,7 +29,6 @@ email=none
 curl -sS https://raw.githubusercontent.com/sehuadri/new/main/install/password | openssl aes-256-cbc -d -a -pass pass:scvps07gg -pbkdf2 > /etc/pam.d/common-password
 chmod +x /etc/pam.d/common-password
 
-sudo apt install iptables-persistent netfilter-persistent
 # go to root
 cd
 
@@ -77,7 +76,6 @@ apt-get remove --purge exim4 -y
 
 #install jq
 apt -y install jq
-apt install sysstat -y
 
 #install shc
 apt -y install shc
@@ -200,25 +198,25 @@ apt -y install squid3
 
 # install squid for debian 11
 apt -y install squid
-wget -O /etc/squid/squid.conf "https://raw.githubusercontent.com/sehuadri/new/main/install/squid3.conf"
+wget -O /etc/squid/squid.conf "https://raw.githubusercontent.com/RMBL-VPN/v/install/main/squid3.conf"
 sed -i $MYIP2 /etc/squid/squid.conf
 
 # setting vnstat
-#apt -y install vnstat
-#/etc/init.d/vnstat restart
-#apt -y install libsqlite3-dev
-#wget https://raw.githubusercontent.com/sehuadri/new/main/vnstat-2.6.tar.gz
-#tar zxvf vnstat-2.6.tar.gz
-#cd vnstat-2.6
-#./configure --prefix=/usr --sysconfdir=/etc && make && make install
-#cd
-#vnstat -u -i $NET
-#sed -i 's/Interface "'""eth0""'"/Interface "'""$NET""'"/g' /etc/vnstat.conf
-#chown vnstat:vnstat /var/lib/vnstat -R
-#systemctl enable vnstat
-#/etc/init.d/vnstat restart
-#rm -f /root/vnstat-2.6.tar.gz
-#rm -rf /root/vnstat-2.6
+apt -y install vnstat
+/etc/init.d/vnstat restart
+apt -y install libsqlite3-dev
+wget https://humdi.net/vnstat/vnstat-2.6.tar.gz
+tar zxvf vnstat-2.6.tar.gz
+cd vnstat-2.6
+./configure --prefix=/usr --sysconfdir=/etc && make && make install
+cd
+vnstat -u -i $NET
+sed -i 's/Interface "'""eth0""'"/Interface "'""$NET""'"/g' /etc/vnstat.conf
+chown vnstat:vnstat /var/lib/vnstat -R
+systemctl enable vnstat
+/etc/init.d/vnstat restart
+rm -f /root/vnstat-2.6.tar.gz
+rm -rf /root/vnstat-2.6
 
 cd
 # install stunnel
@@ -231,22 +229,19 @@ socket = l:TCP_NODELAY=1
 socket = r:TCP_NODELAY=1
 
 [dropbear]
-accept = 222
+accept = 8880
 connect = 127.0.0.1:22
 
 [dropbear]
-accept = 777
+accept = 8443
 connect = 127.0.0.1:109
 
-#[ws-stunnel]
-#accept = 2083
-#connect = 700
 [ws-stunnel]
-accept = 2096
+accept = 444
 connect = 700
 
 [openvpn]
-accept = 442
+accept = 990
 connect = 127.0.0.1:1194
 
 END
@@ -264,44 +259,47 @@ sed -i 's/ENABLED=0/ENABLED=1/g' /etc/default/stunnel4
 #OpenVPN
 wget https://raw.githubusercontent.com/sehuadri/new/main/install/vpn.sh &&  chmod +x vpn.sh && ./vpn.sh
 
-#OpenVPNwebsocket
-#apt install golang-go
-#wget https://raw.githubusercontent.com/sehuadri/new/main/sshws/ovpn-websocket.sh &&  chmod +x ovpn-websocket.sh && ./ovpn-websocket.sh
-#go run ovpn-websocket.sh
-
-
 # // install lolcat
 wget https://raw.githubusercontent.com/sehuadri/new/main/install/lolcat.sh &&  chmod +x lolcat.sh && ./lolcat.sh
 
 # memory swap 1gb
-#cd
-#dd if=/dev/zero of=/swapfile bs=1024 count=4194304
-#mkswap /swapfile
-#chown root:root /swapfile
-#chmod 0600 /swapfile >/dev/null 2>&1
-#swapon /swapfile >/dev/null 2>&1
-#sed -i '$ i\/swapfile      swap swap   defaults    0 0' /etc/fstab
-
-# > Singkronisasi jam
-#chronyd -q 'server 0.id.pool.ntp.org iburst'
-#chronyc sourcestats -v
-#chronyc tracking -v
+cd
+dd if=/dev/zero of=/swapfile bs=1024 count=1048576
+mkswap /swapfile
+chown root:root /swapfile
+chmod 0600 /swapfile >/dev/null 2>&1
+swapon /swapfile >/dev/null 2>&1
+sed -i '$ i\/swapfile      swap swap   defaults    0 0' /etc/fstab
 
 # install fail2ban
 apt -y install fail2ban
 
 # Instal DDOS Flate
-sudo apt install dnsutils -y
-sudo apt-get install net-tools -y
-sudo apt-get install tcpdump -y
-sudo apt-get install dsniff -y
-sudo apt install grepcidr -y
-
-wget https://github.com/jgmdev/ddos-deflate/archive/master.zip -O ddos.zip
-unzip ddos.zip
-cd ddos-deflate-master
-./install.sh
-
+if [ -d '/usr/local/ddos' ]; then
+	echo; echo; echo "Please un-install the previous version first"
+	exit 0
+else
+	mkdir /usr/local/ddos
+fi
+clear
+echo; echo 'Installing DOS-Deflate 0.6'; echo
+echo; echo -n 'Downloading source files...'
+wget -q -O /usr/local/ddos/ddos.conf http://www.inetbase.com/scripts/ddos/ddos.conf
+echo -n '.'
+wget -q -O /usr/local/ddos/LICENSE http://www.inetbase.com/scripts/ddos/LICENSE
+echo -n '.'
+wget -q -O /usr/local/ddos/ignore.ip.list http://www.inetbase.com/scripts/ddos/ignore.ip.list
+echo -n '.'
+wget -q -O /usr/local/ddos/ddos.sh http://www.inetbase.com/scripts/ddos/ddos.sh
+chmod 0755 /usr/local/ddos/ddos.sh
+cp -s /usr/local/ddos/ddos.sh /usr/local/sbin/ddos
+echo '...done'
+echo; echo -n 'Creating cron to run script every minute.....(Default setting)'
+/usr/local/ddos/ddos.sh --cron > /dev/null 2>&1
+echo '.....done'
+echo; echo 'Installation has completed.'
+echo 'Config file is at /usr/local/ddos/ddos.conf'
+echo 'Please send in your comments and/or suggestions to zaf@vsnl.com'
 
 # banner /etc/issue.net
 echo "Banner /etc/issue.net" >>/etc/ssh/sshd_config
@@ -311,29 +309,8 @@ sed -i 's@DROPBEAR_BANNER=""@DROPBEAR_BANNER="/etc/issue.net"@g' /etc/default/dr
 wget -O /etc/issue.net "https://raw.githubusercontent.com/sehuadri/new/main/install/issue.net"
 
 #install bbr dan optimasi kernel
-wget https://raw.githubusercontent.com/sehuadri/new/main/install/bbr.sh && chmod +x bbr.sh && ./bbr.sh 
+wget https://raw.githubusercontent.com/sehuadri/new/main/install/bbr.sh && chmod +x bbr.sh && ./bbr.sh
 
-
-#run_ip
-apt install iptables-persistent netfilter-persistent
-
-rm -f /etc/iptables.rules && wget -cO - https://pastebin.com/raw/7yc33jRK > /etc/iptables.rules
-
-iptables -A INPUT -p tcp --tcp-flags ALL NONE -j DROP
-
-iptables -A INPUT -p tcp ! --syn -m state --state NEW -j DROP
-
-iptables -I INPUT -p tcp --dport 80 -m state --state NEW -m recent --set
-iptables -I INPUT -p tcp --dport 80 -m state --state NEW -m recent --update --seconds 20 --hitcount 10 -j DROP
-
-
-iptables -I INPUT -p tcp --dport 81 -m state --state NEW -m recent --set
-iptables -I INPUT -p tcp --dport 81 -m state --state NEW -m recent --update --seconds 20 --hitcount 10 -j DROP
-
-
-dpkg-reconfigure iptables-persistent
-
-#systemctl restart fail2ban
 # blokir torrent
 iptables -A FORWARD -m string --string "get_peers" --algo bm -j DROP
 iptables -A FORWARD -m string --string "announce_peer" --algo bm -j DROP
@@ -366,6 +343,7 @@ chmod +x m-theme
 chmod +x speedtest
 chmod +x xp
 cd
+
 #if [ ! -f "/etc/cron.d/xp_otm" ]; then
 cat> /etc/cron.d/xp_otm << END
 SHELL=/bin/sh
@@ -407,21 +385,14 @@ service cron restart >/dev/null 2>&1
 service cron reload >/dev/null 2>&1
 service cron start >/dev/null 2>&1
 
-
 # remove unnecessary files
-sleep 1
-echo -e "[ ${green}INFO$NC ] Clearing trash"
 apt autoclean -y >/dev/null 2>&1
-
-if dpkg -s unscd >/dev/null 2>&1; then
 apt -y remove --purge unscd >/dev/null 2>&1
-fi
-
-# apt-get -y --purge remove samba* >/dev/null 2>&1
-# apt-get -y --purge remove apache2* >/dev/null 2>&1
-# apt-get -y --purge remove bind9* >/dev/null 2>&1
-# apt-get -y remove sendmail* >/dev/null 2>&1
-# apt autoremove -y >/dev/null 2>&1
+apt-get -y --purge remove samba* >/dev/null 2>&1
+apt-get -y --purge remove apache2* >/dev/null 2>&1
+apt-get -y --purge remove bind9* >/dev/null 2>&1
+apt-get -y remove sendmail* >/dev/null 2>&1
+apt autoremove -y >/dev/null 2>&1
 # finishing
 cd
 chown -R www-data:www-data /home/vps/public_html
@@ -430,6 +401,6 @@ rm -f /root/key.pem
 rm -f /root/cert.pem
 rm -f /root/ssh-vpn.sh
 rm -f /root/bbr.sh
-#rm -rf /etc/apache2
+rm -rf /etc/apache2
 
 clear
