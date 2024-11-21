@@ -36,7 +36,7 @@ sleep 0.5
  socat cron bash-completion ntpdate xz-utils   apt-transport-https \
  gnupg2 dnsutils lsb-release chrony
 
-curl -sSL https://deb.nodesource.com/setup_20.x | bash - 
+curl -sSL https://deb.nodesource.com/setup_23.x | bash - 
   apt-get install nodejs -y
   apt -y install vnstat
 /etc/init.d/vnstat restart
