@@ -98,8 +98,8 @@ sed -i 's/AcceptEnv/#AcceptEnv/g' /etc/ssh/sshd_config
 
 # // install
 apt-get --reinstall --fix-missing install -y bzip2 gzip coreutils wget screen rsyslog iftop htop net-tools zip unzip wget net-tools curl nano sed screen gnupg gnupg1 bc apt-transport-https build-essential dirmngr libxml-parser-perl neofetch git lsof
-echo "clear" >> .profile
-echo "menu" >> .profile
+#echo "clear" >> .profile
+#echo "menu" >> .profile
 
 install_ssl(){
     if [ -f "/usr/bin/apt-get" ];then
@@ -283,9 +283,9 @@ wget https://raw.githubusercontent.com/sehuadri/new/main/install/lolcat.sh &&  c
 #sed -i '$ i\/swapfile      swap swap   defaults    0 0' /etc/fstab
 
 # > Singkronisasi jam
-chronyd -q 'server 0.id.pool.ntp.org iburst'
-chronyc sourcestats -v
-chronyc tracking -v
+#chronyd -q 'server 0.id.pool.ntp.org iburst'
+#chronyc sourcestats -v
+#chronyc tracking -v
 
 # install fail2ban
 apt -y install fail2ban
