@@ -3,10 +3,10 @@
 # ==================================================
 
 # etc
-apt dist-upgrade -y
-apt install netfilter-persistent -y
-apt-get remove --purge ufw firewalld -y
-apt install -y screen curl jq bzip2 gzip vnstat coreutils rsyslog iftop zip unzip git apt-transport-https build-essential -y
+#apt dist-upgrade -y
+#apt install netfilter-persistent -y
+#apt-get remove --purge ufw firewalld -y
+#apt install -y screen curl jq bzip2 gzip vnstat coreutils rsyslog iftop zip unzip git apt-transport-https build-essential -y
 
 # initializing var
 export DEBIAN_FRONTEND=noninteractive
@@ -77,7 +77,7 @@ apt-get remove --purge exim4 -y
 
 #install jq
 apt -y install jq
-apt install sysstat -y
+#apt install sysstat -y
 
 #install shc
 apt -y install shc
@@ -409,13 +409,13 @@ service cron reload >/dev/null 2>&1
 service cron start >/dev/null 2>&1
 
 # remove unnecessary files
+sleep 1
+echo -e "[ ${green}INFO$NC ] Clearing trash"
 apt autoclean -y >/dev/null 2>&1
+
+if dpkg -s unscd >/dev/null 2>&1; then
 apt -y remove --purge unscd >/dev/null 2>&1
-apt-get -y --purge remove samba* >/dev/null 2>&1
-apt-get -y --purge remove apache2* >/dev/null 2>&1
-apt-get -y --purge remove bind9* >/dev/null 2>&1
-apt-get -y remove sendmail* >/dev/null 2>&1
-apt autoremove -y >/dev/null 2>&1
+fi
 # finishing
 cd
 chown -R www-data:www-data /home/vps/public_html
