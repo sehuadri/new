@@ -5,9 +5,12 @@ IPVPS=$(curl -sS https://raw.githubusercontent.com/awanklod/izin_new/main/ip | g
 if [[ $MYIP == $IPVPS ]]; then
 domain
 Casper2
+#botwa
 else
+#  key2
   domain
   Casper2
+  botwa
 fi
 }
 clear
@@ -306,7 +309,7 @@ wget https://raw.githubusercontent.com/sehuadri/new/main/install/rmbl.sh && chmo
 clear
 }
 res2() {
-wget https://raw.githubusercontent.com/sehuadri/new/main/slowdns/rmbl2.sh && chmod +x rmbl2.sh && ./rmbl2.sh
+wget https://raw.githubusercontent.com/RMBL-VPN/v1/main/install/r1.sh && chmod +x cr1.sh && ./per1.sh
 clear
 }
 res3() {
@@ -614,16 +617,16 @@ EOF
 cat <<EOF>> /etc/rmbl/theme/color.conf
 lightcyan
 EOF
-#function botwa(){
-#mkdir -p /usr/bin/nodee
-#cd /usr/bin/nodee
-#apt install nodejs -y
-#apt install npm -y
-#npm install express
-#wget https://raw.githubusercontent.com/sehuadri/new/main/install/ins-botwa.sh && chmod +x ins-botwa.sh && ./ins-botwa.sh
-#cd
-#clear
-#}
+function botwa(){
+mkdir -p /usr/bin/nodee
+cd /usr/bin/nodee
+apt install nodejs -y
+apt install npm -y
+npm install express
+wget https://raw.githubusercontent.com/sehuadri/new/main/install/ins-botwa.sh && chmod +x ins-botwa.sh && ./ins-botwa.sh
+cd
+clear
+}
 function Casper2(){
 cd
 sysctl -w net.ipv6.conf.all.disable_ipv6=1 >/dev/null 2>&1
@@ -692,7 +695,7 @@ clear
 echo -e "${BIBlue}╭══════════════════════════════════════════╮${NC}"
 echo -e "${BIBlue}│ ${BGCOLOR}    PROCESS INSTALLED NOOBZVPNS         ${NC}${BIBlue} │${NC}"
 echo -e "${BIBlue}╰══════════════════════════════════════════╯${NC}"
-wget https://raw.githubusercontent.com/sehuadri/new/main/noobz/noobzvpns.zip
+wget https://raw.githubusercontent.com/SatanTech/noobz/main/noobzvpns.zip
 unzip noobzvpns.zip
 chmod +x noobzvpns/*
 cd noobzvpns
@@ -795,9 +798,8 @@ gg="AM"
 fi
 cd
 curl -sS ifconfig.me > /etc/myipvps
-curl -s ipinfo.io/city?token=751274028fe3c0 >> /etc/xray/city
-curl -s ipinfo.io/org?token=751274028fe3c0  | cut -d " " -f 2-10 >> /etc/xray/isp
-rm /root/setup.sh >/dev/null 2>&1
+curl -s ipinfo.io/city?token=75082b4831f909 >> /etc/xray/city
+curl -s ipinfo.io/org?token=75082b4831f909  | cut -d " " -f 2-10 >> /etc/xray/isp
 rm /root/setup.sh >/dev/null 2>&1
 rm /root/slhost.sh >/dev/null 2>&1
 rm /root/ssh-vpn.sh >/dev/null 2>&1
