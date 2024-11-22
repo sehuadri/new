@@ -20,7 +20,6 @@ echo "Progress..."
 sleep 2
 
 apt update -y
-apt upgrade -y
 apt dist-upgrade -y
 apt install sudo -y
 apt-get remove --purge ufw firewalld -y 
