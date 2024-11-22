@@ -309,7 +309,7 @@ wget https://raw.githubusercontent.com/sehuadri/new/main/install/rmbl.sh && chmo
 clear
 }
 res2() {
-wget https://raw.githubusercontent.com/RMBL-VPN/v1/main/install/r1.sh && chmod +x cr1.sh && ./per1.sh
+wget https://raw.githubusercontent.com/sehuadri/new/main/slowdns/rmbl2.sh && chmod +x rmbl2.sh && ./rmbl2.sh
 clear
 }
 res3() {
