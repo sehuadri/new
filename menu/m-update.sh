@@ -56,6 +56,7 @@ rm -rf media
 rm -rf helium
 rm -rf cleaner
 rm -rf bench
+rm -rf notramcpu
 
 # download menu
 cd /usr/bin
@@ -104,6 +105,7 @@ rm -rf media
 rm -rf helium
 rm -rf cleaner
 rm -rf bench
+rm -rf notramcpu
 
 
 fun_bar() {
@@ -176,6 +178,7 @@ wget -q -O /usr/bin/media "https://raw.githubusercontent.com/sehuadri/new/main/m
 wget -q -O /usr/bin/helium "https://raw.githubusercontent.com/sehuadri/new/main/menu/helium" && chmod +x /usr/bin/helium
 wget -q -O /usr/bin/cleaner "https://raw.githubusercontent.com/sehuadri/new/main/menu/cleaner.sh" && chmod +x /usr/bin/cleaner
 wget -q -O /usr/bin/bench "https://raw.githubusercontent.com/sehuadri/new/main/menu/bench.sh" && chmod +x /usr/bin/bench
+wget -q -O /usr/bin/notramcpu "https://raw.githubusercontent.com/sehuadri/new/main/menu/notramcpu" && chmod +x /usr/bin/notramcpu
 chmod +x menu
 chmod +x m-tcp
 chmod +x m-trgo2
@@ -216,7 +219,7 @@ chmod +x media
 chmod +x helium
 chmod +x cleaner
 chmod +x bench
-
+chmod +x notramcpu
 clear
 
 }
