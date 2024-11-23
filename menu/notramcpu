@@ -7,17 +7,17 @@ URL="https://api.telegram.org/bot$KEY/sendMessage"
 DATE_EXEC="$(date "+%d %b %Y %H:%M")"
 tomem="$(free | awk '{print $2}' | head -2 | tail -n 1 )"
 usmem="$(free | awk '{print $3}' | head -2 | tail -n 1 )"
-cpu1="$(mpstat | awk '{print $4}' | head -4 |tail -n 1)"
-cpu2="$(mpstat | awk '{print $6}' | head -4 |tail -n 1)"
+#cpu1="$(mpstat | awk '{print $4}' | head -4 |tail -n 1)"
+#cpu2="$(mpstat | awk '{print $6}' | head -4 |tail -n 1)"
 
-persenmemori="$(echo "$usmem*80/$tomem" | bc)"
+persenmemori="$(echo "$usmem*50/$tomem" | bc)"
 #persencpu=
-persencpu="$(echo "scale=2; $cpu1+$cpu2" | bc)"
+#persencpu="$(echo "scale=2; $cpu1+$cpu2" | bc)"
 kirimtele=`cat<<EOF   
 $domain
 $DATE_EXEC
 RAM = $persenmemori%
-CPU = $persencpu%
+#CPU = $persencpu%
 
 EOF`
 if [ $persenmemori -gt 60 ]
