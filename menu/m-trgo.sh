@@ -29,7 +29,7 @@ export UNDERLINE="\e[4m"
 
 # // Exporting URL Host
 export Server_URL="autosc.me/aio"
-export Server_Port="2087"
+export Server_Port="9443"
 export Server_IP="underfined"
 export Script_Mode="Stable"
 export Auther="XdrgVPN"
@@ -78,21 +78,23 @@ exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 hariini=`date -d "0 days" +"%Y-%m-%d"`
 echo -e "### $user $exp" >> /etc/trojan-go/trgo
 systemctl restart trojan-go.service
-linktls="trojan-go://${uuid}@${domain}:9443/?sni=${domain}&type=ws&host=${domain}&path=/trojango&encryption=none#$user"
+link="trojan-go://${uuid}@isi_bug_disini:2087/?sni=${domain}&type=ws&host=${domain}&path=%2Ftrojango#$user"
+link1="trojan://${uuid}@isi_bug_disini:2087/?sni=${domain}&type=ws&host=${domain}&path=%2Ftrojango#$user"
 clear
 echo -e ""
 echo -e "=======-TROJAN-GO-======="
 echo -e "Remarks    : ${user}"
 echo -e "IP/Host    : ${MYIP}"
 echo -e "Address    : ${domain}"
-echo -e "Port TLS   : 9443"
+echo -e "Port TLS   : 2087"
 echo -e "Key        : ${uuid}"
 echo -e "Encryption : none"
 echo -e "Path       : /trojango"
 echo -e "Created    : $hariini"
 echo -e "Expired    : $exp"
 echo -e "========================="
-echo -e "Link TrGo TLS  : ${linktls}"
+echo -e "Link TrGo TLS  : ${link}"
+echo -e "Link TrGo (v2rayNG)	: ${link1}"
 echo -e "========================="
 echo -e ""
 read -n 1 -s -r -p "Press any key to back on menu"
@@ -182,7 +184,7 @@ echo "============================"
 echo "Username : $user"
 echo "Expired  : $exp4"
 echo "=========================="
-echo "Script Mod By SL"
+echo "Script CLOUDVPN"
 }
 
 function cektrgo() {
@@ -225,7 +227,7 @@ oth=$(cat /tmp/other.txt | sort | uniq | nl)
 echo "other";
 echo "$oth";
 echo "------------------------------------";
-echo "Script Mod By SL"
+echo "Script CLOUDVPN"
 rm -rf /tmp/other.txt
 }
 clear
@@ -238,7 +240,7 @@ echo -e "$COLOR1│ $NC  ${WH}[${COLOR1}02${WH}]${NC} ${COLOR1}• ${WH}DELETE T
 echo -e "$COLOR1│ $NC  ${WH}[${COLOR1}00${WH}]${NC} ${COLOR1}• ${WH}BACK ${NC}"
 echo -e "$COLOR1╰═══════════════════════════════════════════════════╯${NC}"
 echo -e "$COLOR1╭═════════════════════ • ${WH}BY${NC}${COLOR1} • ══════════════════════╮${NC}"
-echo -e "$COLOR1${NC}          ${WH}   • CLOUDVPN TUNNELING •                 $COLOR1 $NC"
+echo -e "$COLOR1${NC}          ${WH}   • CLOUDVPN Tunneling •                 $COLOR1 $NC"
 echo -e "$COLOR1╰═══════════════════════════════════════════════════╯${NC}"
 echo -e ""
 echo -ne " ${WH}Select menu ${COLOR1}: ${WH}"; read opt
