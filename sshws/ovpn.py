@@ -1,4 +1,3 @@
-#!/usr/bin/python
 import socket, threading, thread, select, signal, sys, time, getopt
 
 # Listen
@@ -6,7 +5,7 @@ LISTENING_ADDR = '0.0.0.0'
 if sys.argv[1:]:
   LISTENING_PORT = sys.argv[1]
 else:
-  LISTENING_PORT = 2096  
+  LISTENING_PORT = 2086  
 #Pass
 PASS = ''
 
@@ -14,8 +13,7 @@ PASS = ''
 BUFLEN = 4096 * 4
 TIMEOUT = 60
 DEFAULT_HOST = '127.0.0.1:1194'
-RESPONSE = 'HTTP/1.1 101 <u><font color="#00ff00">Switching Protocol</font></u>(Openvpn)\r\nContent-Length: 104857600000\r\n\r\n'
-#RESPONSE = 'HTTP/1.1 200 Websocket_openvpn\r\nContent-length: 0\r\nHTTP/1.1 200 Connection established\r\n\r\n'
+RESPONSE = 'HTTP/1.1 101 OpenVPN WebScoket Bye Hidessh.com\r\n\r\nContent-Length: 104857600000\r\n\r\n'
 
 class Server(threading.Thread):
     def __init__(self, host, port):
@@ -266,3 +264,4 @@ def main(host=LISTENING_ADDR, port=LISTENING_PORT):
 #######    parse_args(sys.argv[1:])
 if __name__ == '__main__':
     main()
+    
