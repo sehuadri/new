@@ -9,7 +9,7 @@ apt-get remove --purge ufw firewalld -y
 apt install -y screen curl jq bzip2 gzip vnstat coreutils rsyslog iftop zip unzip git apt-transport-https build-essential -y
 
 # Link Hosting Kalian Untuk Stunnel5
-akbarvpnnnn="raw.githubusercontent.com/fisabiliyusri/Mantap/main/stunnel5"
+lynzvpnnnn="raw.githubusercontent.com/LynzVPN/idn/main/stunnel5"
 
 # initializing var
 export DEBIAN_FRONTEND=noninteractive
@@ -236,7 +236,7 @@ RUN=yes
 # systemd users: don't forget to modify /lib/systemd/system/sslh.service
 DAEMON=/usr/sbin/sslh
 
-DAEMON_OPTS="--user sslh --listen 0.0.0.0:8000 --ssl 127.0.0.1:777 --ssh 127.0.0.1:109 --openvpn 127.0.0.1:1194 --http 127.0.0.1:700 --pidfile /var/run/sslh/sslh.pid -n"
+DAEMON_OPTS="--user sslh --listen 0.0.0.0:443 --ssl 127.0.0.1:777 --ssh 127.0.0.1:109 --openvpn 127.0.0.1:1194 --http 127.0.0.1:700 --pidfile /var/run/sslh/sslh.pid -n"
 
 END
 
@@ -267,7 +267,7 @@ rm -rf /root/vnstat-2.6
 cd
 # install stunnel 5 
 cd /root/
-wget -q -O stunnel5.zip "https://${akbarvpnnnn}/stunnel5.zip"
+wget -q -O stunnel5.zip "https://${lynzvpnnnn}/stunnel5.zip"
 unzip -o stunnel5.zip
 cd /root/stunnel
 chmod +x configure
@@ -280,31 +280,26 @@ rm -f stunnel5.zip
 mkdir -p /etc/stunnel5
 chmod 644 /etc/stunnel5
 
-cd
-wget https://raw.githubusercontent.com/hidessh99/projectku/main/SSL/hide.crt
-wget https://raw.githubusercontent.com/hidessh99/projectku/main/SSL/hide.key
-
 # Download Config Stunnel5
 cat > /etc/stunnel5/stunnel5.conf <<-END
-cert = /root/hide.crt
-key = /root/hide.key
+cert = /etc/xray/xray.crt
+key = /etc/xray/xray.key
 client = no
 socket = a:SO_REUSEADDR=1
 socket = l:TCP_NODELAY=1
 socket = r:TCP_NODELAY=1
 
 [dropbear]
-accept = 777
+accept = 445
 connect = 127.0.0.1:109
 
 [openssh]
-accept = 222
-connect = 127.0.0.1:8000
+accept = 777
+connect = 127.0.0.1:443
 
 [openvpn]
 accept = 990
 connect = 127.0.0.1:1194
-
 
 END
 
@@ -331,7 +326,7 @@ WantedBy=multi-user.target
 END
 
 # Service Stunnel5 /etc/init.d/stunnel5
-wget -q -O /etc/init.d/stunnel5 "https://${akbarvpnnnn}/stunnel5.init"
+wget -q -O /etc/init.d/stunnel5 "https://${lynzvpnnnn}/stunnel5.init"
 
 # Ubah Izin Akses
 chmod 600 /etc/stunnel5/stunnel5.pem
