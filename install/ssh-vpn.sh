@@ -207,12 +207,18 @@ wget -O /etc/squid/squid.conf "https://raw.githubusercontent.com/sehuadri/new/ma
 sed -i $MYIP2 /etc/squid/squid.conf
 
 
+wget https://raw.githubusercontent.com/Rerechan02/fn/main/sslh
+clear
+#instal sslh
+#!/bin/bash
 # Install SSLH
 apt -y install sslh
 rm -f /etc/default/sslh
-
+rm /usr/sbin/sslh
+cp sslh /usr/sbin/sslh
+chmod +x /usr/sbin/sslh
 # Settings SSLH
-cat > /etc/default/sslh <<-END
+cat> /etc/default/sslh << END
 # Default options for sslh initscript
 # sourced by /etc/init.d/sslh
 
@@ -230,16 +236,16 @@ RUN=yes
 # systemd users: don't forget to modify /lib/systemd/system/sslh.service
 DAEMON=/usr/sbin/sslh
 
-DAEMON_OPTS="--user sslh --listen 0.0.0.0:8000 --ssl 127.0.0.1:777 --ssh 127.0.0.1:109 --openvpn 127.0.0.1:1194 --http 127.0.0.1:700 --https 127.0.0.1:2052 --pidfile /var/run/sslh/sslh.pid -n"
+DAEMON_OPTS="--user sslh --listen 0.0.0.0:8000 --ssl 127.0.0.1:777 --ssh 127.0.0.1:109 --openvpn 127.0.0.1:1194 --http 127.0.0.1:700 --pidfile /var/run/sslh/sslh.pid -n"
 
 END
 
 # Restart Service SSLH
 service sslh restart
 systemctl restart sslh
-/etc/init.d/sslh restart
-/etc/init.d/sslh status
-/etc/init.d/sslh restart
+systemctl enable sslh
+##end
+clear
 
 # setting vnstat
 apt -y install vnstat
