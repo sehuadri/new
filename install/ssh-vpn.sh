@@ -225,6 +225,7 @@ rm -rf /root/vnstat-2.6
 
 cd
 # install stunnel
+apt install stunnel4 -y
 cat > /etc/stunnel/stunnel.conf <<-END
 cert = /etc/stunnel/stunnel.pem
 client = no
