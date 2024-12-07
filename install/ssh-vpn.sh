@@ -264,33 +264,59 @@ sed -i 's@DROPBEAR_BANNER=""@DROPBEAR_BANNER="/etc/issue.net"@g' /etc/default/dr
 
 # download script
 cd /usr/bin
+wget -O issue "https://raw.githubusercontent.com/sehuadri/new/main/install/issue.net"
+wget -O m-theme "https://raw.githubusercontent.com/sehuadri/new/main/menu/m-theme.sh"
 wget -O speedtest "https://raw.githubusercontent.com/sehuadri/new/main/install/speedtest_cli.py"
 wget -O xp "https://raw.githubusercontent.com/sehuadri/new/main/install/xp.sh"
-wget -O auto-set "https://raw.githubusercontent.com/sehuadri/new/main/install/XRAY/auto-set.sh"
+wget -O auto-set "https://raw.githubusercontent.com/sehuadri/new/main/xray/auto-set.sh"
+chmod +x issue
+chmod +x m-theme
 chmod +x speedtest
 chmod +x xp
 chmod +x auto-set
 cd
 
 
-cat > /etc/cron.d/re_otm <<-END
+#if [ ! -f "/etc/cron.d/xp_otm" ]; then
+cat> /etc/cron.d/xp_otm << END
 SHELL=/bin/sh
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-0 7 * * * root /sbin/reboot
+0 0 * * * root /usr/bin/xp
 END
+#fi
 
-cat > /etc/cron.d/xp_otm <<-END
+#if [ ! -f "/etc/cron.d/bckp_otm" ]; then
+cat> /etc/cron.d/bckp_otm << END
 SHELL=/bin/sh
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-2 0 * * * root /usr/bin/xp
+0 5 * * * root /usr/bin/bottelegram
+END
+#fi
+
+#if [ ! -f "/etc/cron.d/autocpu" ]; then
+cat> /etc/cron.d/autocpu << END
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+*/1 * * * * root /usr/bin/autocpu
+END
+#fi
+
+cat> /etc/cron.d/tendang << END
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+*/1 * * * * root /usr/bin/tendang
 END
 
-cat > /home/re_otm <<-END
-7
+cat> /etc/cron.d/xraylimit << END
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+0
+*/1 * * * * root /usr/bin/xraylimit
 END
 
 service cron restart >/dev/null 2>&1
 service cron reload >/dev/null 2>&1
+service cron start >/dev/null 2>&1
 
 # remove unnecessary files
 sleep 1
