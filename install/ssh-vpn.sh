@@ -244,10 +244,6 @@ connect = 127.0.0.1:22
 [openvpn]
 accept = 442
 connect = 127.0.0.1:1194
-
-[stunnelws]
-accept = 2096
-connect = 700
 END
 
 # make a certificate
