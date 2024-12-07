@@ -177,59 +177,27 @@ systemctl start badvpn3
 
 
 # setting port ssh
-#cd
-#sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config
-#sed -i '/Port 22/a Port 500' /etc/ssh/sshd_config
-#sed -i '/Port 22/a Port 40000' /etc/ssh/sshd_config
-#sed -i '/Port 22/a Port 51443' /etc/ssh/sshd_config
-#sed -i '/Port 22/a Port 58080' /etc/ssh/sshd_config
-#sed -i '/Port 22/a Port 200' /etc/ssh/sshd_config
-#sed -i '/Port 22/a Port 22' /etc/ssh/sshd_config
-#/etc/init.d/ssh restart
-
-# /etc/ssh/sshd_config
-sed -i 's/Port 22/Port 22/g' /etc/ssh/sshd_config
-sed -i '/Port 22/a Port 2253' /etc/ssh/sshd_config
-echo "Port 22" >> /etc/ssh/sshd_config
-echo "Port 40000" >> /etc/ssh/sshd_config
-echo "X11Forwarding yes" >> /etc/ssh/sshd_config
-echo "AllowTcpForwarding yes" >> /etc/ssh/sshd_config
-echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
-echo "PubkeyAuthentication yes" >> /etc/ssh/sshd_config
-echo "PasswordAuthentication yes" >> /etc/ssh/sshd_config
-sed -i 's/#AllowTcpForwarding yes/AllowTcpForwarding yes/g' /etc/ssh/sshd_config
+cd
 sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config
-systemctl daemon-reload >/dev/null 2>&1
-systemctl start ssh >/dev/null 2>&1
-systemctl restart ssh >/dev/null 2>&1
+sed -i '/Port 22/a Port 500' /etc/ssh/sshd_config
+sed -i '/Port 22/a Port 40000' /etc/ssh/sshd_config
+sed -i '/Port 22/a Port 51443' /etc/ssh/sshd_config
+sed -i '/Port 22/a Port 58080' /etc/ssh/sshd_config
+sed -i '/Port 22/a Port 200' /etc/ssh/sshd_config
+sed -i '/Port 22/a Port 22' /etc/ssh/sshd_config
+/etc/init.d/ssh restart
 
-#echo "=== Install Dropbear ==="
+echo "=== Install Dropbear ==="
 # install dropbear
-#apt -y install dropbear
-#sed -i 's/NO_START=1/NO_START=0/g' /etc/default/dropbear
-#sed -i 's/DROPBEAR_PORT=22/DROPBEAR_PORT=143/g' /etc/default/dropbear
-#sed -i 's/DROPBEAR_EXTRA_ARGS=/DROPBEAR_EXTRA_ARGS="-p 50000 -p 109 -p 110 -p 69"/g' /etc/default/dropbear
-#echo "/bin/false" >> /etc/shells
-#echo "/usr/sbin/nologin" >> /etc/shells
-#/etc/init.d/ssh restart
-#/etc/init.d/dropbear restart
-
-# install dropbear
-sleep 1
-echo -e "[ ${green}INFO$NC ] Settings Dropbear"
+apt -y install dropbear
 sed -i 's/NO_START=1/NO_START=0/g' /etc/default/dropbear
 sed -i 's/DROPBEAR_PORT=22/DROPBEAR_PORT=143/g' /etc/default/dropbear
 sed -i 's/DROPBEAR_EXTRA_ARGS=/DROPBEAR_EXTRA_ARGS="-p 50000 -p 109 -p 110 -p 69"/g' /etc/default/dropbear
-systemctl daemon-reload >/dev/null 2>&1
-systemctl start dropbear >/dev/null 2>&1
-systemctl restart dropbear >/dev/null 2>&1
-cekker=$(cat /etc/shells | grep -w "/bin/false")
-if [[ "$cekker" = "/bin/false" ]];then
-echo -ne
-else
 echo "/bin/false" >> /etc/shells
 echo "/usr/sbin/nologin" >> /etc/shells
-fi
+/etc/init.d/ssh restart
+/etc/init.d/dropbear restart
+
 
 # // install squid for debian 9,10 & ubuntu 20.04
 #apt -y install squid3
@@ -272,10 +240,14 @@ rm -fr /etc/stunnel5
 mkdir -p /etc/stunnel5
 chmod 644 /etc/stunnel5
 
+cd
+wget https://raw.githubusercontent.com/hidessh99/projectku/main/SSL/hide.crt
+wget https://raw.githubusercontent.com/hidessh99/projectku/main/SSL/hide.key
+
 # Download Config Stunnel5
 cat > /etc/stunnel5/stunnel5.conf <<-END
-cert = /etc/xray/xray.crt
-key = /etc/xray/xray.key
+cert = /root/hide.crt
+key = /root/hide.key
 client = no
 socket = a:SO_REUSEADDR=1
 socket = l:TCP_NODELAY=1
