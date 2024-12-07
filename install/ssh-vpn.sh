@@ -327,12 +327,14 @@ rm -f /usr/local/bin/stunnel3
 rm -f /usr/local/bin/stunnel4
 #rm -f /usr/local/bin/stunnel5
 
-# Restart Stunnel5
-systemctl daemon-reload >/dev/null 2>&1
-systemctl enable stunnel5 >/dev/null 2>&1
-systemctl start stunnel5 >/dev/null 2>&1
-systemctl restart stunnel5 >/dev/null 2>&1
-
+# Restart Stunnel 5
+systemctl stop stunnel5
+systemctl enable stunnel5
+systemctl start stunnel5
+systemctl restart stunnel5
+/etc/init.d/stunnel5 restart
+/etc/init.d/stunnel5 status
+/etc/init.d/stunnel5 restart
 #cd
 # install stunnel
 #apt install stunnel4 -y
