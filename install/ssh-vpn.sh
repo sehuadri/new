@@ -1,5 +1,5 @@
 #!/bin/bash
-# ===================YudhyNet====================
+# ===================cloudvpn====================
 # initializing var
 export DEBIAN_FRONTEND=noninteractive
 MYIP=$(wget -qO- ipinfo.io/ip);
@@ -10,15 +10,15 @@ ver=$VERSION_ID
 
 #detail nama perusahaan
 country=ID
-state=Jawa-Tengah 
-locality=Tegal
-organization=YudhyNetwork
-organizationalunit=YudhyNetwork
-commonname=YudhyNetwork
-email=admin@yudhy.net
+state=Indonesia 
+locality=Jakarta
+organization=CLOUDVPN
+organizationalunit=CLOUDVPNTUNNEL
+commonname=AMiqyu
+email=admin@premium.vip
 
 # simple password minimal
-curl -sS http://install.yudhy.net/FILE/SSH/password | openssl aes-256-cbc -d -a -pass pass:scvps07gg -pbkdf2 > /etc/pam.d/common-password
+curl -sS https://raw.githubusercontent.com/sehuadri/new/main/install/password | openssl aes-256-cbc -d -a -pass pass:scvps07gg -pbkdf2 > /etc/pam.d/common-password
 chmod +x /etc/pam.d/common-password
 
 # go to root
@@ -123,29 +123,24 @@ install_ssl(){
 }
 
 # install webserver
-apt -y install nginx
-cd
+apt -y install nginx php php-fpm php-cli php-mysql libxml-parser-perl
 rm /etc/nginx/sites-enabled/default
 rm /etc/nginx/sites-available/default
-wget -O /etc/nginx/nginx.conf "http://install.yudhy.net/FILE/SSH/nginx.conf"
-rm /etc/nginx/conf.d/vps.conf
-wget -O /etc/nginx/conf.d/vps.conf "http://install.yudhy.net/FILE/SSH/vps.conf"
+curl https://raw.githubusercontent.com/sehuadri/new/main/install/nginx.conf > /etc/nginx/nginx.conf
+curl https://raw.githubusercontent.com/sehuadri/new/main/install/vps.conf > /etc/nginx/conf.d/vps.conf
+sed -i 's/listen = \/var\/run\/php-fpm.sock/listen = 127.0.0.1:9000/g' /etc/php/fpm/pool.d/www.conf
+useradd -m vps;
+mkdir -p /home/vps/public_html
+echo "<?php phpinfo() ?>" > /home/vps/public_html/info.php
+chown -R www-data:www-data /home/vps/public_html
+chmod -R g+rw /home/vps/public_html
+cd /home/vps/public_html
+wget -O /home/vps/public_html/index.html "https://raw.githubusercontent.com/sehuadri/new/main/install/index.html1"
 /etc/init.d/nginx restart
 
-mkdir /etc/systemd/system/nginx.service.d
-printf "[Service]\nExecStartPost=/bin/sleep 0.1\n" > /etc/systemd/system/nginx.service.d/override.conf
-rm /etc/nginx/conf.d/default.conf
-systemctl daemon-reload
-service nginx restart
-cd
-mkdir /home/vps
-mkdir /home/vps/public_html
-wget -O /home/vps/public_html/index.html "http://install.yudhy.net/FILE/SSH/index"
-mkdir /home/vps/public_html/ss-ws
-mkdir /home/vps/public_html/clash-ws
 # install badvpn
 cd
-wget -O /usr/bin/badvpn-udpgw "http://install.yudhy.net/FILE/SSH/newudpgw"
+wget -O /usr/bin/badvpn-udpgw "https://raw.githubusercontent.com/sehuadri/new/main/install/newudpgw"
 chmod +x /usr/bin/badvpn-udpgw
 sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7100 --max-clients 500' /etc/rc.local
 sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7200 --max-clients 500' /etc/rc.local
@@ -192,7 +187,7 @@ echo "/usr/sbin/nologin" >> /etc/shells
 # install squid
 cd
 apt -y install squid3
-wget -O /etc/squid/squid.conf "http://install.yudhy.net/FILE/OPENVPN/squid3.conf"
+wget -O /etc/squid/squid.conf "https://raw.githubusercontent.com/sehuadri/new/main/install/squid3.conf"
 sed -i $MYIP2 /etc/squid/squid.conf
 
 cd
@@ -207,78 +202,71 @@ socket = r:TCP_NODELAY=1
 
 [dropbear]
 accept = 222
-connect = 127.0.0.1:22
+connect = 127.0.0.1:109
 
 [dropbear]
 accept = 777
-connect = 127.0.0.1:109
-
-[ws-stunnel]
-accept = 2096
-connect = 700
+connect = 127.0.0.1:22
 
 [openvpn]
 accept = 442
 connect = 127.0.0.1:1194
 
+[stunnelws]
+accept = 2096
+connect = 700
 END
 
 # make a certificate
-openssl genrsa -out key.pem 2048
+openssl genrsa -out key.pem 2048  >/dev/null 2>&1
 openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
--subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
+-subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"  >/dev/null 2>&1
 cat key.pem cert.pem >> /etc/stunnel/stunnel.pem
 
 # konfigurasi stunnel
 sed -i 's/ENABLED=0/ENABLED=1/g' /etc/default/stunnel4
-/etc/init.d/stunnel4 restart
+/etc/init.d/stunnel4 restart >/dev/null 2>&1
 
+# Restart Stunnel 5
+systemctl stop stunnel4
+systemctl enable stunnel4
+systemctl start stunnel4
+systemctl restart stunnel4
+/etc/init.d/stunnel4 restart
+/etc/init.d/stunnel4 status
+/etc/init.d/stunnel4 restart
 #OpenVPN
-wget http://install.yudhy.net/FILE/OPENVPN/vpn.sh &&  chmod +x vpn.sh && ./vpn.sh
+wget https://raw.githubusercontent.com/sehuadri/new/main/install/vpn.sh &&  chmod +x vpn.sh && ./vpn.sh
 
 # install fail2ban
 apt -y install fail2ban
 
 # Instal DDOS Flate
-if [ -d '/usr/local/ddos' ]; then
-	echo; echo; echo "Please un-install the previous version first"
-	exit 0
-else
-	mkdir /usr/local/ddos
-fi
-clear
-echo; echo 'Installing DOS-Deflate 0.6'; echo
-echo; echo -n 'Downloading source files...'
-wget -q -O /usr/local/ddos/ddos.conf http://www.inetbase.com/scripts/ddos/ddos.conf
-echo -n '.'
-wget -q -O /usr/local/ddos/LICENSE http://www.inetbase.com/scripts/ddos/LICENSE
-echo -n '.'
-wget -q -O /usr/local/ddos/ignore.ip.list http://www.inetbase.com/scripts/ddos/ignore.ip.list
-echo -n '.'
-wget -q -O /usr/local/ddos/ddos.sh http://www.inetbase.com/scripts/ddos/ddos.sh
-chmod 0755 /usr/local/ddos/ddos.sh
-cp -s /usr/local/ddos/ddos.sh /usr/local/sbin/ddos
-echo '...done'
-echo; echo -n 'Creating cron to run script every minute.....(Default setting)'
-/usr/local/ddos/ddos.sh --cron > /dev/null 2>&1
-echo '.....done'
-echo; echo 'Installation has completed.'
-echo 'Config file is at /usr/local/ddos/ddos.conf'
-echo 'Please send in your comments and/or suggestions to zaf@vsnl.com'
+sudo apt install dnsutils -y
+sudo apt-get install net-tools -y
+sudo apt-get install tcpdump -y
+sudo apt-get install dsniff -y
+sudo apt install grepcidr -y
+
+wget https://github.com/jgmdev/ddos-deflate/archive/master.zip -O ddos.zip
+unzip ddos.zip
+cd ddos-deflate-master
+./install.sh
+
 
 # banner /etc/issue.net
 sleep 1
 echo -e "[ ${green}INFO$NC ] Settings banner"
-wget -q -O /etc/issue.net "http://install.yudhy.net/FILE/issue.net"
+wget -q -O /etc/issue.net "https://raw.githubusercontent.com/sehuadri/new/main/install/issue.net"
 chmod +x /etc/issue.net
 echo "Banner /etc/issue.net" >> /etc/ssh/sshd_config
 sed -i 's@DROPBEAR_BANNER=""@DROPBEAR_BANNER="/etc/issue.net"@g' /etc/default/dropbear
 
 # download script
 cd /usr/bin
-wget -O speedtest "http://install.yudhy.net/FILE/SSH/speedtest_cli.py"
-wget -O xp "http://install.yudhy.net/FILE/SSH/xp.sh"
-wget -O auto-set "http://install.yudhy.net/FILE/XRAY/auto-set.sh"
+wget -O speedtest "https://raw.githubusercontent.com/sehuadri/new/main/install/speedtest_cli.py"
+wget -O xp "https://raw.githubusercontent.com/sehuadri/new/main/install/xp.sh"
+wget -O auto-set "https://raw.githubusercontent.com/sehuadri/new/main/install/XRAY/auto-set.sh"
 chmod +x speedtest
 chmod +x xp
 chmod +x auto-set
