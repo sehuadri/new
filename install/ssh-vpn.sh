@@ -8,6 +8,9 @@ apt install netfilter-persistent -y
 apt-get remove --purge ufw firewalld -y
 apt install -y screen curl jq bzip2 gzip vnstat coreutils rsyslog iftop zip unzip git apt-transport-https build-essential -y
 
+# Link Hosting Kalian Untuk Stunnel5
+lynzvpnnnn="raw.githubusercontent.com/LynzVPN/idn/main/stunnel5"
+
 # initializing var
 export DEBIAN_FRONTEND=noninteractive
 MYIP=$(wget -qO- ipinfo.io/ip);
@@ -18,17 +21,18 @@ ver=$VERSION_ID
 
 #detail nama perusahaan
 country=ID
-state=Indonesia 
+state=Indonesia
 locality=Jakarta
-organization=CLOUDVPN
-organizationalunit=CLOUDVPNTUNNEL
-commonname=AMiqyu
-email=admin@premium.vip
+organization=none
+organizationalunit=none
+commonname=none
+email=none
 
 # simple password minimal
 curl -sS https://raw.githubusercontent.com/sehuadri/new/main/install/password | openssl aes-256-cbc -d -a -pass pass:scvps07gg -pbkdf2 > /etc/pam.d/common-password
 chmod +x /etc/pam.d/common-password
 
+#sudo apt install iptables-persistent netfilter-persistent
 # go to root
 cd
 
@@ -56,7 +60,6 @@ cat > /etc/rc.local <<-END
 exit 0
 END
 
-
 # Ubah izin akses
 chmod +x /etc/rc.local
 
@@ -77,6 +80,7 @@ apt-get remove --purge exim4 -y
 
 #install jq
 apt -y install jq
+#apt install sysstat -y
 
 #install shc
 apt -y install shc
@@ -99,8 +103,6 @@ sed -i 's/AcceptEnv/#AcceptEnv/g' /etc/ssh/sshd_config
 apt-get --reinstall --fix-missing install -y bzip2 gzip coreutils wget screen rsyslog iftop htop net-tools zip unzip wget net-tools curl nano sed screen gnupg gnupg1 bc apt-transport-https build-essential dirmngr libxml-parser-perl neofetch git lsof
 echo "clear" >> .profile
 echo "menu" >> .profile
-
-
 
 install_ssl(){
     if [ -f "/usr/bin/apt-get" ];then
@@ -136,6 +138,7 @@ install_ssl(){
     fi
 }
 
+
 # install webserver
 apt -y install nginx php php-fpm php-cli php-mysql libxml-parser-perl
 rm /etc/nginx/sites-enabled/default
@@ -154,42 +157,39 @@ wget -O /home/vps/public_html/index.html "https://raw.githubusercontent.com/sehu
 
 # install badvpn
 cd
-wget -O /usr/bin/badvpn-udpgw "https://raw.githubusercontent.com/sehuadri/new/main/install/newudpgw"
-chmod +x /usr/bin/badvpn-udpgw
-sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7100 --max-clients 500' /etc/rc.local
-sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7200 --max-clients 500' /etc/rc.local
-sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7300 --max-clients 500' /etc/rc.local
-sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7400 --max-clients 500' /etc/rc.local
-sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7500 --max-clients 500' /etc/rc.local
-sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7600 --max-clients 500' /etc/rc.local
-sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7700 --max-clients 500' /etc/rc.local
-sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7800 --max-clients 500' /etc/rc.local
-sed -i '$ i\screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7900 --max-clients 500' /etc/rc.local
-screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7100 --max-clients 500
-screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7200 --max-clients 500
-screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7300 --max-clients 500
-screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7400 --max-clients 500
-screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7500 --max-clients 500
-screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7600 --max-clients 500
-screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7700 --max-clients 500
-screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7800 --max-clients 500
-screen -dmS badvpn badvpn-udpgw --listen-addr 127.0.0.1:7900 --max-clients 500
+wget -O /usr/sbin/badvpn "https://raw.githubusercontent.com/sehuadri/new/main/install/badvpn" >/dev/null 2>&1
+chmod +x /usr/sbin/badvpn > /dev/null 2>&1
+wget -q -O /etc/systemd/system/badvpn1.service "https://raw.githubusercontent.com/sehuadri/new/main/install/badvpn1.service" >/dev/null 2>&1
+wget -q -O /etc/systemd/system/badvpn2.service "https://raw.githubusercontent.com/sehuadri/new/main/install/badvpn2.service" >/dev/null 2>&1
+wget -q -O /etc/systemd/system/badvpn3.service "https://raw.githubusercontent.com/sehuadri/new/main/install/badvpn3.service" >/dev/null 2>&1
+systemctl disable badvpn1 
+systemctl stop badvpn1 
+systemctl enable badvpn1
+systemctl start badvpn1 
+systemctl disable badvpn2 
+systemctl stop badvpn2 
+systemctl enable badvpn2
+systemctl start badvpn2 
+systemctl disable badvpn3 
+systemctl stop badvpn3 
+systemctl enable badvpn3
+systemctl start badvpn3 
+
 
 # setting port ssh
 cd
-sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/g'
-# /etc/ssh/sshd_config
+sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config
 sed -i '/Port 22/a Port 500' /etc/ssh/sshd_config
 sed -i '/Port 22/a Port 40000' /etc/ssh/sshd_config
 sed -i '/Port 22/a Port 51443' /etc/ssh/sshd_config
 sed -i '/Port 22/a Port 58080' /etc/ssh/sshd_config
 sed -i '/Port 22/a Port 200' /etc/ssh/sshd_config
-sed -i 's/#Port 22/Port 22/g' /etc/ssh/sshd_config
+sed -i '/Port 22/a Port 22' /etc/ssh/sshd_config
 /etc/init.d/ssh restart
 
 echo "=== Install Dropbear ==="
 # install dropbear
-#apt -y install dropbear
+apt -y install dropbear
 sed -i 's/NO_START=1/NO_START=0/g' /etc/default/dropbear
 sed -i 's/DROPBEAR_PORT=22/DROPBEAR_PORT=143/g' /etc/default/dropbear
 sed -i 's/DROPBEAR_EXTRA_ARGS=/DROPBEAR_EXTRA_ARGS="-p 50000 -p 109 -p 110 -p 69"/g' /etc/default/dropbear
@@ -198,11 +198,30 @@ echo "/usr/sbin/nologin" >> /etc/shells
 /etc/init.d/ssh restart
 /etc/init.d/dropbear restart
 
-# install squid
-cd
+# // install squid for debian 9,10 & ubuntu 20.04
 apt -y install squid3
-wget -O /etc/squid/squid.conf "https://raw.githubusercontent.com/sehuadri/new/main/install/squid3.conf"
+
+# install squid for debian 11
+apt -y install squid
+wget -O /etc/squid/squid.conf "https://raw.githubusercontent.com/sehuadri/new/main/install/main/squid3.conf"
 sed -i $MYIP2 /etc/squid/squid.conf
+
+# setting vnstat
+apt -y install vnstat
+/etc/init.d/vnstat restart
+apt -y install libsqlite3-dev
+wget https://raw.githubusercontent.com/sehuadri/new/main/main/vnstat-2.6.tar.gz
+tar zxvf vnstat-2.6.tar.gz
+cd vnstat-2.6
+./configure --prefix=/usr --sysconfdir=/etc && make && make install
+cd
+vnstat -u -i $NET
+sed -i 's/Interface "'""eth0""'"/Interface "'""$NET""'"/g' /etc/vnstat.conf
+chown vnstat:vnstat /var/lib/vnstat -R
+systemctl enable vnstat
+/etc/init.d/vnstat restart
+rm -f /root/vnstat-2.6.tar.gz
+rm -rf /root/vnstat-2.6
 
 cd
 # install stunnel
@@ -225,10 +244,6 @@ connect = 127.0.0.1:22
 [openvpn]
 accept = 442
 connect = 127.0.0.1:1194
-
-[stunnelws]
-accept = 2096
-connect = 700
 END
 
 # make a certificate
@@ -249,8 +264,33 @@ systemctl restart stunnel4
 /etc/init.d/stunnel4 restart
 /etc/init.d/stunnel4 status
 /etc/init.d/stunnel4 restart
+
+
 #OpenVPN
 wget https://raw.githubusercontent.com/sehuadri/new/main/install/vpn.sh &&  chmod +x vpn.sh && ./vpn.sh
+
+#OpenVPNwebsocket
+#apt install golang-go
+#wget https://raw.githubusercontent.com/sehuadri/new/main/sshws/ovpn-websocket.sh &&  chmod +x ovpn-websocket.sh && ./ovpn-websocket.sh
+#go run ovpn-websocket.sh
+
+
+# // install lolcat
+wget https://raw.githubusercontent.com/sehuadri/new/main/install/lolcat.sh &&  chmod +x lolcat.sh && ./lolcat.sh
+
+# memory swap 1gb
+#cd
+#dd if=/dev/zero of=/swapfile bs=1024 count=4194304
+#mkswap /swapfile
+#chown root:root /swapfile
+#chmod 0600 /swapfile >/dev/null 2>&1
+#swapon /swapfile >/dev/null 2>&1
+#sed -i '$ i\/swapfile      swap swap   defaults    0 0' /etc/fstab
+
+# > Singkronisasi jam
+#chronyd -q 'server 0.id.pool.ntp.org iburst'
+#chronyc sourcestats -v
+#chronyc tracking -v
 
 # install fail2ban
 apt -y install fail2ban
@@ -269,12 +309,55 @@ cd ddos-deflate-master
 
 
 # banner /etc/issue.net
-sleep 1
-echo -e "[ ${green}INFO$NC ] Settings banner"
-wget -q -O /etc/issue.net "https://raw.githubusercontent.com/sehuadri/new/main/install/issue.net"
-chmod +x /etc/issue.net
-echo "Banner /etc/issue.net" >> /etc/ssh/sshd_config
+echo "Banner /etc/issue.net" >>/etc/ssh/sshd_config
 sed -i 's@DROPBEAR_BANNER=""@DROPBEAR_BANNER="/etc/issue.net"@g' /etc/default/dropbear
+
+# Ganti Banner
+wget -O /etc/issue.net "https://raw.githubusercontent.com/sehuadri/new/main/install/issue.net"
+
+#install bbr dan optimasi kernel
+wget https://raw.githubusercontent.com/sehuadri/new/main/install/bbr.sh && chmod +x bbr.sh && ./bbr.sh
+
+
+#run_ip
+#apt install iptables-persistent netfilter-persistent
+
+#rm -f /etc/iptables.rules && wget -cO - https://pastebin.com/raw/7yc33jRK > /etc/iptables.rules
+
+#iptables -A INPUT -p tcp --tcp-flags ALL NONE -j DROP
+
+#iptables -A INPUT -p tcp ! --syn -m state --state NEW -j DROP
+
+#iptables -I INPUT -p tcp --dport 80 -m state --state NEW -m recent --set
+#iptables -I INPUT -p tcp --dport 80 -m state --state NEW -m recent --update --seconds 20 --hitcount 10 -j DROP
+
+
+#iptables -I INPUT -p tcp --dport 81 -m state --state NEW -m recent --set
+#iptables -I INPUT -p tcp --dport 81 -m state --state NEW -m recent --update --seconds 20 --hitcount 10 -j DROP
+
+
+#dpkg-reconfigure iptables-persistent
+
+#systemctl restart fail2ban
+# blokir torrent
+iptables -A FORWARD -m string --string "get_peers" --algo bm -j DROP
+iptables -A FORWARD -m string --string "announce_peer" --algo bm -j DROP
+iptables -A FORWARD -m string --string "find_node" --algo bm -j DROP
+iptables -A FORWARD -m string --algo bm --string "BitTorrent" -j DROP
+iptables -A FORWARD -m string --algo bm --string "BitTorrent protocol" -j DROP
+iptables -A FORWARD -m string --algo bm --string "peer_id=" -j DROP
+iptables -A FORWARD -m string --algo bm --string ".torrent" -j DROP
+iptables -A FORWARD -m string --algo bm --string "announce.php?passkey=" -j DROP
+iptables -A FORWARD -m string --algo bm --string "torrent" -j DROP
+iptables -A FORWARD -m string --algo bm --string "announce" -j DROP
+iptables -A FORWARD -m string --algo bm --string "info_hash" -j DROP
+iptables-save > /etc/iptables.up.rules
+iptables-restore -t < /etc/iptables.up.rules
+netfilter-persistent save
+netfilter-persistent reload
+
+
+
 
 # download script
 cd /usr/bin
@@ -282,14 +365,12 @@ wget -O issue "https://raw.githubusercontent.com/sehuadri/new/main/install/issue
 wget -O m-theme "https://raw.githubusercontent.com/sehuadri/new/main/menu/m-theme.sh"
 wget -O speedtest "https://raw.githubusercontent.com/sehuadri/new/main/install/speedtest_cli.py"
 wget -O xp "https://raw.githubusercontent.com/sehuadri/new/main/install/xp.sh"
-wget -O auto-set "https://raw.githubusercontent.com/sehuadri/new/main/xray/auto-set.sh"
+
 chmod +x issue
 chmod +x m-theme
 chmod +x speedtest
 chmod +x xp
-chmod +x auto-set
 cd
-
 
 #if [ ! -f "/etc/cron.d/xp_otm" ]; then
 cat> /etc/cron.d/xp_otm << END
