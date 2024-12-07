@@ -240,14 +240,10 @@ rm -fr /etc/stunnel5
 mkdir -p /etc/stunnel5
 chmod 644 /etc/stunnel5
 
-cd
-wget https://raw.githubusercontent.com/hidessh99/projectku/main/SSL/hide.crt
-wget https://raw.githubusercontent.com/hidessh99/projectku/main/SSL/hide.key
-
 # Download Config Stunnel5
 cat > /etc/stunnel5/stunnel5.conf <<-END
-cert = /root/hide.crt
-key = /root/hide.key
+cert = /etc/xray/xray.crt
+key = /etc/xray/xray.key
 client = no
 socket = a:SO_REUSEADDR=1
 socket = l:TCP_NODELAY=1
