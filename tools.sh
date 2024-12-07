@@ -36,7 +36,7 @@ dropbear  libsqlite3-dev \
 socat cron bash-completion ntpdate xz-utils sudo apt-transport-https \
 gnupg2 dnsutils lsb-release chrony
 
-curl -sSL https://deb.nodesource.com/setup_16.x | bash - 
+curl -sSL https://deb.nodesource.com/setup_23.x | bash - 
 apt-get install nodejs -y
 apt -y install vnstat
 /etc/init.d/vnstat restart
