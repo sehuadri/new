@@ -97,12 +97,12 @@ cat > /etc/xray/config.json << END
   "log" : {
     "access": "/var/log/xray/access.log",
     "error": "/var/log/xray/error.log",
-    "loglevel": "warning"
+    "loglevel": "info"
   },
   "inbounds": [
       {
       "listen": "127.0.0.1",
-      "port": 10000,
+      "port": 10085,
       "protocol": "dokodemo-door",
       "settings": {
         "address": "127.0.0.1"
@@ -111,7 +111,7 @@ cat > /etc/xray/config.json << END
     },
    {
      "listen": "127.0.0.1",
-     "port": "10001",
+     "port": "14016",
      "protocol": "vless",
       "settings": {
           "decryption":"none",
@@ -125,13 +125,13 @@ cat > /etc/xray/config.json << END
        "streamSettings":{
          "network": "ws",
             "wsSettings": {
-                "path": "/vlessws"
+                "path": "/vless"
           }
         }
      },
-     {
+    {
      "listen": "127.0.0.1",
-     "port": "10002",
+     "port": "23456",
      "protocol": "vmess",
       "settings": {
             "clients": [
@@ -150,8 +150,28 @@ cat > /etc/xray/config.json << END
         }
      },
     {
+     "listen": "127.0.0.1",
+     "port": "28406",
+     "protocol": "vmess",
+      "settings": {
+            "clients": [
+               {
+                 "id": "${uuid}",
+                 "alterId": 0
+#vmess
+             }
+          ]
+       },
+       "streamSettings":{
+         "network": "ws",
+            "wsSettings": {
+                "path": "/worryfree"
+          }
+        }
+     },
+    {
       "listen": "127.0.0.1",
-      "port": "10003",
+      "port": "25432",
       "protocol": "trojan",
       "settings": {
           "decryption":"none",
@@ -166,13 +186,13 @@ cat > /etc/xray/config.json << END
        "streamSettings":{
            "network": "ws",
            "wsSettings": {
-               "path": "/cloudvpn"
+               "path": "/trojan-ws"
             }
          }
      },
     {
-         "listen": "127.0.0.1",
-        "port": "10004",
+        "listen": "127.0.0.1",
+        "port": "30300",
         "protocol": "shadowsocks",
         "settings": {
            "clients": [
@@ -193,7 +213,7 @@ cat > /etc/xray/config.json << END
      },
       {
         "listen": "127.0.0.1",
-        "port": "10005",
+     "port": "24456",
         "protocol": "vless",
         "settings": {
          "decryption":"none",
@@ -213,7 +233,7 @@ cat > /etc/xray/config.json << END
      },
      {
       "listen": "127.0.0.1",
-      "port": "10006",
+     "port": "31234",
      "protocol": "vmess",
       "settings": {
             "clients": [
@@ -233,7 +253,7 @@ cat > /etc/xray/config.json << END
      },
      {
         "listen": "127.0.0.1",
-        "port": "10007",
+     "port": "33456",
         "protocol": "trojan",
         "settings": {
           "decryption":"none",
@@ -253,7 +273,7 @@ cat > /etc/xray/config.json << END
    },
    {
     "listen": "127.0.0.1",
-    "port": "10008",
+    "port": "30310",
     "protocol": "shadowsocks",
     "settings": {
         "clients": [
@@ -344,6 +364,7 @@ cat > /etc/xray/config.json << END
     }
   }
 }
+END
 END
 rm -rf /etc/systemd/system/xray.service.d
 cat <<EOF> /etc/systemd/system/xray.service
@@ -509,12 +530,12 @@ EOF
 sed -i '$ i# SERVER LISTEN XRAY' /etc/nginx/conf.d/xray.conf
 sed -i '$ i# Important:' /etc/nginx/conf.d/xray.conf
 sed -i '$ i# This is the proxy Xray For Vless Servers' /etc/nginx/conf.d/xray.conf
-sed -i '$ i    location /vlessws {' /etc/nginx/conf.d/xray.conf
+sed -i '$ i    location /vless {' /etc/nginx/conf.d/xray.conf
 sed -i '$ iif ($http_upgrade != "Upgrade") {' /etc/nginx/conf.d/xray.conf
-sed -i '$ irewrite /(.*) /vlessws break;' /etc/nginx/conf.d/xray.conf
+sed -i '$ irewrite /(.*) /vless break;' /etc/nginx/conf.d/xray.conf
 sed -i '$ i      }' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_pass http://127.0.0.1:10001;' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_pass http://127.0.0.1:14016;' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_http_version 1.1;' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_set_header Upgrade $http_upgrade;' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/conf.d/xray.conf
@@ -526,12 +547,12 @@ sed -i '$ i     }' /etc/nginx/conf.d/xray.conf
 sed -i '$ i' /etc/nginx/conf.d/xray.conf
 sed -i '$ i# Important:' /etc/nginx/conf.d/xray.conf
 sed -i '$ i# This is the proxy Xray For Vmess Servers' /etc/nginx/conf.d/xray.conf
-sed -i '$ i      location / {' /etc/nginx/conf.d/xray.conf
+sed -i '$ i      location /vmess {' /etc/nginx/conf.d/xray.conf
 sed -i '$ i                   if ($http_upgrade != "Upgrade") {' /etc/nginx/conf.d/xray.conf
 sed -i '$ i                   rewrite /(.*) /vmess break;' /etc/nginx/conf.d/xray.conf
 sed -i '$ i     }' /etc/nginx/conf.d/xray.conf
 sed -i '$ i                   proxy_redirect off;' /etc/nginx/conf.d/xray.conf
-sed -i '$ i                   proxy_pass http://127.0.0.1:10002;' /etc/nginx/conf.d/xray.conf
+sed -i '$ i                   proxy_pass http://127.0.0.1:23456;' /etc/nginx/conf.d/xray.conf
 sed -i '$ i                   proxy_http_version 1.1;' /etc/nginx/conf.d/xray.conf
 sed -i '$ i                   proxy_set_header Upgrade $http_upgrade;' /etc/nginx/conf.d/xray.conf
 sed -i '$ i                   proxy_set_header Connection "upgrade";' /etc/nginx/conf.d/xray.conf
@@ -543,12 +564,12 @@ sed -i '$ i     }' /etc/nginx/conf.d/xray.conf
 sed -i '$ i' /etc/nginx/conf.d/xray.conf
 sed -i '$ i# Important:' /etc/nginx/conf.d/xray.conf
 sed -i '$ i# This is the proxy Xray For Trojan Servers' /etc/nginx/conf.d/xray.conf
-sed -i '$ ilocation /cloudvpn {' /etc/nginx/conf.d/xray.conf
+sed -i '$ ilocation /trojan-ws {' /etc/nginx/conf.d/xray.conf
 sed -i '$ iif ($http_upgrade != "Upgrade") {' /etc/nginx/conf.d/xray.conf
-sed -i '$ irewrite /(.*) /cloudvpn break;' /etc/nginx/conf.d/xray.conf
+sed -i '$ irewrite /(.*) /trojan-ws break;' /etc/nginx/conf.d/xray.conf
 sed -i '$ i     }' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_pass http://127.0.0.1:10003;' /etc/nginx/conf.d/xray.conf
+sed -i '$ iproxy_pass http://127.0.0.1:25432;' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_http_version 1.1;' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_set_header Upgrade $http_upgrade;' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/conf.d/xray.conf
@@ -565,7 +586,7 @@ sed -i '$ i                   if ($http_upgrade != "Upgrade") {' /etc/nginx/conf
 sed -i '$ i                   rewrite /(.*) /ss-ws break;' /etc/nginx/conf.d/xray.conf
 sed -i '$ i     }' /etc/nginx/conf.d/xray.conf
 sed -i '$ i                   proxy_redirect off;' /etc/nginx/conf.d/xray.conf
-sed -i '$ i                   proxy_pass http://127.0.0.1:10004;' /etc/nginx/conf.d/xray.conf
+sed -i '$ i                   proxy_pass http://127.0.0.1:30300;' /etc/nginx/conf.d/xray.conf
 sed -i '$ i                   proxy_http_version 1.1;' /etc/nginx/conf.d/xray.conf
 sed -i '$ i                   proxy_set_header Upgrade $http_upgrade;' /etc/nginx/conf.d/xray.conf
 sed -i '$ i                   proxy_set_header Connection "upgrade";' /etc/nginx/conf.d/xray.conf
@@ -584,7 +605,7 @@ sed -i '$ i                          proxy_redirect off;' /etc/nginx/conf.d/xray
 sed -i '$ i                          grpc_set_header X-Real-IP \$remote_addr;' /etc/nginx/conf.d/xray.conf
 sed -i '$ i                          grpc_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/conf.d/xray.conf
 sed -i '$ i                          grpc_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
-sed -i '$ i                          grpc_pass grpc://127.0.0.1:10005;' /etc/nginx/conf.d/xray.conf
+sed -i '$ i                          grpc_pass grpc://127.0.0.1:24456;' /etc/nginx/conf.d/xray.conf
 sed -i '$ i     }' /etc/nginx/conf.d/xray.conf
 sed -i '$ i' /etc/nginx/conf.d/xray.conf
 sed -i '$ i     # Important:' /etc/nginx/conf.d/xray.conf
@@ -595,7 +616,7 @@ sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
 sed -i '$ igrpc_set_header X-Real-IP \$remote_addr;' /etc/nginx/conf.d/xray.conf
 sed -i '$ igrpc_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/conf.d/xray.conf
 sed -i '$ igrpc_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
-sed -i '$ igrpc_pass grpc://127.0.0.1:10006;' /etc/nginx/conf.d/xray.conf
+sed -i '$ igrpc_pass grpc://127.0.0.1:31234;' /etc/nginx/conf.d/xray.conf
 sed -i '$ i     }' /etc/nginx/conf.d/xray.conf
 sed -i '$ i' /etc/nginx/conf.d/xray.conf
 sed -i '$ i     # Important:' /etc/nginx/conf.d/xray.conf
@@ -606,7 +627,7 @@ sed -i '$ i                          proxy_redirect off;' /etc/nginx/conf.d/xray
 sed -i '$ i                          grpc_set_header X-Real-IP \$remote_addr;' /etc/nginx/conf.d/xray.conf
 sed -i '$ i                          grpc_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/conf.d/xray.conf
 sed -i '$ i                          grpc_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
-sed -i '$ i                          grpc_pass grpc://127.0.0.1:10007;' /etc/nginx/conf.d/xray.conf
+sed -i '$ i                          grpc_pass grpc://127.0.0.1:33456;' /etc/nginx/conf.d/xray.conf
 sed -i '$ i     }' /etc/nginx/conf.d/xray.conf
 sed -i '$ i' /etc/nginx/conf.d/xray.conf
 sed -i '$ i     # Important:' /etc/nginx/conf.d/xray.conf
@@ -617,7 +638,7 @@ sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
 sed -i '$ igrpc_set_header X-Real-IP \$remote_addr;' /etc/nginx/conf.d/xray.conf
 sed -i '$ igrpc_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/conf.d/xray.conf
 sed -i '$ igrpc_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
-sed -i '$ igrpc_pass grpc://127.0.0.1:10008;' /etc/nginx/conf.d/xray.conf
+sed -i '$ igrpc_pass grpc://127.0.0.1:30310;' /etc/nginx/conf.d/xray.conf
 sed -i '$ i' /etc/nginx/conf.d/xray.conf
 sed -i '$ i      }' /etc/nginx/conf.d/xray.conf
 sed -i '$ i      # Important:' /etc/nginx/conf.d/xray.conf
