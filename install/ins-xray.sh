@@ -668,9 +668,6 @@ systemctl start trojan-go
 systemctl enable trojan-go
 systemctl restart trojan-go
 sleep 1
-wget -q -O /usr/bin/auto-set "https://raw.githubusercontent.com/sehuadri/new/main/xray/auto-set.sh" && chmod +x /usr/bin/auto-set 
-wget -q -O /usr/bin/crtxray "https://raw.githubusercontent.com/sehuadri/new/main/xray/crt.sh" && chmod +x /usr/bin/crtxray 
-sleep 1
 yellow() { echo -e "\\033[33;1m${*}\\033[0m"; }
 yellow "xray/Vmess"
 yellow "xray/Vless"
