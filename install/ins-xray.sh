@@ -635,12 +635,11 @@ sed -i '$ i                   proxy_set_header X-Forwarded-For $proxy_add_x_forw
 sed -i '$ i     }' /etc/nginx/conf.d/xray.conf
 
 
-
-sleep 1
 echo -e "$yell[SERVICE]$NC Restart All service"
 systemctl daemon-reload
-sleep 1
+sleep 0.5
 echo -e "[ ${green}ok${NC} ] Enable & restart xray "
+systemctl daemon-reload
 systemctl enable xray
 systemctl restart xray
 systemctl restart nginx
@@ -650,15 +649,15 @@ systemctl stop trojan-go
 systemctl start trojan-go
 systemctl enable trojan-go
 systemctl restart trojan-go
-sleep 1
+
+sleep 0.5
 yellow() { echo -e "\\033[33;1m${*}\\033[0m"; }
 yellow "xray/Vmess"
 yellow "xray/Vless"
 
-
-mv /root/domain /etc/xray/ 
+mv /root/domain /etc/xray/
 if [ -f /root/scdomain ];then
 rm /root/scdomain > /dev/null 2>&1
 fi
 clear
-rm -f ins-xray.sh  
+rm -f ins-xray.sh
