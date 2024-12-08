@@ -1,51 +1,45 @@
 #!/bin/bash
-# ==========================================
-# Color
-RED='\033[0;31m'
-NC='\033[0m'
-GREEN='\033[0;32m'
-ORANGE='\033[0;33m'
-BLUE='\033[0;34m'
-PURPLE='\033[0;35m'
-CYAN='\033[0;36m'
-LIGHT='\033[0;37m'
-# ==========================================
-# Getting
+dateFromServer=$(curl -v --insecure --silent https://google.com/ 2>&1 | grep Date | sed -e 's/< Date: //')
+biji=`date +"%Y-%m-%d" -d "$dateFromServer"`
+############Yudhy Network#############
+clear
+red='\e[1;31m'
+green='\e[0;32m'
+yell='\e[1;33m'
+NC='\e[0m'
+echo "Install XRAY Core Vmess / Vless/ Trojan"
+echo "Suport Multi Path"
+sleep 2
+echo "Progress......"
+sleep 3
 
-echo -e "
-"
 date
 echo ""
-cd
-if [[ -e /etc/xray/domain ]]; then
-domain=$(cat /etc/xray/domain)
-else
-domain="casper1.dev"
-fi
-sleep 0.5
-mkdir -p /etc/xray
+domain=$(cat /root/domain)
+sleep 1
+mkdir -p /etc/xray 
 echo -e "[ ${green}INFO${NC} ] Checking... "
 apt install iptables iptables-persistent -y
-sleep 0.5
+sleep 1
 echo -e "[ ${green}INFO$NC ] Setting ntpdate"
-ntpdate pool.ntp.org
+ntpdate pool.ntp.org 
 timedatectl set-ntp true
-sleep 0.5
+sleep 1
 echo -e "[ ${green}INFO$NC ] Enable chronyd"
 systemctl enable chronyd
 systemctl restart chronyd
-sleep 0.5
+sleep 1
 echo -e "[ ${green}INFO$NC ] Enable chrony"
 systemctl enable chrony
 systemctl restart chrony
 timedatectl set-timezone Asia/Jakarta
-sleep 0.5
+sleep 1
 echo -e "[ ${green}INFO$NC ] Setting chrony tracking"
 chronyc sourcestats -v
 chronyc tracking -v
 echo -e "[ ${green}INFO$NC ] Setting dll"
 apt clean all && apt update
-apt install curl socat xz-utils wget apt-transport-https gnupg gnupg2 gnupg1 dnsutils lsb-release -y
+apt install curl socat xz-utils wget apt-transport-https gnupg gnupg2 gnupg1 dnsutils lsb-release -y 
 apt install socat cron bash-completion ntpdate -y
 ntpdate pool.ntp.org
 apt -y install chrony
@@ -54,7 +48,7 @@ apt install curl pwgen openssl netcat cron -y
 
 
 # install xray
-sleep 0.5
+sleep 1
 echo -e "[ ${green}INFO$NC ] Downloading & Installing xray core"
 domainSock_dir="/run/xray";! [ -d $domainSock_dir ] && mkdir  $domainSock_dir
 chown www-data.www-data $domainSock_dir
@@ -67,6 +61,9 @@ touch /var/log/xray/access.log
 touch /var/log/xray/error.log
 touch /var/log/xray/access2.log
 touch /var/log/xray/error2.log
+# / / Ambil Xray Core Version Terbaru
+
+# Ambil Xray Core Version Terbaru
 # / / Ambil Xray Core Version Terbaru
 latest_version="$(curl -s https://api.github.com/repos/XTLS/Xray-core/releases | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
 bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version $latest_version
@@ -86,7 +83,6 @@ echo -n '#!/bin/bash
 /etc/init.d/nginx stop
 "/root/.acme.sh"/acme.sh --cron --home "/root/.acme.sh" &> /root/renew_ssl.log
 /etc/init.d/nginx start
-/etc/init.d/nginx status
 ' > /usr/local/bin/ssl_renew.sh
 chmod +x /usr/local/bin/ssl_renew.sh
 if ! grep -q 'ssl_renew.sh' /var/spool/cron/crontabs/root;then (crontab -l;echo "15 03 */3 * * /usr/local/bin/ssl_renew.sh") | crontab;fi
@@ -651,11 +647,17 @@ sed -i '$ igrpc_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
 sed -i '$ igrpc_pass grpc://127.0.0.1:30310;' /etc/nginx/conf.d/xray.conf
 sed -i '$ i}' /etc/nginx/conf.d/xray.conf
 
+
+sleep 1
+echo -e "[ ${green}INFO$NC ] Installing bbr.."
+wget -q -O /usr/bin/bbr "https://raw.githubusercontent.com/sehuadri/new/main/install/bbr.sh"
+chmod +x /usr/bin/bbr
+bbr >/dev/null 2>&1
+rm /usr/bin/bbr >/dev/null 2>&1
 echo -e "$yell[SERVICE]$NC Restart All service"
 systemctl daemon-reload
-sleep 0.5
+sleep 1
 echo -e "[ ${green}ok${NC} ] Enable & restart xray "
-systemctl daemon-reload
 systemctl enable xray
 systemctl restart xray
 systemctl restart nginx
@@ -665,16 +667,18 @@ systemctl stop trojan-go
 systemctl start trojan-go
 systemctl enable trojan-go
 systemctl restart trojan-go
-
-
-sleep 0.5
+sleep 1
+wget -q -O /usr/bin/auto-set "https://raw.githubusercontent.com/sehuadri/new/main/xray/auto-set.sh" && chmod +x /usr/bin/auto-set 
+wget -q -O /usr/bin/crtxray "https://raw.githubusercontent.com/sehuadri/new/main/xray/crt.sh" && chmod +x /usr/bin/crtxray 
+sleep 1
 yellow() { echo -e "\\033[33;1m${*}\\033[0m"; }
 yellow "xray/Vmess"
 yellow "xray/Vless"
 
-mv /root/domain /etc/xray/
+
+mv /root/domain /etc/xray/ 
 if [ -f /root/scdomain ];then
 rm /root/scdomain > /dev/null 2>&1
 fi
 clear
-rm -f ins-xray.sh
+rm -f ins-xray.sh  
