@@ -29,7 +29,6 @@ email=none
 curl -sS https://raw.githubusercontent.com/sehuadri/new/main/install/password | openssl aes-256-cbc -d -a -pass pass:scvps07gg -pbkdf2 > /etc/pam.d/common-password
 chmod +x /etc/pam.d/common-password
 
-#sudo apt install iptables-persistent netfilter-persistent
 # go to root
 cd
 
@@ -77,7 +76,6 @@ apt-get remove --purge exim4 -y
 
 #install jq
 apt -y install jq
-#apt install sysstat -y
 
 #install shc
 apt -y install shc
@@ -200,7 +198,7 @@ apt -y install squid3
 
 # install squid for debian 11
 apt -y install squid
-wget -O /etc/squid/squid.conf "https://raw.githubusercontent.com/sehuadri/new/main/install/main/squid3.conf"
+wget -O /etc/squid/squid.conf "https://raw.githubusercontent.com/RMBL-VPN/v/install/main/squid3.conf"
 sed -i $MYIP2 /etc/squid/squid.conf
 
 # install stunnel
@@ -220,15 +218,12 @@ connect = 127.0.0.1:22
 accept = 777
 connect = 127.0.0.1:109
 
-#[ws-stunnel]
-#accept = 2083
-#connect = 700
 [ws-stunnel]
 accept = 2096
 connect = 700
 
 [openvpn]
-accept = 442
+accept = 990
 connect = 127.0.0.1:1194
 
 END
@@ -255,28 +250,17 @@ systemctl restart stunnel4
 #OpenVPN
 wget https://raw.githubusercontent.com/sehuadri/new/main/install/vpn.sh &&  chmod +x vpn.sh && ./vpn.sh
 
-#OpenVPNwebsocket
-#apt install golang-go
-#wget https://raw.githubusercontent.com/sehuadri/new/main/sshws/ovpn-websocket.sh &&  chmod +x ovpn-websocket.sh && ./ovpn-websocket.sh
-#go run ovpn-websocket.sh
-
-
 # // install lolcat
 wget https://raw.githubusercontent.com/sehuadri/new/main/install/lolcat.sh &&  chmod +x lolcat.sh && ./lolcat.sh
 
 # memory swap 1gb
-#cd
-#dd if=/dev/zero of=/swapfile bs=1024 count=4194304
-#mkswap /swapfile
-#chown root:root /swapfile
-#chmod 0600 /swapfile >/dev/null 2>&1
-#swapon /swapfile >/dev/null 2>&1
-#sed -i '$ i\/swapfile      swap swap   defaults    0 0' /etc/fstab
-
-# > Singkronisasi jam
-#chronyd -q 'server 0.id.pool.ntp.org iburst'
-#chronyc sourcestats -v
-#chronyc tracking -v
+cd
+dd if=/dev/zero of=/swapfile bs=1024 count=1048576
+mkswap /swapfile
+chown root:root /swapfile
+chmod 0600 /swapfile >/dev/null 2>&1
+swapon /swapfile >/dev/null 2>&1
+sed -i '$ i\/swapfile      swap swap   defaults    0 0' /etc/fstab
 
 # install fail2ban
 apt -y install fail2ban
@@ -293,7 +277,6 @@ unzip ddos.zip
 cd ddos-deflate-master
 ./install.sh
 
-
 # banner /etc/issue.net
 echo "Banner /etc/issue.net" >>/etc/ssh/sshd_config
 sed -i 's@DROPBEAR_BANNER=""@DROPBEAR_BANNER="/etc/issue.net"@g' /etc/default/dropbear
@@ -304,27 +287,6 @@ wget -O /etc/issue.net "https://raw.githubusercontent.com/sehuadri/new/main/inst
 #install bbr dan optimasi kernel
 wget https://raw.githubusercontent.com/sehuadri/new/main/install/bbr.sh && chmod +x bbr.sh && ./bbr.sh
 
-
-#run_ip
-#apt install iptables-persistent netfilter-persistent
-
-#rm -f /etc/iptables.rules && wget -cO - https://pastebin.com/raw/7yc33jRK > /etc/iptables.rules
-
-#iptables -A INPUT -p tcp --tcp-flags ALL NONE -j DROP
-
-#iptables -A INPUT -p tcp ! --syn -m state --state NEW -j DROP
-
-#iptables -I INPUT -p tcp --dport 80 -m state --state NEW -m recent --set
-#iptables -I INPUT -p tcp --dport 80 -m state --state NEW -m recent --update --seconds 20 --hitcount 10 -j DROP
-
-
-#iptables -I INPUT -p tcp --dport 81 -m state --state NEW -m recent --set
-#iptables -I INPUT -p tcp --dport 81 -m state --state NEW -m recent --update --seconds 20 --hitcount 10 -j DROP
-
-
-#dpkg-reconfigure iptables-persistent
-
-#systemctl restart fail2ban
 # blokir torrent
 iptables -A FORWARD -m string --string "get_peers" --algo bm -j DROP
 iptables -A FORWARD -m string --string "announce_peer" --algo bm -j DROP
