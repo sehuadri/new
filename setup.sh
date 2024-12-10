@@ -617,16 +617,16 @@ EOF
 cat <<EOF>> /etc/rmbl/theme/color.conf
 lightcyan
 EOF
-function botwa(){
-mkdir -p /usr/bin/nodee
-cd /usr/bin/nodee
-apt install nodejs -y
-apt install npm -y
-npm install express
-wget https://raw.githubusercontent.com/sehuadri/new/main/install/ins-botwa.sh && chmod +x ins-botwa.sh && ./ins-botwa.sh
-cd
-clear
-}
+#function botwa(){
+#mkdir -p /usr/bin/nodee
+#cd /usr/bin/nodee
+#apt install nodejs -y
+#apt install npm -y
+#npm install express
+#wget https://raw.githubusercontent.com/sehuadri/new/main/install/ins-botwa.sh && chmod +x ins-botwa.sh && ./ins-botwa.sh
+#cd
+#clear
+#}
 function Casper2(){
 cd
 sysctl -w net.ipv6.conf.all.disable_ipv6=1 >/dev/null 2>&1
@@ -695,7 +695,7 @@ clear
 echo -e "${BIBlue}╭══════════════════════════════════════════╮${NC}"
 echo -e "${BIBlue}│ ${BGCOLOR}    PROCESS INSTALLED NOOBZVPNS         ${NC}${BIBlue} │${NC}"
 echo -e "${BIBlue}╰══════════════════════════════════════════╯${NC}"
-wget https://raw.githubusercontent.com/SatanTech/noobz/main/noobzvpns.zip
+wget https://raw.githubusercontent.com/sehuadri/new/main/noobz/noobzvpns.zip
 unzip noobzvpns.zip
 chmod +x noobzvpns/*
 cd noobzvpns
