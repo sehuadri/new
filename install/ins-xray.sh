@@ -600,23 +600,6 @@ sed -i '$ iproxy_set_header X-Real-IP $remote_addr;' /etc/nginx/conf.d/xray.conf
 sed -i '$ iproxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;' /etc/nginx/conf.d/xray.conf
 sed -i '$ i     }' /etc/nginx/conf.d/xray.conf
 sed -i '$ i' /etc/nginx/conf.d/xray.conf
-sed -i '$ i# Important:' /etc/nginx/conf.d/xray.conf
-sed -i '$ i# This is the proxy Xray For Trojango Servers' /etc/nginx/conf.d/xray.conf
-sed -i '$ ilocation /trojango {' /etc/nginx/conf.d/xray.conf
-sed -i '$ iif ($http_upgrade != "Upgrade") {' /etc/nginx/conf.d/xray.conf
-sed -i '$ irewrite /(.*) /trojango break;' /etc/nginx/conf.d/xray.conf
-sed -i '$ i     }' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_pass http://127.0.0.1:2087;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_http_version 1.1;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header Upgrade $http_upgrade;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header Host $host;' /etc/nginx/conf.d/xray.conf
-sed -i '$ i# Show real IP in Xray access.log' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header X-Real-IP $remote_addr;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;' /etc/nginx/conf.d/xray.conf
-sed -i '$ i     }' /etc/nginx/conf.d/xray.conf
-sed -i '$ i' /etc/nginx/conf.d/xray.conf
 sed -i '$ i                   # Important:' /etc/nginx/conf.d/xray.conf
 sed -i '$ i                   # This is the proxy Xray For SS Servers' /etc/nginx/conf.d/xray.conf
 sed -i '$ i                   location /ss-ws {' /etc/nginx/conf.d/xray.conf
