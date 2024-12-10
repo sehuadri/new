@@ -203,24 +203,6 @@ apt -y install squid
 wget -O /etc/squid/squid.conf "https://raw.githubusercontent.com/sehuadri/new/main/install/main/squid3.conf"
 sed -i $MYIP2 /etc/squid/squid.conf
 
-# setting vnstat
-apt -y install vnstat
-/etc/init.d/vnstat restart
-apt -y install libsqlite3-dev
-wget https://raw.githubusercontent.com/sehuadri/new/main/main/vnstat-2.6.tar.gz
-tar zxvf vnstat-2.6.tar.gz
-cd vnstat-2.6
-./configure --prefix=/usr --sysconfdir=/etc && make && make install
-cd
-vnstat -u -i $NET
-sed -i 's/Interface "'""eth0""'"/Interface "'""$NET""'"/g' /etc/vnstat.conf
-chown vnstat:vnstat /var/lib/vnstat -R
-systemctl enable vnstat
-/etc/init.d/vnstat restart
-rm -f /root/vnstat-2.6.tar.gz
-rm -rf /root/vnstat-2.6
-
-cd
 # install stunnel
 apt install stunnel4 -y
 cat > /etc/stunnel/stunnel.conf <<-END
@@ -259,6 +241,15 @@ cat key.pem cert.pem >> /etc/stunnel/stunnel.pem
 
 # konfigurasi stunnel
 sed -i 's/ENABLED=0/ENABLED=1/g' /etc/default/stunnel4
+/etc/init.d/stunnel4 restart
+
+# Restart Stunnel4
+systemctl stop stunnel4
+systemctl enable stunnel4
+systemctl start stunnel4
+systemctl restart stunnel4
+/etc/init.d/stunnel4 restart
+/etc/init.d/stunnel4 status
 /etc/init.d/stunnel4 restart
 
 #OpenVPN
