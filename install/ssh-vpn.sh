@@ -194,12 +194,12 @@ echo "/usr/sbin/nologin" >> /etc/shells
 /etc/init.d/dropbear restart
 
 # // install squid for debian 9,10 & ubuntu 20.04
-sudo apt -y install squid3
+#sudo apt -y install squid3
 
 # install squid for debian 11
-sudo apt -y install squid
-wget -O /etc/squid/squid.conf "https://raw.githubusercontent.com/sehuadri/new/main/install/main/squid3.conf"
-sed -i $MYIP2 /etc/squid/squid.conf
+#sudo apt -y install squid
+#wget -O /etc/squid/squid.conf "https://raw.githubusercontent.com/sehuadri/new/main/install/main/squid3.conf"
+#sed -i $MYIP2 /etc/squid/squid.conf
 
 # install stunnel
 apt install stunnel4 -y
