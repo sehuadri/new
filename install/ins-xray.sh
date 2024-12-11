@@ -518,6 +518,10 @@ cat >/etc/nginx/conf.d/xray.conf <<EOF
              listen [::]:2095;
              listen 8080;
              listen [::]:8080;
+             listen 2053 ssl http2 reuseport;
+             listen [::]:2053 http2 reuseport;
+             listen 2083 ssl http2 reuseport;
+             listen [::]:2083 http2 reuseport;
              listen 443 ssl http2 reuseport;
              listen [::]:443 http2 reuseport;
              server_name *.$domain;
