@@ -331,7 +331,7 @@ echo -e "$COLOR1└────────────────────�
 echo -e "$COLOR1┌─────────────────────────────────────────────────┐${NC}"
 echo -e "$COLOR1 $NC ${WH}[ NGINX    : ${status_nginx} ${WH}]  ${WH}[ XRAY : ${status_xray} ${WH}] ${WH} USAGE CPU : ${cpu_usage} $NC"
 echo -e "$COLOR1 $NC ${WH}[ DROPBEAR : ${status_beruangjatuh} ${WH}]  ${WH}[ UDPC : ${status_udp} ${WH}] ${WH} USAGE RAM : ${uram} $NC"
-echo -e "$COLOR1 $NC ${WH}[ DDOS : ${status_ddos} ${WH}]$NC"
+echo -e "$COLOR1 $NC ${WH}[ DDOS     : ${status_ddos} ${WH}]$NC"
 echo -e "$COLOR1└─────────────────────────────────────────────────┘${NC}"
 echo -e "$COLOR1┌─────────────────────────────────────────────────┐${NC}"
 echo -e "$COLOR1 ${COLOR1}Traffic${NC}      ${COLOR1}Today       Yesterday       Month   ${NC}"
