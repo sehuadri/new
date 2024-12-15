@@ -123,7 +123,7 @@ cat > /etc/xray/config.json << END
           "decryption":"none",
             "clients": [
                {
-                 "id": "3311d893-72ea-4e02-b64d-71b7aadddf76"                 
+                 "id": "${uuid}"
 #vless
              }
           ]
@@ -142,7 +142,7 @@ cat > /etc/xray/config.json << END
       "settings": {
             "clients": [
                {
-                 "id": "3311d893-72ea-4e02-b64d-71b7aadddf76",
+                 "id": "${uuid}",
                  "alterId": 0
 #vmess
 
@@ -163,7 +163,7 @@ cat > /etc/xray/config.json << END
       "settings": {
             "clients": [
                {
-                 "id": "3311d893-72ea-4e02-b64d-71b7aadddf76",
+                 "id": "${uuid}",
                  "alterId": 0
 #vmess
 
@@ -185,7 +185,7 @@ cat > /etc/xray/config.json << END
           "decryption":"none",		
            "clients": [
               {
-                 "password": "3311d893-72ea-4e02-b64d-71b7aadddf76"
+                 "password": "${uuid}"
 #trojanws
               }
           ],
@@ -206,7 +206,7 @@ cat > /etc/xray/config.json << END
            "clients": [
            {
            "method": "aes-128-gcm",
-          "password": "3311d893-72ea-4e02-b64d-71b7aadddf76"
+          "password": ${uuid}"
 #ssws
            }
           ],
@@ -227,7 +227,7 @@ cat > /etc/xray/config.json << END
          "decryption":"none",
            "clients": [
              {
-               "id": "3311d893-72ea-4e02-b64d-71b7aadddf76"
+               "id": "${uuid}"
 #vlessgrpc
              }
           ]
@@ -246,7 +246,7 @@ cat > /etc/xray/config.json << END
       "settings": {
             "clients": [
                {
-                 "id": "3311d893-72ea-4e02-b64d-71b7aadddf76",
+                 "id": "${uuid}",
                  "alterId": 0
 #vmessgrpc
              }
@@ -267,7 +267,7 @@ cat > /etc/xray/config.json << END
           "decryption":"none",
              "clients": [
                {
-                 "password": "3311d893-72ea-4e02-b64d-71b7aadddf76"
+                 "password": "${uuid}"
 #trojangrpc
                }
            ]
@@ -287,7 +287,7 @@ cat > /etc/xray/config.json << END
         "clients": [
           {
              "method": "aes-128-gcm",
-             "password": "3311d893-72ea-4e02-b64d-71b7aadddf76"
+             "password": "${uuid}"
 #ssgrpc
            }
          ],
