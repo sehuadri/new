@@ -410,21 +410,6 @@ LimitNOFILE=1000000
 WantedBy=multi-user.target
 EOF
 
-cat > /etc/systemd/system/runn.service <<EOF
-[Unit]
-Description=rmblvpn
-After=network.target
-
-[Service]
-Type=simple
-ExecStartPre=-/usr/bin/mkdir -p /var/run/xray
-ExecStart=/usr/bin/chown www-data:www-data /var/run/xray
-Restart=on-abort
-
-[Install]
-WantedBy=multi-user.target
-EOF
-
 #install trojan go
 latest_version="$(curl -s "https://api.github.com/repos/p4gefau1t/trojan-go/releases" | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
 trojango_link="https://github.com/p4gefau1t/trojan-go/releases/download/v${latest_version}/trojan-go-linux-amd64.zip"
