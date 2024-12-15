@@ -85,6 +85,8 @@ curl -sL "$xraycore_link" -o xray.zip
 unzip -q xray.zip && rm -rf xray.zip
 mv xray /usr/local/bin/xray
 chmod +x /usr/local/bin/xray
+systemctl restart xray
+sleep 0.5
 
 ## crt xray
 systemctl stop nginx
