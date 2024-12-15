@@ -1,51 +1,33 @@
 #!/bin/bash
-# ==========================================
-# Color
-RED='\033[0;31m'
-NC='\033[0m'
-GREEN='\033[0;32m'
-ORANGE='\033[0;33m'
-BLUE='\033[0;34m'
-PURPLE='\033[0;35m'
-CYAN='\033[0;36m'
-LIGHT='\033[0;37m'
-# ==========================================
-# Getting
-
 echo -e "
 "
 date
 echo ""
-cd
-if [[ -e /etc/xray/domain ]]; then
-domain=$(cat /etc/xray/domain)
-else
-domain="casper1.dev"
-fi
-sleep 0.5
-mkdir -p /etc/xray
+domain=$(cat /root/domain)
+sleep 1
+mkdir -p /etc/xray 
 echo -e "[ ${green}INFO${NC} ] Checking... "
 apt install iptables iptables-persistent -y
-sleep 0.5
+sleep 1
 echo -e "[ ${green}INFO$NC ] Setting ntpdate"
-ntpdate pool.ntp.org
+ntpdate pool.ntp.org 
 timedatectl set-ntp true
-sleep 0.5
+sleep 1
 echo -e "[ ${green}INFO$NC ] Enable chronyd"
 systemctl enable chronyd
 systemctl restart chronyd
-sleep 0.5
+sleep 1
 echo -e "[ ${green}INFO$NC ] Enable chrony"
 systemctl enable chrony
 systemctl restart chrony
 timedatectl set-timezone Asia/Jakarta
-sleep 0.5
+sleep 1
 echo -e "[ ${green}INFO$NC ] Setting chrony tracking"
 chronyc sourcestats -v
 chronyc tracking -v
 echo -e "[ ${green}INFO$NC ] Setting dll"
 apt clean all && apt update
-apt install curl socat xz-utils wget apt-transport-https gnupg gnupg2 gnupg1 dnsutils lsb-release -y
+apt install curl socat xz-utils wget apt-transport-https gnupg gnupg2 gnupg1 dnsutils lsb-release -y 
 apt install socat cron bash-completion ntpdate -y
 ntpdate pool.ntp.org
 apt -y install chrony
@@ -54,7 +36,7 @@ apt install curl pwgen openssl netcat cron -y
 
 
 # install xray
-sleep 0.5
+sleep 1
 echo -e "[ ${green}INFO$NC ] Downloading & Installing xray core"
 domainSock_dir="/run/xray";! [ -d $domainSock_dir ] && mkdir  $domainSock_dir
 chown www-data.www-data $domainSock_dir
@@ -68,7 +50,9 @@ touch /var/log/xray/error.log
 touch /var/log/xray/access2.log
 touch /var/log/xray/error2.log
 # / / Ambil Xray Core Version Terbaru
-bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version 1.5.6
+bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version 1.6.1
+
+
 
 ## crt xray
 systemctl stop nginx
@@ -405,7 +389,7 @@ Restart=on-abort
 WantedBy=multi-user.target
 EOF
 
-#install trojan go
+# Install Trojan Go
 latest_version="$(curl -s "https://api.github.com/repos/p4gefau1t/trojan-go/releases" | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
 trojango_link="https://github.com/p4gefau1t/trojan-go/releases/download/v${latest_version}/trojan-go-linux-amd64.zip"
 mkdir -p "/usr/bin/trojan-go"
@@ -416,10 +400,9 @@ unzip -q trojan-go.zip && rm -rf trojan-go.zip
 mv trojan-go /usr/local/bin/trojan-go
 chmod +x /usr/local/bin/trojan-go
 mkdir /var/log/trojan-go/
-touch /etc/trojan-go/trgo
+touch /etc/trojan-go/akun.conf
 touch /var/log/trojan-go/trojan-go.log
 
-uuid=$(cat /proc/sys/kernel/random/uuid)
 # Buat Config Trojan Go
 cat > /etc/trojan-go/config.json << END
 {
@@ -488,8 +471,8 @@ END
 # Installing Trojan Go Service
 cat > /etc/systemd/system/trojan-go.service << END
 [Unit]
-Description=Trojan-Go Service Mod By CLOUDVPN 
-Documentation=nekopoi.care
+Description=Trojan-Go Service Mod By ARTA M
+Documentation=github.com/adammoi/vipies
 After=network.target nss-lookup.target
 
 [Service]
