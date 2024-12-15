@@ -17,10 +17,11 @@ echo -e "
 date
 echo ""
 cd
-if [[ -e /etc/xray/domain ]]; then
+echo "IP=$domain" > /var/lib/ipvps.conf
+if [[ "$IP" = "" ]]; then
 domain=$(cat /etc/xray/domain)
 else
-domain="casper1.dev"
+domain=$IP
 fi
 sleep 0.5
 mkdir -p /etc/xray
