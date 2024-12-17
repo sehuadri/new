@@ -68,7 +68,7 @@ touch /var/log/xray/error.log
 touch /var/log/xray/access2.log
 touch /var/log/xray/error2.log
 # / / Ambil Xray Core Version Terbaru
-bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version 24.11.30
+bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version 1.8.4
 
 ## crt xray
 systemctl stop nginx
@@ -418,8 +418,6 @@ chmod +x /usr/local/bin/trojan-go
 mkdir /var/log/trojan-go/
 touch /etc/trojan-go/trgo
 touch /var/log/trojan-go/trojan-go.log
-
-uuid=$(cat /proc/sys/kernel/random/uuid)
 # Buat Config Trojan Go
 cat > /etc/trojan-go/config.json << END
 {
