@@ -114,8 +114,8 @@ wsovpn=$(systemctl status ws-ovpn | grep Active | awk '{print $3}' | cut -d "(" 
 #wsopen=$(systemctl status ws-openssh | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
 osslh=$(systemctl status sslh | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
 udp=$(systemctl status udp-custom | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
-sls=$(systemctl status server | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
-slc=$(systemctl status client | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
+#sls=$(systemctl status server | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
+#slc=$(systemctl status client | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
 noobz=$(systemctl status noobzvpns | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
 trgoo=$(systemctl status trojan-go | grep Active | awk '{print $3}' | cut -d "(" -f2 | cut -d ")" -f1)
 
@@ -380,8 +380,8 @@ res1() {
     systemctl restart badvpn1
     systemctl restart badvpn2
     systemctl restart badvpn3
-    systemctl restart client
-    systemctl restart server
+#    systemctl restart client
+#    systemctl restart server
 }
 clear
 echo -e "$COLOR1 ╭══════════════════════════════════════════╮${NC}"
@@ -411,8 +411,8 @@ function sfrestart() {
     systemctl restart badvpn1
     systemctl restart badvpn2
     systemctl restart badvpn3
-    systemctl restart client
-    systemctl restart server
+#    systemctl restart client
+#    systemctl restart server
 }
 sfrestart
 clear
@@ -467,8 +467,8 @@ echo -e "$COLOR1 $NC  ${WH}❈ Websocket None TLS      ${COLOR1}: ${WH}$swstls${
 echo -e "$COLOR1 $NC  ${WH}❈ NOOBZVPNS               ${COLOR1}: ${WH}$noobz${NC}"
 echo -e "$COLOR1 $NC  ${WH}❈ TROJAN-GO               ${COLOR1}: ${WH}$status_trgo${NC}"
 echo -e "$COLOR1 $NC  ${WH}❈ SSH UDP COSTUM          ${COLOR1}: ${WH}$udp${NC}"
-echo -e "$COLOR1 $NC  ${WH}❈ SlowDNS CLIENT          ${COLOR1}: ${WH}$slc${NC}"
-echo -e "$COLOR1 $NC  ${WH}❈ SlowDNS SERVER          ${COLOR1}: ${WH}$sls${NC}"
+#echo -e "$COLOR1 $NC  ${WH}❈ SlowDNS CLIENT          ${COLOR1}: ${WH}$slc${NC}"
+#echo -e "$COLOR1 $NC  ${WH}❈ SlowDNS SERVER          ${COLOR1}: ${WH}$sls${NC}"
 #echo -e "🔱 SSL / SSH Multiplexer   :$sosslh"
 echo -e "$COLOR1╰═══════════════════════════════════════════════════╯${NC}"
 #echo -e " $COLOR1 $NC                                              ${NC} $COLOR1 $NC"
