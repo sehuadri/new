@@ -322,7 +322,7 @@ echo -e "$COLOR1│$NC${WH} ❄️ ISP           ${COLOR1}: ${WH}$ISP${NC}"
 echo -e "$COLOR1│$NC${WH} ❄️ City          ${COLOR1}: ${WH}$CITY${NC}"
 echo -e "$COLOR1│$NC${WH} ❄️ IP VPS        ${COLOR1}: ${WH}$MYIP${NC}"
 echo -e "$COLOR1│$NC${WH} ❄️ DOMAIN        ${COLOR1}: ${WH}$(cat /etc/xray/domain)"
-echo -e "$COLOR1│$NC${WH} ❄️ NSDomain      ${COLOR1}: ${WH}$(cat /etc/xray/dns)"
+#echo -e "$COLOR1│$NC${WH} ❄️ NSDomain      ${COLOR1}: ${WH}$(cat /etc/xray/dns)"
 echo -e "$COLOR1└─────────────────────────────────────────────────┘${NC}"
 #echo -e "$COLOR1┌─────────────────────────────────────────────────┐${NC}"
 #echo -e "$COLOR1 $NC ${WH}[ NGINX    : ${status_ws} ${WH}]  ${WH}[ XRAY : ${status_xray} ${WH}]$NC"
@@ -443,8 +443,8 @@ res1() {
     systemctl restart badvpn1
     systemctl restart badvpn2
     systemctl restart badvpn3
-    systemctl restart client
-    systemctl restart server
+#    systemctl restart client
+#    systemctl restart server
 }
 clear
 echo -e "$COLOR1 ╭══════════════════════════════════════════╮${NC}"
