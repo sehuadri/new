@@ -345,7 +345,7 @@ echo -e "  ${WH}[${COLOR1}02${WH}]${NC} ${COLOR1}• ${WH}VMESS    ${WH}[${COLOR
 echo -e "  ${WH}[${COLOR1}03${WH}]${NC} ${COLOR1}• ${WH}VLESS    ${WH}[${COLOR1}${status_xray}${WH}]   ${WH}[${COLOR1}11${WH}]${NC} ${COLOR1}• ${WH}UPDATE    ${WH}[${COLOR1}Menu${WH}]  $COLOR1 $NC"  
 echo -e "  ${WH}[${COLOR1}04${WH}]${NC} ${COLOR1}• ${WH}TROJAN   ${WH}[${COLOR1}${status_xray}${WH}]   ${WH}[${COLOR1}12${WH}]${NC} ${COLOR1}• ${WH}SYSTEM    ${WH}[${COLOR1}Menu${WH}]  $COLOR1 $NC"  
 echo -e "  ${WH}[${COLOR1}05${WH}]${NC} ${COLOR1}• ${WH}NOOBZ    ${WH}[${COLOR1}${stat_noobz}${WH}]   ${WH}[${COLOR1}13${WH}]${NC} ${COLOR1}• ${WH}BACKUP    ${WH}[${COLOR1}Menu${WH}]  $COLOR1 $NC"
-echo -e "  ${WH}[${COLOR1}06${WH}]${NC} ${COLOR1}• ${WH}exit     ${WH}[${COLOR1}${status_ws}${WH}]   ${WH}[${COLOR1}14${WH}]${NC} ${COLOR1}• ${WH}RESTART   ${WH}[${COLOR1}Menu${WH}]  $COLOR1 $NC"
+echo -e "  ${WH}[${COLOR1}06${WH}]${NC} ${COLOR1}• ${WH}TRJN-GO  ${WH}[${COLOR1}${stat_trgo}${WH}]   ${WH}[${COLOR1}14${WH}]${NC} ${COLOR1}• ${WH}RESTART   ${WH}[${COLOR1}Menu${WH}]  $COLOR1 $NC"
 echo -e "  ${WH}[${COLOR1}07${WH}]${NC} ${COLOR1}• ${WH}RUNNING  ${WH}[${COLOR1}${status_xray}${WH}]   ${WH}[${COLOR1}15${WH}]${NC} ${COLOR1}• ${WH}REBOOT    ${WH}[${COLOR1}Menu${WH}]  $COLOR1 $NC"
 echo -e "  ${WH}[${COLOR1}08${WH}]${NC} ${COLOR1}• ${WH}CEK Net  ${WH}[${COLOR1}${status_xray}${WH}]   ${WH}[${COLOR1}16${WH}]${NC} ${COLOR1}• ${WH}PASSWORD  ${WH}[${COLOR1}Menu${WH}]  $COLOR1 $NC"
 echo -e "$COLOR1└─────────────────────────────────────────────────┘${NC}"
