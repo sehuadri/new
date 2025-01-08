@@ -1,3 +1,4 @@
+#!/bin/bash
 latest_version="$(curl -s "https://api.github.com/repos/p4gefau1t/trojan-go/releases" | grep tag_name | sed -E 's/.*"v(.*)".*/\1/' | head -n 1)"
 trojango_link="https://github.com/p4gefau1t/trojan-go/releases/download/v${latest_version}/trojan-go-linux-amd64.zip"
 mkdir -p "/usr/bin/trojan-go"
@@ -103,10 +104,10 @@ $uuid
 END
 
 # restart
-#iptables-save > /etc/iptables.up.rules
-#iptables-restore -t < /etc/iptables.up.rules
-#netfilter-persistent save
-#netfilter-persistent reload
+iptables-save > /etc/iptables.up.rules
+iptables-restore -t < /etc/iptables.up.rules
+netfilter-persistent save
+netfilter-persistent reload
 systemctl daemon-reload
 systemctl stop trojan-go
 systemctl start trojan-go
