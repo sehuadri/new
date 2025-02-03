@@ -23,6 +23,7 @@ echo > /var/log/syslog
 echo > /var/log/btmp
 echo > /var/log/messages
 echo > /var/log/debug
+echo > /var/log/xray/access.log
 bcc=`date`
 echo ""
 echo "Successfully clean log at $bcc"
