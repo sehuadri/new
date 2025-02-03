@@ -20,7 +20,7 @@ RAM = $persenmemori%
 #CPU = $persencpu%
 
 EOF`
-if [ $persenmemori -gt 60 ]
+if [ $persenmemori -gt 90 ]
 then
     service nginx restart
     service xray restart
