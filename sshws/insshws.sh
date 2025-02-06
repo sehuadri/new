@@ -3,7 +3,7 @@
 rm -f $0
 
 file_path="/etc/handeling"
-repo="https://raw.githubusercontent.com/Andyyuda/P/main"
+repo="https://raw.githubusercontent.com/sehuadri/new/main/sshws"
 
 apt update
 apt install python3 -y
