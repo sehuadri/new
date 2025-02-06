@@ -107,26 +107,16 @@ apt-get --reinstall --fix-missing install -y bzip2 gzip coreutils wget screen rs
 apt -y install nginx php php-fpm php-cli php-mysql libxml-parser-perl
 rm /etc/nginx/sites-enabled/default
 rm /etc/nginx/sites-available/default
-curl ${REPO}ssh/nginx.conf > /etc/nginx/nginx.conf
+curl https://raw.githubusercontent.com/sehuadri/new/main/install/nginx.conf > /etc/nginx/nginx.conf
+curl https://raw.githubusercontent.com/sehuadri/new/main/install/vps.conf > /etc/nginx/conf.d/vps.conf
 sed -i 's/listen = \/var\/run\/php-fpm.sock/listen = 127.0.0.1:9000/g' /etc/php/fpm/pool.d/www.conf
-mkdir -p /var/www/html
-echo "<?php phpinfo() ?>" > /var/www/html/info.php
-chown -R www-data:www-data /var/www/html
-chmod -R g+rw /var/www/html
-cd /var/www/html
-#wget -O /var/www/html/index.html "${REPO}ssh/index.html1"
-
-cat > /var/www/html/index.html <<-END
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html>
-<kepala>
-<meta http-equiv="REFRESH" content="0;url=https://wa.me/6282131861788">
-</kepala>
-<tubuh>
-<p>Pengalihan URL</p>
-</tubuh>
-</html>
-END
+useradd -m vps;
+mkdir -p /home/vps/public_html
+echo "<?php phpinfo() ?>" > /home/vps/public_html/info.php
+chown -R www-data:www-data /home/vps/public_html
+chmod -R g+rw /home/vps/public_html
+cd /home/vps/public_html
+wget -O /home/vps/public_html/index.html "https://raw.githubusercontent.com/sehuadri/new/main/install/index.html1"
 /etc/init.d/nginx restart
 
 # install badvpn
