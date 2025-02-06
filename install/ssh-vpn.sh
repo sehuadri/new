@@ -391,16 +391,41 @@ rm ipserver
 # download script
 cd
 
-cat> /etc/cron.d/auto_exp << END
+#if [ ! -f "/etc/cron.d/xp_otm" ]; then
+cat> /etc/cron.d/xp_otm << END
 SHELL=/bin/sh
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-0 0 * * * root /usr/local/sbin/xp
+0 0 * * * root /usr/bin/xp
+END
+#fi
+
+#if [ ! -f "/etc/cron.d/bckp_otm" ]; then
+cat> /etc/cron.d/bckp_otm << END
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+0 5 * * * root /usr/bin/bottelegram
+END
+#fi
+
+#if [ ! -f "/etc/cron.d/autocpu" ]; then
+cat> /etc/cron.d/autocpu << END
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+*/1 * * * * root /usr/bin/autocpu
+END
+#fi
+
+cat> /etc/cron.d/tendang << END
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+*/1 * * * * root /usr/bin/tendang
 END
 
-cat> /etc/cron.d/daily_backup << END
+cat> /etc/cron.d/xraylimit << END
 SHELL=/bin/sh
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-0 22 * * * root /usr/local/sbin/backup
+0
+*/1 * * * * root /usr/bin/xraylimit
 END
 
 cat >/etc/cron.d/logclean <<-END
