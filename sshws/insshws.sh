@@ -28,7 +28,7 @@ else
 fi
 
 cd /usr/local/bin
-wget -q -O vpn.zip "${repo}/ws/vpn.zip"
+wget -q -O vpn.zip "${repo}/vpn.zip"
 unzip vpn.zip
 cp ws ws-ovpn
 chmod +x ws ws-ovpn
