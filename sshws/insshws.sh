@@ -84,3 +84,26 @@ systemctl daemon-reload
 systemctl enable ws-ovpn
 systemctl start ws-ovpn
 systemctl restart ws-ovpn
+
+wget -O /usr/local/bin/edu-proxy ${repo}/https.py
+chmod +x /usr/local/bin/edu-proxy
+# Installing Service
+cat > /etc/systemd/system/ws-stunnel.service << END
+[Unit]
+Description=HTTP SSH Over Websocket Python HideSSH
+Documentation=https://hidessh.com
+After=network.target nss-lookup.target
+[Service]
+Type=simple
+User=root
+CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
+NoNewPrivileges=true
+Restart=on-failure
+ExecStart=/usr/bin/python -O /usr/local/bin/edu-proxy
+[Install]
+WantedBy=multi-user.target
+END
+systemctl enable edu-proxy.service
+systemctl start edu-proxy.service
+systemctl restart edu-proxy.service
