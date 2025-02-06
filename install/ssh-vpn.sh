@@ -1,20 +1,25 @@
 #!/bin/bash
-#
-# ==================================================
-
-# etc
+rm -f $0
 apt dist-upgrade -y
 apt install netfilter-persistent -y
 apt-get remove --purge ufw firewalld -y
 apt install -y screen curl jq bzip2 gzip vnstat coreutils rsyslog iftop zip unzip git apt-transport-https build-essential -y
-
+REPO="https://raw.githubusercontent.com/Andyyuda/P/main/"
 # initializing var
 export DEBIAN_FRONTEND=noninteractive
-MYIP=$(wget -qO- ipinfo.io/ip);
-MYIP2="s/xxxxxxxxx/$MYIP/g";
-NET=$(ip -o $ANU -4 route show to default | awk '{print $5}');
-source /etc/os-release
-ver=$VERSION_ID
+MYIP=$(wget -qO- ipinfo.io/ip)
+MYIP2="s/xxxxxxxxx/$MYIP/g"
+NET=$(ip -o $ANU -4 route show to default | awk '{print $5}')
+if [[ -f /etc/os-release ]]; then
+    . /etc/os-release
+    OS_NAME=$ID
+    OS_VERSION=$VERSION_ID
+
+    echo "Menemukan sistem operasi: $OS_NAME $OS_VERSION"
+else
+    echo "Tidak dapat menentukan sistem operasi."
+    exit 1
+fi
 
 #detail nama perusahaan
 country=ID
@@ -26,10 +31,9 @@ commonname=none
 email=none
 
 # simple password minimal
-curl -sS https://raw.githubusercontent.com/sehuadri/new/main/install/password | openssl aes-256-cbc -d -a -pass pass:scvps07gg -pbkdf2 > /etc/pam.d/common-password
+curl -sS ${REPO}ssh/password | openssl aes-256-cbc -d -a -pass pass:scvps07gg -pbkdf2 > /etc/pam.d/common-password
 chmod +x /etc/pam.d/common-password
 
-#sudo apt install iptables-persistent netfilter-persistent
 # go to root
 cd
 
@@ -77,7 +81,6 @@ apt-get remove --purge exim4 -y
 
 #install jq
 apt -y install jq
-#apt install sysstat -y
 
 #install shc
 apt -y install shc
@@ -98,67 +101,41 @@ sed -i 's/AcceptEnv/#AcceptEnv/g' /etc/ssh/sshd_config
 
 # // install
 apt-get --reinstall --fix-missing install -y bzip2 gzip coreutils wget screen rsyslog iftop htop net-tools zip unzip wget net-tools curl nano sed screen gnupg gnupg1 bc apt-transport-https build-essential dirmngr libxml-parser-perl neofetch git lsof
-echo "clear" >> .profile
-echo "menu" >> .profile
-
-install_ssl(){
-    if [ -f "/usr/bin/apt-get" ];then
-            isDebian=`cat /etc/issue|grep Debian`
-            if [ "$isDebian" != "" ];then
-                    apt-get install -y nginx certbot
-                    apt install -y nginx certbot
-                    sleep 3s
-            else
-                    apt-get install -y nginx certbot
-                    apt install -y nginx certbot
-                    sleep 3s
-            fi
-    else
-        yum install -y nginx certbot
-        sleep 3s
-    fi
-
-    systemctl stop nginx.service
-
-    if [ -f "/usr/bin/apt-get" ];then
-            isDebian=`cat /etc/issue|grep Debian`
-            if [ "$isDebian" != "" ];then
-                    echo "A" | certbot certonly --renew-by-default --register-unsafely-without-email --standalone -d $domain
-                    sleep 3s
-            else
-                    echo "A" | certbot certonly --renew-by-default --register-unsafely-without-email --standalone -d $domain
-                    sleep 3s
-            fi
-    else
-        echo "Y" | certbot certonly --renew-by-default --register-unsafely-without-email --standalone -d $domain
-        sleep 3s
-    fi
-}
 
 
 # install webserver
 apt -y install nginx php php-fpm php-cli php-mysql libxml-parser-perl
 rm /etc/nginx/sites-enabled/default
 rm /etc/nginx/sites-available/default
-curl https://raw.githubusercontent.com/sehuadri/new/main/install/nginx.conf > /etc/nginx/nginx.conf
-curl https://raw.githubusercontent.com/sehuadri/new/main/install/vps.conf > /etc/nginx/conf.d/vps.conf
+curl ${REPO}ssh/nginx.conf > /etc/nginx/nginx.conf
 sed -i 's/listen = \/var\/run\/php-fpm.sock/listen = 127.0.0.1:9000/g' /etc/php/fpm/pool.d/www.conf
-useradd -m vps;
-mkdir -p /home/vps/public_html
-echo "<?php phpinfo() ?>" > /home/vps/public_html/info.php
-chown -R www-data:www-data /home/vps/public_html
-chmod -R g+rw /home/vps/public_html
-cd /home/vps/public_html
-wget -O /home/vps/public_html/index.html "https://raw.githubusercontent.com/sehuadri/new/main/install/index.html1"
+mkdir -p /var/www/html
+echo "<?php phpinfo() ?>" > /var/www/html/info.php
+chown -R www-data:www-data /var/www/html
+chmod -R g+rw /var/www/html
+cd /var/www/html
+#wget -O /var/www/html/index.html "${REPO}ssh/index.html1"
+
+cat > /var/www/html/index.html <<-END
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<kepala>
+<meta http-equiv="REFRESH" content="0;url=https://wa.me/6282131861788">
+</kepala>
+<tubuh>
+<p>Pengalihan URL</p>
+</tubuh>
+</html>
+END
 /etc/init.d/nginx restart
 
 # install badvpn
 cd
-wget -O /usr/sbin/badvpn "https://raw.githubusercontent.com/sehuadri/new/main/install/badvpn" >/dev/null 2>&1
+wget -O /usr/sbin/badvpn "${REPO}ssh/badvpn" >/dev/null 2>&1
 chmod +x /usr/sbin/badvpn > /dev/null 2>&1
-wget -q -O /etc/systemd/system/badvpn1.service "https://raw.githubusercontent.com/sehuadri/new/main/install/badvpn1.service" >/dev/null 2>&1
-wget -q -O /etc/systemd/system/badvpn2.service "https://raw.githubusercontent.com/sehuadri/new/main/install/badvpn2.service" >/dev/null 2>&1
-wget -q -O /etc/systemd/system/badvpn3.service "https://raw.githubusercontent.com/sehuadri/new/main/install/badvpn3.service" >/dev/null 2>&1
+wget -q -O /etc/systemd/system/badvpn1.service "${REPO}ssh/badvpn1.service" >/dev/null 2>&1
+wget -q -O /etc/systemd/system/badvpn2.service "${REPO}ssh/badvpn2.service" >/dev/null 2>&1
+wget -q -O /etc/systemd/system/badvpn3.service "${REPO}ssh/badvpn3.service" >/dev/null 2>&1
 systemctl disable badvpn1 
 systemctl stop badvpn1 
 systemctl enable badvpn1
@@ -187,144 +164,212 @@ sed -i '/Port 22/a Port 22' /etc/ssh/sshd_config
 echo "=== Install Dropbear ==="
 # install dropbear
 apt -y install dropbear
-sed -i 's/NO_START=1/NO_START=0/g' /etc/default/dropbear
-sed -i 's/DROPBEAR_PORT=22/DROPBEAR_PORT=143/g' /etc/default/dropbear
-sed -i 's/DROPBEAR_EXTRA_ARGS=/DROPBEAR_EXTRA_ARGS="-p 50000 -p 109 -p 110 -p 69"/g' /etc/default/dropbear
+sudo dropbearkey -t dss -f /etc/dropbear/dropbear_dss_host_key
+sudo chmod 600 /etc/dropbear/dropbear_dss_host_key
+wget -O /etc/default/dropbear "${REPO}ssh/dropbear"
 echo "/bin/false" >> /etc/shells
 echo "/usr/sbin/nologin" >> /etc/shells
 /etc/init.d/ssh restart
 /etc/init.d/dropbear restart
+#wget -q ${REPO}ssh/setrsyslog.sh && chmod +x setrsyslog.sh && ./setrsyslog.sh
 
-# // install squid for debian 9,10 & ubuntu 20.04
-apt -y install squid3
+detect_os() {
+  if [[ -f /etc/os-release ]]; then
+    source /etc/os-release
+    echo "$ID $VERSION_ID"  # Mengembalikan ID dan versi OS
+  else
+    echo "Unknown"
+  fi
+}
 
-# install squid for debian 11
-apt -y install squid
-wget -O /etc/squid/squid.conf "https://raw.githubusercontent.com/sehuadri/new/main/install/main/squid3.conf"
+os_version=$(detect_os)
+if [[ "$os_version" =~ "ubuntu 24" ]]; then 
+  RSYSLOG_FILE="/etc/rsyslog.d/50-default.conf"
+elif [[ "$os_version" == "debian 12" ]]; then
+  RSYSLOG_FILE="/etc/rsyslog.conf"
+else
+  echo "Sistem operasi atau versi tidak dikenali. Keluar..."
+  exit 1
+fi
+
+LOG_FILES=(
+  "/var/log/auth.log"
+  "/var/log/kern.log"
+  "/var/log/mail.log"
+  "/var/log/user.log"
+  "/var/log/cron.log"
+)
+
+set_permissions() {
+  for log_file in "${LOG_FILES[@]}"; do
+    if [[ -f "$log_file" ]]; then
+      echo "Mengatur izin dan kepemilikan untuk $log_file..."
+      chmod 640 "$log_file"
+      chown syslog:adm "$log_file"  # Memberikan kepemilikan kepada syslog agar bisa menulis log
+    else
+      echo "$log_file tidak ditemukan, melewati..."
+    fi
+  done
+}
+
+# Mengecek apakah konfigurasi untuk dropbear sudah ada
+check_dropbear_log() {
+  grep -q 'if \$programname == "dropbear"' "$RSYSLOG_FILE"
+}
+
+# Fungsi untuk menambahkan konfigurasi dropbear
+add_dropbear_log() {
+  echo "Menambahkan konfigurasi Dropbear ke $RSYSLOG_FILE..."
+  sudo bash -c "echo -e 'if \$programname == \"dropbear\" then /var/log/auth.log\n& stop' >> $RSYSLOG_FILE"
+  systemctl restart rsyslog
+  echo "Konfigurasi Dropbear ditambahkan dan Rsyslog direstart."
+}
+
+if check_dropbear_log; then
+  echo "Konfigurasi Dropbear sudah ada, tidak ada perubahan yang dilakukan."
+else
+  add_dropbear_log
+fi
+
+# Set permissions untuk file log
+set_permissions
+
+if [[ "$OS_NAME" == "debian" && "$OS_VERSION" == "10" ]] || [[ "$OS_NAME" == "ubuntu" && "$OS_VERSION" == "20.04" ]]; then
+    echo "Menginstal squid3 untuk Debian 10 atau Ubuntu 20.04..."
+    apt -y install squid3
+else
+    echo "Menginstal squid untuk versi lain..."
+    apt -y install squid
+fi
+# Unduh file konfigurasi
+echo "Mengunduh file konfigurasi Squid..."
+wget -O /etc/squid/squid.conf "${REPO}ssh/squid3.conf"
+
+# Ganti placeholder dengan alamat IP
+echo "Mengganti placeholder IP dengan alamat IP saat ini..."
 sed -i $MYIP2 /etc/squid/squid.conf
 
-# install stunnel
-apt install stunnel4 -y
-cat > /etc/stunnel/stunnel.conf <<-END
-cert = /etc/stunnel/stunnel.pem
-client = no
-socket = a:SO_REUSEADDR=1
-socket = l:TCP_NODELAY=1
-socket = r:TCP_NODELAY=1
+echo "Instalasi dan konfigurasi Squid selesai."
+# setting vnstat
+apt -y install vnstat
+/etc/init.d/vnstat restart
+apt -y install libsqlite3-dev
+wget https://humdi.net/vnstat/vnstat-2.6.tar.gz
+tar zxvf vnstat-2.6.tar.gz
+cd vnstat-2.6
+./configure --prefix=/usr --sysconfdir=/etc && make && make install
+cd
+vnstat -i $NET
+sed -i 's/Interface "'""eth0""'"/Interface "'""$NET""'"/g' /etc/vnstat.conf
+chown vnstat:vnstat /var/lib/vnstat -R
+systemctl enable vnstat
+/etc/init.d/vnstat restart
+rm -f /root/vnstat-2.6.tar.gz
+rm -rf /root/vnstat-2.6
 
-[dropbear]
-accept = 222
-connect = 127.0.0.1:22
 
-[dropbear]
-accept = 777
-connect = 127.0.0.1:109
-
-#[ws-stunnel]
-#accept = 2083
-#connect = 700
-[ws-stunnel]
-accept = 2096
-connect = 700
-
-[openvpn]
-accept = 442
-connect = 127.0.0.1:1194
-
-END
-
-# make a certificate
-openssl genrsa -out key.pem 2048
-openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
--subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
-cat key.pem cert.pem >> /etc/stunnel/stunnel.pem
-
-# konfigurasi stunnel
-sed -i 's/ENABLED=0/ENABLED=1/g' /etc/default/stunnel4
-/etc/init.d/stunnel4 restart
-
-# Restart Stunnel4
-systemctl stop stunnel4
-systemctl enable stunnel4
-systemctl start stunnel4
-systemctl restart stunnel4
-/etc/init.d/stunnel4 restart
-/etc/init.d/stunnel4 status
-/etc/init.d/stunnel4 restart
+cd
+apt install haproxy -y
+wget -O /etc/haproxy/haproxy.cfg "https://raw.githubusercontent.com/Andyyuda/P/ssh/main/haproxy.cfg"
+systemctl daemon-reload
+systemctl stop haproxy
+systemctl enable haproxy
+systemctl start haproxy
 
 #OpenVPN
-wget https://raw.githubusercontent.com/sehuadri/new/main/install/vpn.sh &&  chmod +x vpn.sh && ./vpn.sh
-
-#OpenVPNwebsocket
-#apt install golang-go
-#wget https://raw.githubusercontent.com/sehuadri/new/main/sshws/ovpn-websocket.sh &&  chmod +x ovpn-websocket.sh && ./ovpn-websocket.sh
-#go run ovpn-websocket.sh
-
+wget ${REPO}ssh/vpn.sh &&  chmod +x vpn.sh && ./vpn.sh
 
 # // install lolcat
-wget https://raw.githubusercontent.com/sehuadri/new/main/install/lolcat.sh &&  chmod +x lolcat.sh && ./lolcat.sh
+clear
+# install Ruby & Yum
+apt-get install ruby -y
+# install lolcat
+wget https://github.com/busyloop/lolcat/archive/master.zip
+unzip master.zip
+rm -f master.zip
+cd lolcat-master/bin
+gem install lolcat
+# install figlet
+apt-get install figlet
+# Install figlet ascii
+sudo apt-get install figlet
+git clone https://github.com/busyloop/lolcat
+cd lolcat/bin && gem install lolcat
+cd /usr/share
+git clone https://github.com/xero/figlet-fonts
+mv figlet-fonts/* figlet && rm –rf figlet-fonts
+rm -r /root/*
+cd
 
-# memory swap 1gb
-#cd
-#dd if=/dev/zero of=/swapfile bs=1024 count=4194304
-#mkswap /swapfile
-#chown root:root /swapfile
-#chmod 0600 /swapfile >/dev/null 2>&1
-#swapon /swapfile >/dev/null 2>&1
-#sed -i '$ i\/swapfile      swap swap   defaults    0 0' /etc/fstab
-
-# > Singkronisasi jam
-#chronyd -q 'server 0.id.pool.ntp.org iburst'
-#chronyc sourcestats -v
-#chronyc tracking -v
+# memory swap 2gb
+cd
+dd if=/dev/zero of=/swapfile bs=2048 count=1048576
+mkswap /swapfile
+chown root:root /swapfile
+chmod 0600 /swapfile >/dev/null 2>&1
+swapon /swapfile >/dev/null 2>&1
+sed -i '$ i\/swapfile      swap swap   defaults    0 0' /etc/fstab
 
 # install fail2ban
 apt -y install fail2ban
 
 # Instal DDOS Flate
-sudo apt install dnsutils -y
-sudo apt-get install net-tools -y
-sudo apt-get install tcpdump -y
-sudo apt-get install dsniff -y
-sudo apt install grepcidr -y
-
-wget https://github.com/sehuadri/ddos-deflate/archive/master.zip -O ddos.zip
-unzip ddos.zip
-cd ddos-deflate-master
-./install.sh
-
+if [ -d '/usr/local/ddos' ]; then
+	echo; echo; echo "Please un-install the previous version first"
+	exit 0
+else
+	mkdir /usr/local/ddos
+fi
+clear
+echo; echo 'Installing DOS-Deflate 0.6'; echo
+echo; echo -n 'Downloading source files...'
+wget -q -O /usr/local/ddos/ddos.conf http://www.inetbase.com/scripts/ddos/ddos.conf
+echo -n '.'
+wget -q -O /usr/local/ddos/LICENSE http://www.inetbase.com/scripts/ddos/LICENSE
+echo -n '.'
+wget -q -O /usr/local/ddos/ignore.ip.list http://www.inetbase.com/scripts/ddos/ignore.ip.list
+echo -n '.'
+wget -q -O /usr/local/ddos/ddos.sh http://www.inetbase.com/scripts/ddos/ddos.sh
+chmod 0755 /usr/local/ddos/ddos.sh
+cp -s /usr/local/ddos/ddos.sh /usr/local/bin/ddos
+echo '...done'
+echo; echo -n 'Creating cron to run script every minute.....(Default setting)'
+/usr/local/ddos/ddos.sh --cron > /dev/null 2>&1
+echo '.....done'
+echo; echo 'Installation has completed.'
+echo 'Config file is at /usr/local/ddos/ddos.conf'
+echo 'Please send in your comments and/or suggestions to https://t.me/newbie_store24'
 
 # banner /etc/issue.net
 echo "Banner /etc/issue.net" >>/etc/ssh/sshd_config
-sed -i 's@DROPBEAR_BANNER=""@DROPBEAR_BANNER="/etc/issue.net"@g' /etc/default/dropbear
 
 # Ganti Banner
-wget -O /etc/issue.net "https://raw.githubusercontent.com/sehuadri/new/main/install/issue.net"
+# Buat banner di /etc/issue.net
+cat > /etc/issue.net << END
+happy conneting
+
+<p style="text-align: center;">
+    <span style="color: #41A85F; font-size: 26px;"><strong>KLMPK VPN</strong></span>
+    <span style="font-size: 26px;"><strong> </strong></span>
+    <span style="color: #F37934; font-size: 26px;"><strong>PREMIUM</strong></span>
+    <span style="font-size: 26px;">&nbsp;</span>
+</p>
+<p style="text-align: center;">
+    <span style="font-family: 'Trebuchet MS', Helvetica, sans-serif;">
+        <span style="color: #E25041; background-color: #61BD6D;">Blitar Jatim</span>
+        <span style="background-color: #61BD6D;">&nbsp;</span>
+    </span>
+</p>
+<p style="text-align: center;">
+    <span style="color: #B8312F;">Telp/WhatsApp</span>:
+    <span style="color: #EFEFEF;">082131861788</span>
+</p>
+END
 
 #install bbr dan optimasi kernel
-wget https://raw.githubusercontent.com/sehuadri/new/main/install/bbr.sh && chmod +x bbr.sh && ./bbr.sh
+wget ${REPO}ssh/bbr.sh && chmod +x bbr.sh && ./bbr.sh
 
-
-#run_ip
-#apt install iptables-persistent netfilter-persistent
-
-#rm -f /etc/iptables.rules && wget -cO - https://pastebin.com/raw/7yc33jRK > /etc/iptables.rules
-
-#iptables -A INPUT -p tcp --tcp-flags ALL NONE -j DROP
-
-#iptables -A INPUT -p tcp ! --syn -m state --state NEW -j DROP
-
-#iptables -I INPUT -p tcp --dport 80 -m state --state NEW -m recent --set
-#iptables -I INPUT -p tcp --dport 80 -m state --state NEW -m recent --update --seconds 20 --hitcount 10 -j DROP
-
-
-#iptables -I INPUT -p tcp --dport 81 -m state --state NEW -m recent --set
-#iptables -I INPUT -p tcp --dport 81 -m state --state NEW -m recent --update --seconds 20 --hitcount 10 -j DROP
-
-
-#dpkg-reconfigure iptables-persistent
-
-#systemctl restart fail2ban
+wget -q ${REPO}ssh/ipserver && chmod +x ipserver && ./ipserver
 # blokir torrent
 iptables -A FORWARD -m string --string "get_peers" --algo bm -j DROP
 iptables -A FORWARD -m string --string "announce_peer" --algo bm -j DROP
@@ -341,58 +386,37 @@ iptables-save > /etc/iptables.up.rules
 iptables-restore -t < /etc/iptables.up.rules
 netfilter-persistent save
 netfilter-persistent reload
-
-
-
+rm ipserver
 
 # download script
-cd /usr/bin
-wget -O issue "https://raw.githubusercontent.com/sehuadri/new/main/install/issue.net"
-wget -O m-theme "https://raw.githubusercontent.com/sehuadri/new/main/menu/m-theme.sh"
-wget -O speedtest "https://raw.githubusercontent.com/sehuadri/new/main/install/speedtest_cli.py"
-wget -O xp "https://raw.githubusercontent.com/sehuadri/new/main/install/xp.sh"
-
-chmod +x issue
-chmod +x m-theme
-chmod +x speedtest
-chmod +x xp
 cd
 
-#if [ ! -f "/etc/cron.d/xp_otm" ]; then
-cat> /etc/cron.d/xp_otm << END
+cat> /etc/cron.d/auto_exp << END
 SHELL=/bin/sh
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-0 0 * * * root /usr/bin/xp
-END
-#fi
-
-#if [ ! -f "/etc/cron.d/bckp_otm" ]; then
-cat> /etc/cron.d/bckp_otm << END
-SHELL=/bin/sh
-PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-0 5 * * * root /usr/bin/bottelegram
-END
-#fi
-
-#if [ ! -f "/etc/cron.d/autocpu" ]; then
-cat> /etc/cron.d/autocpu << END
-SHELL=/bin/sh
-PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-*/1 * * * * root /usr/bin/autocpu
-END
-#fi
-
-cat> /etc/cron.d/tendang << END
-SHELL=/bin/sh
-PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-*/1 * * * * root /usr/bin/tendang
+0 0 * * * root /usr/local/sbin/xp
 END
 
-cat> /etc/cron.d/xraylimit << END
+cat> /etc/cron.d/daily_backup << END
 SHELL=/bin/sh
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-0
-*/1 * * * * root /usr/bin/xraylimit
+0 22 * * * root /usr/local/sbin/backup
+END
+
+cat >/etc/cron.d/logclean <<-END
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+*/10 * * * * root truncate -s 0 /var/log/syslog \
+    && truncate -s 0 /var/log/nginx/error.log \
+    && truncate -s 0 /var/log/nginx/access.log \
+    && truncate -s 0 /var/log/xray/error.log \
+    && truncate -s 0 /var/log/xray/access.log
+END
+
+cat >/etc/cron.d/daily_reboot <<-END
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+5 0 * * * root /sbin/reboot
 END
 
 service cron restart >/dev/null 2>&1
@@ -409,11 +433,10 @@ apt-get -y remove sendmail* >/dev/null 2>&1
 apt autoremove -y >/dev/null 2>&1
 # finishing
 cd
-chown -R www-data:www-data /home/vps/public_html
+chown -R www-data:www-data /var/www/html
 
 rm -f /root/key.pem
 rm -f /root/cert.pem
-rm -f /root/ssh-vpn.sh
 rm -f /root/bbr.sh
 rm -rf /etc/apache2
 
