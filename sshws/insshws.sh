@@ -1,86 +1,64 @@
 #!/bin/bash
-
-rm -f $0
-
-file_path="/etc/handeling"
-repo="https://raw.githubusercontent.com/Andyyuda/P/main"
-
-apt update
-apt install python3 -y
-apt install python3-pip -y
-apt install python3-requests -y
-
-# Cek apakah file ada
-if [ ! -f "$file_path" ]; then
-    # Jika file tidak ada, buat file dan isi dengan dua baris
-    echo -e "Switching Protocols\nYellow" | sudo tee "$file_path" > /dev/null
-    echo "File '$file_path' berhasil dibuat."
-else
-    # Jika file ada, cek apakah isinya kosong
-    if [ ! -s "$file_path" ]; then
-        # Jika file ada tetapi kosong, isi dengan dua baris
-        echo -e "Switching Protocols\nYellow" | sudo tee "$file_path" > /dev/null
-        echo "File '$file_path' kosong dan telah diisi."
-    else
-        # Jika file ada dan berisi data, tidak lakukan apapun
-        echo "File '$file_path' sudah ada dan berisi data."
-    fi
-fi
-
-cd /usr/local/bin
-wget -q -O vpn.zip "${repo}/ws/vpn.zip"
-unzip vpn.zip
-cp ws ws-ovpn
-chmod +x ws ws-ovpn
-rm vpn.zip
+#installer Websocker tunneling 
+url="https://raw.githubusercontent.com/sehuadri/new/main"
 cd
 
-# Installing Service
-cat > /etc/systemd/system/ws.service << END
-[Unit]
-Description=Proxy Mod
-Documentation=https://google.com
-After=network.target nss-lookup.target
+#Install Script Websocket-SSH Python
+wget -O /usr/local/bin/edu-proxy ${url}/sshws/https.py
+wget -O /usr/local/bin/ws-dropbear ${url}/sshws/dropbear-ws.py.txt
+wget -O /usr/local/bin/ws-stunnel ${url}/sshws/ws-stunnel.txt
+#wget -O /usr/local/bin/edu-proxyovpn ${url}/sshws/ovpn.py
+#wget -O /usr/local/bin/ws-openssh ${url}/sshws/ws-openssh
 
-[Service]
-Type=simple
-User=root
-CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-NoNewPrivileges=true
-ExecStart=/usr/local/bin/ws
-Restart=on-failure
+#izin permision
+chmod +x /usr/local/bin/edu-proxy
+chmod +x /usr/local/bin/ws-dropbear
+chmod +x /usr/local/bin/ws-stunnel
+#chmod +x /usr/local/bin/edu-proxyovpn
+#chmod +x /usr/local/bin/ws-openssh
 
-[Install]
-WantedBy=multi-user.target
-END
+#System Direcly dropbear Websocket-SSH Python
+wget -O /etc/systemd/system/edu-proxy.service ${url}/sshws/http.service && chmod +x /etc/systemd/system/edu-proxy.service
 
+#System Dropbear Websocket-SSH Python
+wget -O /etc/systemd/system/ws-dropbear.service ${url}/sshws/service-wsdropbear.txt && chmod +x /etc/systemd/system/ws-dropbear.service
+
+#System SSL/TLS Websocket-SSH Python
+wget -O /etc/systemd/system/ws-stunnel.service ${url}/sshws/ws-stunnel.service.txt && chmod +x /etc/systemd/system/ws-stunnel.service
+
+#System Websocket-OpenVPN Python
+#wget -O /etc/systemd/system/edu-proxyovpn.service ${url}/sshws/edu-proxyovpn.service && chmod +x /etc/systemd/system/edu-proxyovpn.service
+
+#System Websocket-Openssh
+#wget -O /etc/systemd/system/ws-openssh.service ${url}/sshws/ws-openssh.service && chmod +x /etc/systemd/system/ws-openssh.service
+
+
+#restart service
 systemctl daemon-reload
-systemctl enable ws.service
-systemctl start ws.service
-systemctl restart ws.service
 
-# Installing Service
-cat > /etc/systemd/system/ws-ovpn.service << END
-[Unit]
-Description=Proxy Mod
-Documentation=https://google.com
-After=network.target nss-lookup.target
-
-[Service]
-Type=simple
-User=root
-CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
-NoNewPrivileges=true
-ExecStart=/usr/local/bin/ws-ovpn 2086
-Restart=on-failure
-
-[Install]
-WantedBy=multi-user.target
-END
-
+#Enable & Start & Restart directly dropbear
 systemctl daemon-reload
-systemctl enable ws-ovpn
-systemctl start ws-ovpn
-systemctl restart ws-ovpn
+systemctl enable edu-proxy.service
+systemctl start edu-proxy.service
+systemctl restart edu-proxy.service
+
+#Enable & Start & Restart ws-dropbear service
+systemctl enable ws-dropbear.service
+systemctl start ws-dropbear.service
+systemctl restart ws-dropbear.service
+
+#Enable & Start & Restart ws-stunnel service
+systemctl enable ws-stunnel.service
+systemctl start ws-stunnel.service
+systemctl restart ws-stunnel.service
+
+#systemctl daemon-reload
+#systemctl enable edu-proxyovpn.service
+#systemctl start edu-proxyovpn.service
+#systemctl restart edu-proxyovpn.service
+
+#Enable & Start & Restart ws-openssh service
+#systemctl enable ws-openssh.service
+#systemctl start ws-openssh.service
+#systemctl restart ws-openssh.service
+clear
