@@ -264,14 +264,15 @@ wget https://raw.githubusercontent.com/sehuadri/new/main/install/vpn.sh &&  chmo
 # // install lolcat
 wget https://raw.githubusercontent.com/sehuadri/new/main/install/lolcat.sh &&  chmod +x lolcat.sh && ./lolcat.sh
 
-# memory swap 1gb
-#cd
-#dd if=/dev/zero of=/swapfile bs=1024 count=4194304
-#mkswap /swapfile
-#chown root:root /swapfile
-#chmod 0600 /swapfile >/dev/null 2>&1
-#swapon /swapfile >/dev/null 2>&1
-#sed -i '$ i\/swapfile      swap swap   defaults    0 0' /etc/fstab
+# memory swap 2gb
+cd
+dd if=/dev/zero of=/swapfile bs=2048 count=1048576
+mkswap /swapfile
+chown root:root /swapfile
+chmod 0600 /swapfile >/dev/null 2>&1
+swapon /swapfile >/dev/null 2>&1
+sed -i '$ i\/swapfile      swap swap   defaults    0 0' /etc/fstab
+
 
 # > Singkronisasi jam
 #chronyd -q 'server 0.id.pool.ntp.org iburst'
@@ -288,7 +289,7 @@ sudo apt-get install tcpdump -y
 sudo apt-get install dsniff -y
 sudo apt install grepcidr -y
 
-wget https://github.com/sehuadri/ddos-deflate/archive/master.zip -O ddos.zip
+wget https://github.com/jgmdev/ddos-deflate/archive/master.zip -O ddos.zip
 unzip ddos.zip
 cd ddos-deflate-master
 ./install.sh
