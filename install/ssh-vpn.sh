@@ -104,6 +104,40 @@ apt-get --reinstall --fix-missing install -y bzip2 gzip coreutils wget screen rs
 echo "clear" >> .profile
 echo "menu" >> .profile
 
+install_ssl(){
+    if [ -f "/usr/bin/apt-get" ];then
+            isDebian=`cat /etc/issue|grep Debian`
+            if [ "$isDebian" != "" ];then
+                    apt-get install -y nginx certbot
+                    apt install -y nginx certbot
+                    sleep 3s
+            else
+                    apt-get install -y nginx certbot
+                    apt install -y nginx certbot
+                    sleep 3s
+            fi
+    else
+        yum install -y nginx certbot
+        sleep 3s
+    fi
+
+    systemctl stop nginx.service
+
+    if [ -f "/usr/bin/apt-get" ];then
+            isDebian=`cat /etc/issue|grep Debian`
+            if [ "$isDebian" != "" ];then
+                    echo "A" | certbot certonly --renew-by-default --register-unsafely-without-email --standalone -d $domain
+                    sleep 3s
+            else
+                    echo "A" | certbot certonly --renew-by-default --register-unsafely-without-email --standalone -d $domain
+                    sleep 3s
+            fi
+    else
+        echo "Y" | certbot certonly --renew-by-default --register-unsafely-without-email --standalone -d $domain
+        sleep 3s
+    fi
+}
+
 # install webserver
 apt -y install nginx php php-fpm php-cli php-mysql libxml-parser-perl
 rm /etc/nginx/sites-enabled/default
@@ -155,72 +189,13 @@ sed -i '/Port 22/a Port 22' /etc/ssh/sshd_config
 echo "=== Install Dropbear ==="
 # install dropbear
 apt -y install dropbear
-sudo dropbearkey -t dss -f /etc/dropbear/dropbear_dss_host_key
-sudo chmod 600 /etc/dropbear/dropbear_dss_host_key
-wget -O /etc/default/dropbear "${REPO}install/dropbear"
+sed -i 's/NO_START=1/NO_START=0/g' /etc/default/dropbear
+sed -i 's/DROPBEAR_PORT=22/DROPBEAR_PORT=143/g' /etc/default/dropbear
+sed -i 's/DROPBEAR_EXTRA_ARGS=/DROPBEAR_EXTRA_ARGS="-p 50000 -p 109 -p 110 -p 69"/g' /etc/default/dropbear
 echo "/bin/false" >> /etc/shells
 echo "/usr/sbin/nologin" >> /etc/shells
 /etc/init.d/ssh restart
 /etc/init.d/dropbear restart
-#wget -q ${REPO}ssh/setrsyslog.sh && chmod +x setrsyslog.sh && ./setrsyslog.sh
-
-detect_os() {
-  if [[ -f /etc/os-release ]]; then
-    source /etc/os-release
-    echo "$ID $VERSION_ID"  # Mengembalikan ID dan versi OS
-  else
-    echo "Unknown"
-  fi
-}
-
-os_version=$(detect_os)
-if [[ "$os_version" =~ "ubuntu 24" ]]; then 
-  RSYSLOG_FILE="/etc/rsyslog.d/50-default.conf"
-elif [[ "$os_version" == "debian 12" ]]; then
-  RSYSLOG_FILE="/etc/rsyslog.conf"
-else
-  echo "Sistem operasi atau versi tidak dikenali. Keluar..."
-  exit 1
-fi
-
-LOG_FILES=(
-  "/var/log/auth.log"
-  "/var/log/kern.log"
-  "/var/log/mail.log"
-  "/var/log/user.log"
-  "/var/log/cron.log"
-)
-
-set_permissions() {
-  for log_file in "${LOG_FILES[@]}"; do
-    if [[ -f "$log_file" ]]; then
-      echo "Mengatur izin dan kepemilikan untuk $log_file..."
-      chmod 640 "$log_file"
-      chown syslog:adm "$log_file"  # Memberikan kepemilikan kepada syslog agar bisa menulis log
-    else
-      echo "$log_file tidak ditemukan, melewati..."
-    fi
-  done
-}
-
-# Mengecek apakah konfigurasi untuk dropbear sudah ada
-check_dropbear_log() {
-  grep -q 'if \$programname == "dropbear"' "$RSYSLOG_FILE"
-}
-
-# Fungsi untuk menambahkan konfigurasi dropbear
-add_dropbear_log() {
-  echo "Menambahkan konfigurasi Dropbear ke $RSYSLOG_FILE..."
-  sudo bash -c "echo -e 'if \$programname == \"dropbear\" then /var/log/auth.log\n& stop' >> $RSYSLOG_FILE"
-  systemctl restart rsyslog
-  echo "Konfigurasi Dropbear ditambahkan dan Rsyslog direstart."
-}
-
-if check_dropbear_log; then
-  echo "Konfigurasi Dropbear sudah ada, tidak ada perubahan yang dilakukan."
-else
-  add_dropbear_log
-fi
 
 # install stunnel
 apt install stunnel4 -y
