@@ -1,6 +1,5 @@
 #!/bin/bash
-
-#Optimasi Speed By cloudvpn
+rm -f $0
 Add_To_New_Line(){
 	if [ "$(tail -n1 $1 | wc -l)" == "0"  ];then
 		echo "" >> "$1"
@@ -65,4 +64,3 @@ echo "#############################################"
 }
 Install_BBR
 Optimize_Parameters
-rm -f /root/bbr.sh
