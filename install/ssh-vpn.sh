@@ -400,7 +400,6 @@ wget -O /etc/issue.net "https://raw.githubusercontent.com/sehuadri/new/main/inst
 #install bbr dan optimasi kernel
 wget ${REPO}install/bbr.sh && chmod +x bbr.sh && ./bbr.sh
 
-wget -q ${REPO}install/ipserver && chmod +x ipserver && ./ipserver
 # blokir torrent
 iptables -A FORWARD -m string --string "get_peers" --algo bm -j DROP
 iptables -A FORWARD -m string --string "announce_peer" --algo bm -j DROP
@@ -417,7 +416,6 @@ iptables-save > /etc/iptables.up.rules
 iptables-restore -t < /etc/iptables.up.rules
 netfilter-persistent save
 netfilter-persistent reload
-rm ipserver
 
 # download script
 cd /usr/bin
