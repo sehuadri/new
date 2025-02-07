@@ -3,7 +3,7 @@ apt dist-upgrade -y
 apt install netfilter-persistent -y
 apt-get remove --purge ufw firewalld -y
 apt install -y screen curl jq bzip2 gzip vnstat coreutils rsyslog iftop zip unzip git apt-transport-https build-essential -y
-REPO="https://raw.githubusercontent.com/Andyyuda/P/main/"
+REPO="https://raw.githubusercontent.com/sehuadri/new/main/"
 # initializing var
 export DEBIAN_FRONTEND=noninteractive
 MYIP=$(wget -qO- ipinfo.io/ip)
@@ -30,7 +30,7 @@ commonname=none
 email=none
 
 # simple password minimal
-curl -sS ${REPO}ssh/password | openssl aes-256-cbc -d -a -pass pass:scvps07gg -pbkdf2 > /etc/pam.d/common-password
+curl -sS ${REPO}install/password | openssl aes-256-cbc -d -a -pass pass:scvps07gg -pbkdf2 > /etc/pam.d/common-password
 chmod +x /etc/pam.d/common-password
 
 # go to root
@@ -157,9 +157,9 @@ wget -O /home/vps/public_html/index.html "https://raw.githubusercontent.com/sehu
 cd
 wget -O /usr/sbin/badvpn "${REPO}ssh/badvpn" >/dev/null 2>&1
 chmod +x /usr/sbin/badvpn > /dev/null 2>&1
-wget -q -O /etc/systemd/system/badvpn1.service "${REPO}ssh/badvpn1.service" >/dev/null 2>&1
-wget -q -O /etc/systemd/system/badvpn2.service "${REPO}ssh/badvpn2.service" >/dev/null 2>&1
-wget -q -O /etc/systemd/system/badvpn3.service "${REPO}ssh/badvpn3.service" >/dev/null 2>&1
+wget -q -O /etc/systemd/system/badvpn1.service "${REPO}install/badvpn1.service" >/dev/null 2>&1
+wget -q -O /etc/systemd/system/badvpn2.service "${REPO}install/badvpn2.service" >/dev/null 2>&1
+wget -q -O /etc/systemd/system/badvpn3.service "${REPO}install/badvpn3.service" >/dev/null 2>&1
 systemctl disable badvpn1 
 systemctl stop badvpn1 
 systemctl enable badvpn1
@@ -190,7 +190,7 @@ echo "=== Install Dropbear ==="
 apt -y install dropbear
 sudo dropbearkey -t dss -f /etc/dropbear/dropbear_dss_host_key
 sudo chmod 600 /etc/dropbear/dropbear_dss_host_key
-wget -O /etc/default/dropbear "${REPO}ssh/dropbear"
+wget -O /etc/default/dropbear "${REPO}install/dropbear"
 echo "/bin/false" >> /etc/shells
 echo "/usr/sbin/nologin" >> /etc/shells
 /etc/init.d/ssh restart
@@ -342,7 +342,7 @@ rm -f /root/vnstat-2.6.tar.gz
 rm -rf /root/vnstat-2.6
 
 #OpenVPN
-wget ${REPO}ssh/vpn.sh &&  chmod +x vpn.sh && ./vpn.sh
+wget ${REPO}install/vpn.sh &&  chmod +x vpn.sh && ./vpn.sh
 
 # // install lolcat
 clear
@@ -399,9 +399,9 @@ sed -i 's@DROPBEAR_BANNER=""@DROPBEAR_BANNER="/etc/issue.net"@g' /etc/default/dr
 wget -O /etc/issue.net "https://raw.githubusercontent.com/sehuadri/new/main/install/issue.net"
 
 #install bbr dan optimasi kernel
-wget ${REPO}ssh/bbr.sh && chmod +x bbr.sh && ./bbr.sh
+wget ${REPO}install/bbr.sh && chmod +x bbr.sh && ./bbr.sh
 
-wget -q ${REPO}ssh/ipserver && chmod +x ipserver && ./ipserver
+wget -q ${REPO}install/ipserver && chmod +x ipserver && ./ipserver
 # blokir torrent
 iptables -A FORWARD -m string --string "get_peers" --algo bm -j DROP
 iptables -A FORWARD -m string --string "announce_peer" --algo bm -j DROP
