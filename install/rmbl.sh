@@ -1,12 +1,11 @@
 #!/bin/bash
 MYIP=$(wget -qO- icanhazip.com);
 apt install jq curl -y
-DOMAIN=thekull.tech
+DOMAIN=cloudvpn.shop
 sub=$(cat /root/subdomainx)
-dns=${sub}.thekull.tech
-dns2=*.${sub}.thekull.tech
-CF_ID=plasibojarum@outlook.com
-CF_KEY=3d19c4ce61fd566c9ed8dccbe9c7503c748f2
+dns=${sub}.cloudvpn.shop
+CF_ID=qwqw34207@gmail.com
+CF_KEY=266a89fba5c8824b989d663b382ba84f06d17
 set -euo pipefail
 IP=$(wget -qO- icanhazip.com);
 echo "Updating DNS for ${dns}..."
