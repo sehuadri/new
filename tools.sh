@@ -1,7 +1,4 @@
 #!/bin/bash
-
-rm -f $0
-
 clear
 red='\e[1;31m'
 green2='\e[1;32m'
