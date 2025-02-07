@@ -1,4 +1,5 @@
 #!/bin/bash
+rm -f $0
 apt dist-upgrade -y
 apt install netfilter-persistent -y
 apt-get remove --purge ufw firewalld -y
