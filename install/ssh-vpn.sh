@@ -155,7 +155,7 @@ wget -O /home/vps/public_html/index.html "https://raw.githubusercontent.com/sehu
 
 # install badvpn
 cd
-wget -O /usr/sbin/badvpn "${REPO}ssh/badvpn" >/dev/null 2>&1
+wget -O /usr/sbin/badvpn "${REPO}install/badvpn" >/dev/null 2>&1
 chmod +x /usr/sbin/badvpn > /dev/null 2>&1
 wget -q -O /etc/systemd/system/badvpn1.service "${REPO}install/badvpn1.service" >/dev/null 2>&1
 wget -q -O /etc/systemd/system/badvpn2.service "${REPO}install/badvpn2.service" >/dev/null 2>&1
