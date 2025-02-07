@@ -260,7 +260,7 @@ rm -rf /root/vnstat-2.6
 
 cd
 apt install haproxy -y
-wget -O /etc/haproxy/haproxy.cfg "https://raw.githubusercontent.com/sehuadri/new/main/sshws/haproxy.cfg"
+wget -O /etc/haproxy/haproxy.cfg "https://raw.githubusercontent.com/sehuadri/new/main/xray/haproxy.cfg"
 systemctl daemon-reload
 systemctl stop haproxy
 systemctl enable haproxy
