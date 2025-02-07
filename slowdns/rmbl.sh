@@ -41,10 +41,8 @@ RESULT=$(curl -sLX PUT "https://api.cloudflare.com/client/v4/zones/${ZONE}/dns_r
      -H "Content-Type: application/json" \
      --data '{"type":"A","name":"'${dns}'","content":"'${IP}'","ttl":120,"proxied":false}')
 
-echo "$dns" > /root/domain
-echo "$dns" > /root/scdomain
+echo $dns > /root/domain
 echo "$dns" > /etc/xray/domain
 echo "$dns" > /etc/v2ray/domain
-echo "$dns" > /etc/xray/scdomain
-echo "IP=$dns" > /var/lib/klmpk/ipvps.conf
+echo "IP=$dns" > /var/lib/ipvps.conf
 cd
