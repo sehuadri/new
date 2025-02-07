@@ -709,10 +709,10 @@ wget https://raw.githubusercontent.com/sehuadri/new/main/install/ins-trgo.sh && 
 clear
 }
 
-res12() {
-wget -q -O /etc/crontab "https://raw.githubusercontent.com/sehuadri/new/main/install/crontab" && chmod 644 /etc/crontab
-clear
-}
+#res12() {
+#wget -q -O /etc/crontab "https://raw.githubusercontent.com/sehuadri/new/main/install/crontab" && chmod 644 /etc/crontab
+#clear
+#}
 
 echo -e "${BIBlue}╭══════════════════════════════════════════╮${NC}"
 echo -e "${BIBlue}│ ${BGCOLOR}  PROCESS INSTALLED SSH & OVVPN         ${NC}${BIBlue} │${NC}"
@@ -763,10 +763,10 @@ echo -e "${BIBlue}╭═══════════════════�
 echo -e "${BIBlue}│ ${BGCOLOR}    PROCESS INSTALLED TOJAN-GO        ${NC}${BIBlue} │${NC}"
 echo -e "${BIBlue}╰══════════════════════════════════════════╯${NC}"
 fun_bar 'res11'
-echo -e "${BIBlue}╭══════════════════════════════════════════╮${NC}"
-echo -e "${BIBlue}│ ${BGCOLOR}    PROCESS INSTALLED CRONTAB         ${NC}${BIBlue} │${NC}"
-echo -e "${BIBlue}╰══════════════════════════════════════════╯${NC}"
-fun_bar 'res12'
+#echo -e "${BIBlue}╭══════════════════════════════════════════╮${NC}"
+#echo -e "${BIBlue}│ ${BGCOLOR}    PROCESS INSTALLED CRONTAB         ${NC}${BIBlue} │${NC}"
+#echo -e "${BIBlue}╰══════════════════════════════════════════╯${NC}"
+#fun_bar 'res12'
 }
 
 function iinfo(){
@@ -806,14 +806,14 @@ curl -s --max-time $TIMES -d "chat_id=$CHATID&disable_web_page_preview=1&text=$T
 clear
 }
 #install remove log
-echo "0 5 * * * root reboot" >> /etc/crontab
-echo "* * * * * root clog" >> /etc/crontab
-echo "0 3 * * * root clearlog" >> /etc/crontab
-echo "59 * * * * root pkill 'menu'" >> /etc/crontab
-echo "0 1 * * * root xp" >> /etc/crontab
-echo "*/5 * * * * root notramcpu" >> /etc/crontab
-service cron restart
-clear
+#echo "0 5 * * * root reboot" >> /etc/crontab
+#echo "* * * * * root clog" >> /etc/crontab
+#echo "0 3 * * * root clearlog" >> /etc/crontab
+#echo "59 * * * * root pkill 'menu'" >> /etc/crontab
+#echo "0 1 * * * root xp" >> /etc/crontab
+#echo "*/5 * * * * root notramcpu" >> /etc/crontab
+#service cron restart
+#clear
 CEKIP
 Casper3
 cat> /root/.profile << END
