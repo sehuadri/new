@@ -1,6 +1,7 @@
-wget -O /usr/bin/ws "${REPO}ws/ws" >/dev/null 2>&1
-    wget -O /usr/bin/tun.conf "${REPO}ws/tun.conf" >/dev/null 2>&1
-    wget -O /etc/systemd/system/ws.service "${REPO}ws/ws.service" >/dev/null 2>&1
+REPO="https://raw.githubusercontent.com/sehuadri/new/main/"
+wget -O /usr/bin/ws "${REPO}sshws/ws" >/dev/null 2>&1
+    wget -O /usr/bin/tun.conf "${REPO}sshws/tun.conf" >/dev/null 2>&1
+    wget -O /etc/systemd/system/ws.service "${REPO}sshws/ws.service" >/dev/null 2>&1
     chmod +x /etc/systemd/system/ws.service
     chmod +x /usr/bin/ws
     chmod 644 /usr/bin/tun.conf
