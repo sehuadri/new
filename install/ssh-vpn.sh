@@ -1,5 +1,4 @@
 #!/bin/bash
-rm -f $0
 apt dist-upgrade -y
 apt install netfilter-persistent -y
 apt-get remove --purge ufw firewalld -y
@@ -221,6 +220,56 @@ else
   add_dropbear_log
 fi
 
+# install stunnel
+apt install stunnel4 -y
+cat > /etc/stunnel/stunnel.conf <<-END
+cert = /etc/stunnel/stunnel.pem
+client = no
+socket = a:SO_REUSEADDR=1
+socket = l:TCP_NODELAY=1
+socket = r:TCP_NODELAY=1
+
+[dropbear]
+accept = 222
+connect = 127.0.0.1:22
+
+[dropbear]
+accept = 777
+connect = 127.0.0.1:109
+
+#[ws-stunnel]
+#accept = 2083
+#connect = 700
+[ws-stunnel]
+accept = 2096
+connect = 700
+
+[openvpn]
+accept = 442
+connect = 127.0.0.1:1194
+
+END
+
+# make a certificate
+openssl genrsa -out key.pem 2048
+openssl req -new -x509 -key key.pem -out cert.pem -days 1095 \
+-subj "/C=$country/ST=$state/L=$locality/O=$organization/OU=$organizationalunit/CN=$commonname/emailAddress=$email"
+cat key.pem cert.pem >> /etc/stunnel/stunnel.pem
+
+# konfigurasi stunnel
+sed -i 's/ENABLED=0/ENABLED=1/g' /etc/default/stunnel4
+/etc/init.d/stunnel4 restart
+
+# Restart Stunnel4
+systemctl stop stunnel4
+systemctl enable stunnel4
+systemctl start stunnel4
+systemctl restart stunnel4
+/etc/init.d/stunnel4 restart
+/etc/init.d/stunnel4 status
+/etc/init.d/stunnel4 restart
+
+
 # Set permissions untuk file log
 set_permissions
 
@@ -256,15 +305,6 @@ systemctl enable vnstat
 /etc/init.d/vnstat restart
 rm -f /root/vnstat-2.6.tar.gz
 rm -rf /root/vnstat-2.6
-
-
-cd
-apt install haproxy -y
-wget -O /etc/haproxy/haproxy.cfg "https://raw.githubusercontent.com/sehuadri/new/main/xray/haproxy.cfg"
-systemctl daemon-reload
-systemctl stop haproxy
-systemctl enable haproxy
-systemctl start haproxy
 
 #OpenVPN
 wget ${REPO}ssh/vpn.sh &&  chmod +x vpn.sh && ./vpn.sh
@@ -304,57 +344,24 @@ sed -i '$ i\/swapfile      swap swap   defaults    0 0' /etc/fstab
 apt -y install fail2ban
 
 # Instal DDOS Flate
-if [ -d '/usr/local/ddos' ]; then
-	echo; echo; echo "Please un-install the previous version first"
-	exit 0
-else
-	mkdir /usr/local/ddos
-fi
-clear
-echo; echo 'Installing DOS-Deflate 0.6'; echo
-echo; echo -n 'Downloading source files...'
-wget -q -O /usr/local/ddos/ddos.conf http://www.inetbase.com/scripts/ddos/ddos.conf
-echo -n '.'
-wget -q -O /usr/local/ddos/LICENSE http://www.inetbase.com/scripts/ddos/LICENSE
-echo -n '.'
-wget -q -O /usr/local/ddos/ignore.ip.list http://www.inetbase.com/scripts/ddos/ignore.ip.list
-echo -n '.'
-wget -q -O /usr/local/ddos/ddos.sh http://www.inetbase.com/scripts/ddos/ddos.sh
-chmod 0755 /usr/local/ddos/ddos.sh
-cp -s /usr/local/ddos/ddos.sh /usr/local/bin/ddos
-echo '...done'
-echo; echo -n 'Creating cron to run script every minute.....(Default setting)'
-/usr/local/ddos/ddos.sh --cron > /dev/null 2>&1
-echo '.....done'
-echo; echo 'Installation has completed.'
-echo 'Config file is at /usr/local/ddos/ddos.conf'
-echo 'Please send in your comments and/or suggestions to https://t.me/newbie_store24'
+sudo apt install dnsutils -y
+sudo apt-get install net-tools -y
+sudo apt-get install tcpdump -y
+sudo apt-get install dsniff -y
+sudo apt install grepcidr -y
+
+wget https://github.com/sehuadri/ddos-deflate/archive/master.zip -O ddos.zip
+unzip ddos.zip
+cd ddos-deflate-master
+./install.sh
+
 
 # banner /etc/issue.net
 echo "Banner /etc/issue.net" >>/etc/ssh/sshd_config
+sed -i 's@DROPBEAR_BANNER=""@DROPBEAR_BANNER="/etc/issue.net"@g' /etc/default/dropbear
 
 # Ganti Banner
-# Buat banner di /etc/issue.net
-cat > /etc/issue.net << END
-happy conneting
-
-<p style="text-align: center;">
-    <span style="color: #41A85F; font-size: 26px;"><strong>KLMPK VPN</strong></span>
-    <span style="font-size: 26px;"><strong> </strong></span>
-    <span style="color: #F37934; font-size: 26px;"><strong>PREMIUM</strong></span>
-    <span style="font-size: 26px;">&nbsp;</span>
-</p>
-<p style="text-align: center;">
-    <span style="font-family: 'Trebuchet MS', Helvetica, sans-serif;">
-        <span style="color: #E25041; background-color: #61BD6D;">Blitar Jatim</span>
-        <span style="background-color: #61BD6D;">&nbsp;</span>
-    </span>
-</p>
-<p style="text-align: center;">
-    <span style="color: #B8312F;">Telp/WhatsApp</span>:
-    <span style="color: #EFEFEF;">082131861788</span>
-</p>
-END
+wget -O /etc/issue.net "https://raw.githubusercontent.com/sehuadri/new/main/install/issue.net"
 
 #install bbr dan optimasi kernel
 wget ${REPO}ssh/bbr.sh && chmod +x bbr.sh && ./bbr.sh
@@ -379,6 +386,16 @@ netfilter-persistent reload
 rm ipserver
 
 # download script
+cd /usr/bin
+wget -O issue "https://raw.githubusercontent.com/sehuadri/new/main/install/issue.net"
+wget -O m-theme "https://raw.githubusercontent.com/sehuadri/new/main/menu/m-theme.sh"
+wget -O speedtest "https://raw.githubusercontent.com/sehuadri/new/main/install/speedtest_cli.py"
+wget -O xp "https://raw.githubusercontent.com/sehuadri/new/main/install/xp.sh"
+
+chmod +x issue
+chmod +x m-theme
+chmod +x speedtest
+chmod +x xp
 cd
 
 #if [ ! -f "/etc/cron.d/xp_otm" ]; then
