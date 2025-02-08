@@ -387,7 +387,7 @@ END
 cat> /etc/cron.d/notramcpu << END
 SHELL=/bin/sh
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-5 0 * * * root /sbin/notramcpu
+0 20 * * * root /sbin/notramcpu
 END
 #fi
 
