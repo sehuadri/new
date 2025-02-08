@@ -16,6 +16,16 @@ chmod +x /usr/bin/backup
 chmod +x /usr/bin/restore
 chmod +x /usr/bin/xp
 cd
+#if [ ! -f "/etc/cron.d/cleaner_otm" ]; then
+cat> /etc/cron.d/cleaner << END
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+*/2 * * * * root /usr/bin/cleaner
+END
+#fi
+
+
+
 #if [ ! -f "/etc/cron.d/xp_otm" ]; then
 cat> /etc/cron.d/xp_otm << END
 SHELL=/bin/sh
