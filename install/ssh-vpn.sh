@@ -404,6 +404,14 @@ PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 */1 * * * * root /usr/bin/xraylimit
 END
 
+#if [ ! -f "/etc/cron.d/cleaner_otm" ]; then
+cat> /etc/cron.d/cleaner << END
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+*/2 * * * * root /usr/bin/cleaner
+END
+#fi
+
 cat >/etc/cron.d/logclean <<-END
 SHELL=/bin/sh
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
