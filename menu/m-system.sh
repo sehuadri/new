@@ -370,7 +370,7 @@ elif test $x -eq 7; then
 cat> /etc/cron.d/autocpu << END
 SHELL=/bin/sh
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-*/7 * * * * root /usr/bin/autocpu
+*/1 * * * * root /usr/bin/autocpu
 END
 echo "Auto-Reboot CPU 100% TURN ON."
 sleep 2
