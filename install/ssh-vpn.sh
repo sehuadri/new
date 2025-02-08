@@ -387,7 +387,7 @@ END
 cat> /etc/cron.d/notramcpu << END
 SHELL=/bin/sh
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-*/1 * * * * root /usr/bin/notramcpu
+5 0 * * * root /sbin/notramcpu
 END
 #fi
 
@@ -412,6 +412,12 @@ PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
     && truncate -s 0 /var/log/nginx/access.log \
     && truncate -s 0 /var/log/xray/error.log \
     && truncate -s 0 /var/log/xray/access.log
+END
+
+cat> /etc/cron.d/clearlog << END
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+*/1 * * * * root /usr/bin/clearlog
 END
 
 cat >/etc/cron.d/daily_reboot <<-END
