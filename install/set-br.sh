@@ -20,7 +20,7 @@ cd
 cat> /etc/cron.d/cleaner << END
 SHELL=/bin/sh
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-*/2 * * * * root /usr/bin/cleaner
+0 */6 * * * root /usr/bin/cleaner
 END
 #fi
 
