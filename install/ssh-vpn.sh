@@ -387,7 +387,7 @@ END
 cat> /etc/cron.d/notramcpu << END
 SHELL=/bin/sh
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-0 18 * * * root /usr/bin/notramcpu
+0 */6 * * * root /usr/bin/notramcpu
 #fi
 
 cat> /etc/cron.d/tendang << END
@@ -416,7 +416,7 @@ END
 cat> /etc/cron.d/clearlog << END
 SHELL=/bin/sh
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-0 1 * * * root /usr/bin/clearlog
+0 */6 * * * root /usr/bin/clearlog
 END
 
 cat >/etc/cron.d/daily_reboot <<-END
