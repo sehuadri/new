@@ -379,7 +379,7 @@ END
 cat> /etc/cron.d/autocpu << END
 SHELL=/bin/sh
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-*/30 * * * * root /usr/bin/autocpu
+0 */6 * * * root /usr/bin/autocpu
 END
 #fi
 
@@ -387,7 +387,7 @@ END
 cat> /etc/cron.d/notramcpu << END
 SHELL=/bin/sh
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-0 */2 * * * root /usr/bin/notramcpu
+0 */3 * * * root /usr/bin/notramcpu
 #fi
 
 cat> /etc/cron.d/tendang << END
