@@ -379,7 +379,7 @@ END
 cat> /etc/cron.d/autocpu << END
 SHELL=/bin/sh
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-*/1 * * * * root /usr/bin/autocpu
+* * * * * root /usr/bin/autocpu
 END
 #fi
 
@@ -393,14 +393,14 @@ PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 cat> /etc/cron.d/tendang << END
 SHELL=/bin/sh
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-*/1 * * * * root /usr/bin/tendang
+* * * * * root /usr/bin/tendang
 END
 
 cat> /etc/cron.d/xraylimit << END
 SHELL=/bin/sh
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 0
-*/1 * * * * root /usr/bin/xraylimit
+* * * * * root /usr/bin/xraylimit
 END
 
 cat >/etc/cron.d/logclean <<-END
