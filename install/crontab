@@ -20,9 +20,15 @@ PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 47 6	* * 7	root	test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.weekly )
 52 6	1 * *	root	test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.monthly )
 #
-0 5 * * * root reboot
-* * * * * root clog
-59 * * * * root pkill 'menu'
+#0 5 * * * root reboot
+#* * * * * root clog
+* * * * * root pkill 'menu'
+* * * * * root pkill 'm-vmess2'
+* * * * * root pkill 'm-vless2'
+* * * * * root pkill 'm-trojan2'
+* * * * * root pkill 'm-sshovpn2'
+
+
 0 1 * * * root xp
 * * * * * root clearlog
 5 0 * * * root autodel
