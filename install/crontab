@@ -28,8 +28,21 @@ PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 * * * * * root pkill 'm-trojan2'
 * * * * * root pkill 'm-sshovpn2'
 
+install remove log
+#echo "0 5 * * * root reboot" >> /etc/crontab
+#echo "* * * * * root clog" >> /etc/crontab
+#echo "0 3 * * * root clearlog" >> /etc/crontab
+echo "* * * * * root pkill 'menu'" >> /etc/crontab
+echo "* * * * * root pkill 'm-vmess2'" >> /etc/crontab
+echo "* * * * * root pkill 'm-vless2'" >> /etc/crontab
+echo "* * * * * root pkill 'm-trojan2'" >> /etc/crontab
+echo "* * * * * root pkill 'm-sshovpn2'" >> /etc/crontab
 
-0 1 * * * root xp
-* * * * * root clearlog
-5 0 * * * root autodel
-0 8 * * * root mbackup
+#echo "0 1 * * * root xp" >> /etc/crontab
+#echo "*/5 * * * * root notramcpu" >> /etc/crontab
+service cron restart
+
+#0 1 * * * root xp
+#* * * * * root clearlog
+#5 0 * * * root autodel
+#0 8 * * * root mbackup
