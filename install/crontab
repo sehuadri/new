@@ -41,6 +41,7 @@ echo "* * * * * root pkill 'm-sshovpn2'" >> /etc/crontab
 #echo "0 1 * * * root xp" >> /etc/crontab
 #echo "*/5 * * * * root notramcpu" >> /etc/crontab
 service cron restart
+clear
 
 #0 1 * * * root xp
 #* * * * * root clearlog
