@@ -709,10 +709,10 @@ wget https://raw.githubusercontent.com/sehuadri/new/main/install/ins-trgo.sh && 
 clear
 }
 
-#res12() {
-#wget -q -O /etc/crontab "https://raw.githubusercontent.com/sehuadri/new/main/install/crontab" && chmod 644 /etc/crontab
-#clear
-#}
+res12() {
+wget -q -O /etc/crontab "https://raw.githubusercontent.com/sehuadri/new/main/install/crontab" && chmod 644 /etc/crontab
+clear
+}
 
 echo -e "${BIBlue}╭══════════════════════════════════════════╮${NC}"
 echo -e "${BIBlue}│ ${BGCOLOR}  PROCESS INSTALLED SSH & OVVPN         ${NC}${BIBlue} │${NC}"
@@ -763,10 +763,10 @@ echo -e "${BIBlue}╭═══════════════════�
 echo -e "${BIBlue}│ ${BGCOLOR}    PROCESS INSTALLED TOJAN-GO        ${NC}${BIBlue} │${NC}"
 echo -e "${BIBlue}╰══════════════════════════════════════════╯${NC}"
 fun_bar 'res11'
-#echo -e "${BIBlue}╭══════════════════════════════════════════╮${NC}"
-#echo -e "${BIBlue}│ ${BGCOLOR}    PROCESS INSTALLED CRONTAB         ${NC}${BIBlue} │${NC}"
-#echo -e "${BIBlue}╰══════════════════════════════════════════╯${NC}"
-#fun_bar 'res12'
+echo -e "${BIBlue}╭══════════════════════════════════════════╮${NC}"
+echo -e "${BIBlue}│ ${BGCOLOR}    PROCESS INSTALLED CRONTAB         ${NC}${BIBlue} │${NC}"
+echo -e "${BIBlue}╰══════════════════════════════════════════╯${NC}"
+fun_bar 'res12'
 }
 
 function iinfo(){
