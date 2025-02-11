@@ -25,10 +25,14 @@ rm -rf addnoobz
 rm -rf cek-noobz
 rm -rf m-noobz
 rm -rf m-vmess2
+rm -rf m-vmess
 rm -rf m-vless2
+rm -rf m-vless
 rm -rf m-trojan2
+rm -rf m-trojan
 rm -rf m-system
 rm -rf m-sshovpn2
+rm -rf m-sshovpn
 rm -rf m-ssws
 rm -rf running
 rm -rf m-update
@@ -77,7 +81,7 @@ rm -rf m-trojan2
 rm -rf m-trojan
 rm -rf m-system
 rm -rf m-sshovpn2
-rm -rf m-sshovpn2
+rm -rf m-sshovpn
 rm -rf m-ssws
 rm -rf running
 rm -rf m-backup
