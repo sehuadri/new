@@ -474,7 +474,7 @@ echo -e "$COLOR1└────────────────────�
 echo -e ""
 echo -ne " ${WH}Select menu ${COLOR1}: ${WH}"; read opt
 case $opt in
-01 | 1) clear ; m-sshovpn2 ;;
+01 | 1) clear ; m-sshovpn ;;
 02 | 2) clear ; m-vmess2 ;;
 03 | 3) clear ; m-vless2 ;;
 04 | 4) clear ; m-trojan2 ;;
