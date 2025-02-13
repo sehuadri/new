@@ -68,7 +68,7 @@ touch /var/log/xray/error.log
 touch /var/log/xray/access2.log
 touch /var/log/xray/error2.log
 # / / Ambil Xray Core Version Terbaru
-bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version 1.7.5
+bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -u www-data --version 24.10.31
 
 ## crt xray
 systemctl stop nginx
@@ -447,125 +447,195 @@ cat >/etc/nginx/conf.d/xray.conf <<EOF
              root /home/vps/public_html;
         }
 EOF
-sed -i '$ ilocation = /vless' /etc/nginx/conf.d/xray.conf
-sed -i '$ i{' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_pass http://127.0.0.1:14016;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_http_version 1.1;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header X-Real-IP \$remote_addr;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header Upgrade \$http_upgrade;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
-sed -i '$ i}' /etc/nginx/conf.d/xray.conf
-
-sed -i '$ ilocation = /vmess' /etc/nginx/conf.d/xray.conf
-sed -i '$ i{' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_pass http://127.0.0.1:23456;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_http_version 1.1;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header X-Real-IP \$remote_addr;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header Upgrade \$http_upgrade;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
-sed -i '$ i}' /etc/nginx/conf.d/xray.conf
-
-sed -i '$ ilocation = /worryfree' /etc/nginx/conf.d/xray.conf
-sed -i '$ i{' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_pass http://127.0.0.1:28406;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_http_version 1.1;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header X-Real-IP \$remote_addr;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header Upgrade \$http_upgrade;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
-sed -i '$ i}' /etc/nginx/conf.d/xray.conf
-# TROJAN NONTLS
-sed -i '$ ilocation = /trojan-ntls' /etc/nginx/conf.d/xray.conf
-sed -i '$ i{' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_pass http://127.0.0.1:25431;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_http_version 1.1;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header X-Real-IP \$remote_addr;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header Upgrade \$http_upgrade;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
-sed -i '$ i}' /etc/nginx/conf.d/xray.conf
-
-sed -i '$ ilocation = /trojan-ws' /etc/nginx/conf.d/xray.conf
-sed -i '$ i{' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_pass http://127.0.0.1:25432;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_http_version 1.1;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header X-Real-IP \$remote_addr;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header Upgrade \$http_upgrade;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
-sed -i '$ i}' /etc/nginx/conf.d/xray.conf
-
-sed -i '$ ilocation = /ss-ws' /etc/nginx/conf.d/xray.conf
-sed -i '$ i{' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_pass http://127.0.0.1:30300;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_http_version 1.1;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header X-Real-IP \$remote_addr;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header Upgrade \$http_upgrade;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
-sed -i '$ i}' /etc/nginx/conf.d/xray.conf
-
-sed -i '$ ilocation /' /etc/nginx/conf.d/xray.conf
-sed -i '$ i{' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_pass http://127.0.0.1:700;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_http_version 1.1;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header X-Real-IP \$remote_addr;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header Upgrade \$http_upgrade;' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header Connection "upgrade";' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
-sed -i '$ i}' /etc/nginx/conf.d/xray.conf
-
-sed -i '$ ilocation ^~ /vless-grpc' /etc/nginx/conf.d/xray.conf
-sed -i '$ i{' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
-sed -i '$ igrpc_set_header X-Real-IP \$remote_addr;' /etc/nginx/conf.d/xray.conf
-sed -i '$ igrpc_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/conf.d/xray.conf
-sed -i '$ igrpc_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
-sed -i '$ igrpc_pass grpc://127.0.0.1:24456;' /etc/nginx/conf.d/xray.conf
-sed -i '$ i}' /etc/nginx/conf.d/xray.conf
-
-sed -i '$ ilocation ^~ /vmess-grpc' /etc/nginx/conf.d/xray.conf
-sed -i '$ i{' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
-sed -i '$ igrpc_set_header X-Real-IP \$remote_addr;' /etc/nginx/conf.d/xray.conf
-sed -i '$ igrpc_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/conf.d/xray.conf
-sed -i '$ igrpc_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
-sed -i '$ igrpc_pass grpc://127.0.0.1:31234;' /etc/nginx/conf.d/xray.conf
-sed -i '$ i}' /etc/nginx/conf.d/xray.conf
-
-sed -i '$ ilocation ^~ /trojan-grpc' /etc/nginx/conf.d/xray.conf
-sed -i '$ i{' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
-sed -i '$ igrpc_set_header X-Real-IP \$remote_addr;' /etc/nginx/conf.d/xray.conf
-sed -i '$ igrpc_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/conf.d/xray.conf
-sed -i '$ igrpc_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
-sed -i '$ igrpc_pass grpc://127.0.0.1:33456;' /etc/nginx/conf.d/xray.conf
-sed -i '$ i}' /etc/nginx/conf.d/xray.conf
-
-sed -i '$ ilocation ^~ /ss-grpc' /etc/nginx/conf.d/xray.conf
-sed -i '$ i{' /etc/nginx/conf.d/xray.conf
-sed -i '$ iproxy_redirect off;' /etc/nginx/conf.d/xray.conf
-sed -i '$ igrpc_set_header X-Real-IP \$remote_addr;' /etc/nginx/conf.d/xray.conf
-sed -i '$ igrpc_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;' /etc/nginx/conf.d/xray.conf
-sed -i '$ igrpc_set_header Host \$http_host;' /etc/nginx/conf.d/xray.conf
-sed -i '$ igrpc_pass grpc://127.0.0.1:30310;' /etc/nginx/conf.d/xray.conf
-sed -i '$ i}' /etc/nginx/conf.d/xray.conf
+ location ~ /vless {
+    if ($http_upgrade != "Websocket") {
+    rewrite /(.*) /vless break;
+    }
+    add_header X-HTTP-LEVEL-HEADER 1;
+    add_header X-ANOTHER-HTTP-LEVEL-HEADER 1;
+    add_header X-SERVER-LEVEL-HEADER 1;
+    add_header X-LOCATION-LEVEL-HEADER 1;
+    proxy_headers_hash_max_size 512;
+    proxy_headers_hash_bucket_size 128;
+    proxy_http_version 1.1;
+    proxy_redirect off;
+    proxy_pass http://127.0.0.1:14016;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $http_x_forwarded_for;
+    proxy_set_header X-Forwarded-For $http_x_forwarded_for;
+  }
+    location ~ /vmess {
+    if ($http_upgrade != "Websocket") {
+    rewrite /(.*) /vmess break;
+    }
+    add_header X-HTTP-LEVEL-HEADER 1;
+    add_header X-ANOTHER-HTTP-LEVEL-HEADER 1;
+    add_header X-SERVER-LEVEL-HEADER 1;
+    add_header X-LOCATION-LEVEL-HEADER 1;
+    proxy_headers_hash_max_size 512;
+    proxy_headers_hash_bucket_size 128;
+    proxy_http_version 1.1;
+    proxy_redirect off;
+    proxy_pass http://127.0.0.1:23456;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $http_x_forwarded_for;
+    proxy_set_header X-Forwarded-For $http_x_forwarded_for;
+  } 
+   location ~ /worryfree {
+    if ($http_upgrade != "Websocket") {
+    rewrite /(.*) /vmess break;
+    }
+    add_header X-HTTP-LEVEL-HEADER 1;
+    add_header X-ANOTHER-HTTP-LEVEL-HEADER 1;
+    add_header X-SERVER-LEVEL-HEADER 1;
+    add_header X-LOCATION-LEVEL-HEADER 1;
+    proxy_headers_hash_max_size 512;
+    proxy_headers_hash_bucket_size 128;
+    proxy_http_version 1.1;
+    proxy_redirect off;
+    proxy_pass http://127.0.0.1:28406;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $http_x_forwarded_for;
+    proxy_set_header X-Forwarded-For $http_x_forwarded_for;
+  } 
+    location ~ /trojan-ntls {
+    if ($http_upgrade != "Websocket") {
+    rewrite /(.*) /trojan-ntls break;
+    }
+    add_header X-HTTP-LEVEL-HEADER 1;
+    add_header X-ANOTHER-HTTP-LEVEL-HEADER 1;
+    add_header X-SERVER-LEVEL-HEADER 1;
+    add_header X-LOCATION-LEVEL-HEADER 1;
+    proxy_headers_hash_max_size 512;
+    proxy_headers_hash_bucket_size 128;
+    proxy_http_version 1.1;
+    proxy_redirect off;
+    proxy_pass http://127.0.0.1:25431;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $http_x_forwarded_for;
+    proxy_set_header X-Forwarded-For $http_x_forwarded_for;
+  }
+  location ~ /trojan-ws {
+    if ($http_upgrade != "Websocket") {
+    rewrite /(.*) /trojan-ws break;
+    }
+    add_header X-HTTP-LEVEL-HEADER 1;
+    add_header X-ANOTHER-HTTP-LEVEL-HEADER 1;
+    add_header X-SERVER-LEVEL-HEADER 1;
+    add_header X-LOCATION-LEVEL-HEADER 1;
+    proxy_headers_hash_max_size 512;
+    proxy_headers_hash_bucket_size 128;
+    proxy_http_version 1.1;
+    proxy_redirect off;
+    proxy_pass http://127.0.0.1:25432;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $http_x_forwarded_for;
+    proxy_set_header X-Forwarded-For $http_x_forwarded_for;
+  }
+    location ~ /ss-ws {
+    if ($http_upgrade != "Websocket") {
+    rewrite /(.*) /ss-ws break;
+    }
+    add_header X-HTTP-LEVEL-HEADER 1;
+    add_header X-ANOTHER-HTTP-LEVEL-HEADER 1;
+    add_header X-SERVER-LEVEL-HEADER 1;
+    add_header X-LOCATION-LEVEL-HEADER 1;
+    proxy_headers_hash_max_size 512;
+    proxy_headers_hash_bucket_size 128;
+    proxy_http_version 1.1;
+    proxy_redirect off;
+    proxy_pass http://127.0.0.1:30300;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $http_x_forwarded_for;
+    proxy_set_header X-Forwarded-For $http_x_forwarded_for;
+  }
+  location ~ /' {
+    if ($http_upgrade != "Websocket") {
+    rewrite /(.*) /' break;
+    }
+    add_header X-HTTP-LEVEL-HEADER 1;
+    add_header X-ANOTHER-HTTP-LEVEL-HEADER 1;
+    add_header X-SERVER-LEVEL-HEADER 1;
+    add_header X-LOCATION-LEVEL-HEADER 1;
+    proxy_headers_hash_max_size 512;
+    proxy_headers_hash_bucket_size 128;
+    proxy_http_version 1.1;
+    proxy_redirect off;
+    proxy_pass http://127.0.0.1:700;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $http_x_forwarded_for;
+    proxy_set_header X-Forwarded-For $http_x_forwarded_for;
+  }
+    location ~ /vless-grpc {
+    add_header X-HTTP-LEVEL-HEADER 1;
+    add_header X-ANOTHER-HTTP-LEVEL-HEADER 1;
+    add_header X-SERVER-LEVEL-HEADER 1;
+    add_header X-LOCATION-LEVEL-HEADER 1;
+    proxy_headers_hash_max_size 512;
+    proxy_headers_hash_bucket_size 128;
+    proxy_http_version 1.1;
+    proxy_redirect off;
+    grpc_set_header Host $host;
+    grpc_pass grpc://127.0.0.1:24456;
+    grpc_set_header X-Real-IP $http_x_forwarded_for;
+    grpc_set_header X-Forwarded-For $http_x_forwarded_for;
+  }
+    location ~ /vmess-grpc {
+    add_header X-HTTP-LEVEL-HEADER 1;
+    add_header X-ANOTHER-HTTP-LEVEL-HEADER 1;
+    add_header X-SERVER-LEVEL-HEADER 1;
+    add_header X-LOCATION-LEVEL-HEADER 1;
+    proxy_headers_hash_max_size 512;
+    proxy_headers_hash_bucket_size 128;
+    proxy_http_version 1.1;
+    proxy_redirect off;
+    grpc_set_header Host $host;
+    grpc_pass grpc://127.0.0.1:31234;
+    grpc_set_header X-Real-IP $http_x_forwarded_for;
+    grpc_set_header X-Forwarded-For $http_x_forwarded_for;
+  }
+    location ~ /trojan-grpc {
+    add_header X-HTTP-LEVEL-HEADER 1;
+    add_header X-ANOTHER-HTTP-LEVEL-HEADER 1;
+    add_header X-SERVER-LEVEL-HEADER 1;
+    add_header X-LOCATION-LEVEL-HEADER 1;
+    proxy_headers_hash_max_size 512;
+    proxy_headers_hash_bucket_size 128;
+    proxy_http_version 1.1;
+    proxy_redirect off;
+    grpc_set_header Host $host;
+    grpc_pass grpc://127.0.0.1:33456;
+    grpc_set_header X-Real-IP $http_x_forwarded_for;
+    grpc_set_header X-Forwarded-For $http_x_forwarded_for;
+  }
+    location ~ /ss-grpc {
+    add_header X-HTTP-LEVEL-HEADER 1;
+    add_header X-ANOTHER-HTTP-LEVEL-HEADER 1;
+    add_header X-SERVER-LEVEL-HEADER 1;
+    add_header X-LOCATION-LEVEL-HEADER 1;
+    proxy_headers_hash_max_size 512;
+    proxy_headers_hash_bucket_size 128;
+    proxy_http_version 1.1;
+    proxy_redirect off;
+    grpc_set_header Host $host;
+    grpc_pass grpc://127.0.0.1:30310;
+    grpc_set_header X-Real-IP $http_x_forwarded_for;
+    grpc_set_header X-Forwarded-For $http_x_forwarded_for;
+  }
 
 echo -e "$yell[SERVICE]$NC Restart All service"
 systemctl daemon-reload
