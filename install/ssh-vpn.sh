@@ -187,21 +187,31 @@ sed -i '/Port 22/a Port 22' /etc/ssh/sshd_config
 echo "=== Install Dropbear ==="
 # install dropbear
 apt -y install dropbear
-sed -i 's/NO_START=1/NO_START=0/g' /etc/default/dropbear
-sed -i 's/DROPBEAR_PORT=22/DROPBEAR_PORT=143/g' /etc/default/dropbear
-sed -i 's/DROPBEAR_EXTRA_ARGS=/DROPBEAR_EXTRA_ARGS="-p 50000 -p 109 -p 110 -p 69"/g' /etc/default/dropbear
+sudo dropbearkey -t dss -f /etc/dropbear/dropbear_dss_host_key
+sudo chmod 600 /etc/dropbear/dropbear_dss_host_key
+wget -O /etc/default/dropbear "${REPO}install/dropbear"
 echo "/bin/false" >> /etc/shells
 echo "/usr/sbin/nologin" >> /etc/shells
 /etc/init.d/ssh restart
 /etc/init.d/dropbear restart
+wget -q ${REPO}install/setrsyslog.sh && chmod +x setrsyslog.sh && ./setrsyslog.sh
 
-# // install squid for debian 9,10 & ubuntu 20.04
-apt -y install squid3
+if [[ "$OS_NAME" == "debian" && "$OS_VERSION" == "10" ]] || [[ "$OS_NAME" == "ubuntu" && "$OS_VERSION" == "20.04" ]]; then
+    echo "Menginstal squid3 untuk Debian 10 atau Ubuntu 20.04..."
+    apt -y install squid3
+else
+    echo "Menginstal squid untuk versi lain..."
+    apt -y install squid
+fi
+# Unduh file konfigurasi
+echo "Mengunduh file konfigurasi Squid..."
+wget -O /etc/squid/squid.conf "${REPO}install/squid3.conf"
 
-# install squid for debian 11
-apt -y install squid
-wget -O /etc/squid/squid.conf "https://raw.githubusercontent.com/sehuadri/new/main/install/main/squid3.conf"
+# Ganti placeholder dengan alamat IP
+echo "Mengganti placeholder IP dengan alamat IP saat ini..."
 sed -i $MYIP2 /etc/squid/squid.conf
+
+echo "Instalasi dan konfigurasi Squid selesai."
 
 # setting vnstat
 apt -y install vnstat
