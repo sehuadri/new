@@ -27,7 +27,7 @@ echo -e "$COLOR1└────────────────────�
 systemctl stop nginx
 systemctl stop kyt
 systemctl stop xray
-systemctl stop ws-stunnel
+systemctl stop ws
 exit
 fi
 }
@@ -93,19 +93,19 @@ systemctl restart kyt
 systemctl start kyt
 fi
 fi
-stunnel=$( systemctl status ws-stunnel | grep "Errno" | wc -l )
+stunnel=$( systemctl status ws | grep "Errno" | wc -l )
 if [[ $stunnel == "0" ]]; then
 echo -ne
 else
-systemctl restart ws-stunnel
-systemctl start ws-stunnel
+systemctl restart ws
+systemctl start ws
 fi
-stunnel2=$( systemctl status ws-stunnel | grep "TERM" | wc -l )
+stunnel2=$( systemctl status ws | grep "TERM" | wc -l )
 if [[ $stunnel2 == "0" ]]; then
 echo -ne
 else
-systemctl restart ws-stunnel
-systemctl start ws-stunnel
+systemctl restart ws
+systemctl start ws
 fi
 xrray=$( systemctl status xray | grep "error" | wc -l )
 if [[ $xrray == "0" ]]; then
