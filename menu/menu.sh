@@ -130,7 +130,7 @@ else
     yesterday_txv=NULL
 fi
 
-ssh_ws=$( systemctl status ws-stunnel | grep Active | awk '{print $3}' | sed 's/(//g' | sed 's/)//g' )
+ssh_ws=$( systemctl status ws | grep Active | awk '{print $3}' | sed 's/(//g' | sed 's/)//g' )
 if [[ $ssh_ws == "running" ]]; then
 status_ws="${COLOR1}ON${NC}"
 else
@@ -306,7 +306,7 @@ echo -e "$COLOR1 ${NC} ${COLBG1}               ${WH}• VPS PANEL MENU •      
 echo -e "$COLOR1└─────────────────────────────────────────────────┘${NC}"
 echo -e "$COLOR1┌─────────────────────────────────────────────────┐${NC}"
 echo -e "$COLOR1│$NC${WH} ❄️ OS            ${COLOR1}: ${WH}$MODEL2${NC}"
-#echo -e "$COLOR1│$NC${WH} ❄️ RAM           ${COLOR1}: ${WH}$tram / $uram MB${NC}"
+echo -e "$COLOR1│$NC${WH} ❄️ RAM           ${COLOR1}: ${WH}$tram / $uram MB${NC}"
 echo -e "$COLOR1│$NC${WH} ❄️ DATE          ${COLOR1}: ${WH}$DATE2 WIB${NC}"
 echo -e "$COLOR1│$NC${WH} ❄️ UPTIME        ${COLOR1}: ${WH}$uphours $upminutes $uptimecek"
 #echo -e " $COLOR1│$NC${WH} ❄️ TIME          ${COLOR1}: ${WH}$TIMEZONE${NC}"
@@ -425,8 +425,8 @@ res1() {
     systemctl restart noobzvpns
     systemctl restart daemon
     systemctl restart udp-custom
-    systemctl restart ws-dropbear
-    systemctl restart ws-stunnel
+    systemctl restart dropbear
+    systemctl restart ws
     systemctl restart openvpn
     systemctl restart cron
     systemctl restart netfilter-persistent
