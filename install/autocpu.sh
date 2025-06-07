@@ -13,7 +13,7 @@ Exp2=$(curl -sS https://raw.githubusercontent.com/awanklod/izin_new/main/ip | gr
 d1=$(date -d "$Exp2" +%s)
 d2=$(date -d "$today" +%s)
 certificate=$(( (d1 - d2) / 86400 ))
-echo "$certificate Hari" > /etc/masaaktif
+echo "$certificate Hari" > /etc/scdurasi
 vnstat_profile=$(vnstat | sed -n '3p' | awk '{print $1}' | grep -o '[^:]*')
 vnstat -i ${vnstat_profile} >/etc/t1
 bulan=$(date +%b)
