@@ -534,16 +534,6 @@ res9() {
 wget ${REPO}install/udp-custom.sh && chmod +x udp-custom.sh && bash udp-custom.sh
 clear
 }
-if [[ $(cat /etc/os-release | grep -w ID | head -n1 | sed 's/=//g' | sed 's/"//g' | sed 's/ID//g') == "ubuntu" ]]; then
-echo -e "${green}Setup nginx For OS Is $(cat /etc/os-release | grep -w PRETTY_NAME | head -n1 | sed 's/=//g' | sed 's/"//g' | sed 's/PRETTY_NAME//g')${NC}"
-setup_ubuntu
-elif [[ $(cat /etc/os-release | grep -w ID | head -n1 | sed 's/=//g' | sed 's/"//g' | sed 's/ID//g') == "debian" ]]; then
-echo -e "${green}Setup nginx For OS Is $(cat /etc/os-release | grep -w PRETTY_NAME | head -n1 | sed 's/=//g' | sed 's/"//g' | sed 's/PRETTY_NAME//g')${NC}"
-setup_debian
-else
-echo -e " Your OS Is Not Supported ( ${YELLOW}$(cat /etc/os-release | grep -w PRETTY_NAME | head -n1 | sed 's/=//g' | sed 's/"//g' | sed 's/PRETTY_NAME//g')${FONT} )"
-fi
-}
 res10() {
 wget https://raw.githubusercontent.com/sehuadri/new/main/noobz/noobzvpns.zip
 unzip noobzvpns.zip
@@ -553,6 +543,16 @@ bash install.sh
 rm -rf noobzvpns
 systemctl restart noobzvpns
 clear
+}
+if [[ $(cat /etc/os-release | grep -w ID | head -n1 | sed 's/=//g' | sed 's/"//g' | sed 's/ID//g') == "ubuntu" ]]; then
+echo -e "${green}Setup nginx For OS Is $(cat /etc/os-release | grep -w PRETTY_NAME | head -n1 | sed 's/=//g' | sed 's/"//g' | sed 's/PRETTY_NAME//g')${NC}"
+setup_ubuntu
+elif [[ $(cat /etc/os-release | grep -w ID | head -n1 | sed 's/=//g' | sed 's/"//g' | sed 's/ID//g') == "debian" ]]; then
+echo -e "${green}Setup nginx For OS Is $(cat /etc/os-release | grep -w PRETTY_NAME | head -n1 | sed 's/=//g' | sed 's/"//g' | sed 's/PRETTY_NAME//g')${NC}"
+setup_debian
+else
+echo -e " Your OS Is Not Supported ( ${YELLOW}$(cat /etc/os-release | grep -w PRETTY_NAME | head -n1 | sed 's/=//g' | sed 's/"//g' | sed 's/PRETTY_NAME//g')${FONT} )"
+fi
 }
 function setup_debian(){
 echo -e "${green}┌──────────────────────────────────────────┐${NC}"
@@ -597,7 +597,7 @@ echo -e "${green}└────────────────────
 fun_bar 'res9'
 }
 echo -e "${green}┌──────────────────────────────────────────┐${NC}"
-echo -e "${green}│           DOWNLOAD NOOBZvpnss            │${NC}"
+echo -e "${green}│           Downloadss NOOBZvpns           │${NC}"
 echo -e "${green}└──────────────────────────────────────────┘${NC}"
 fun_bar 'res10'
 }
@@ -642,6 +642,11 @@ echo -e "${green}┌────────────────────
 echo -e "${green}│           DOWNLOAD UDP COSTUM            │${NC}"
 echo -e "${green}└──────────────────────────────────────────┘${NC}"
 res9
+}
+echo -e "${green}┌──────────────────────────────────────────┐${NC}"
+echo -e "${green}│           PRocesss NOOBZvpnss            │${NC}"
+echo -e "${green}└──────────────────────────────────────────┘${NC}"
+res10
 }
 function iinfo(){
 domain=$(cat /etc/xray/domain)
