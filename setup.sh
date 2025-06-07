@@ -10,7 +10,7 @@ else
 #  key2
   domain
   Casper2
-  botwa
+#  botwa
 fi
 }
 clear
