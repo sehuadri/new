@@ -403,16 +403,6 @@ PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 * * * * * root /usr/bin/xraylimit
 END
 
-cat >/etc/cron.d/logclean <<-END
-SHELL=/bin/sh
-PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-*/10 * * * * root truncate -s 0 /var/log/syslog \
-    && truncate -s 0 /var/log/nginx/error.log \
-    && truncate -s 0 /var/log/nginx/access.log \
-    && truncate -s 0 /var/log/xray/error.log \
-    && truncate -s 0 /var/log/xray/access.log
-END
-
 cat >/etc/cron.d/daily_reboot <<-END
 SHELL=/bin/sh
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
