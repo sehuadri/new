@@ -130,7 +130,7 @@ else
     yesterday_txv=NULL
 fi
 
-ssh_ws=$( systemctl status ws-stunnel | grep Active | awk '{print $3}' | sed 's/(//g' | sed 's/)//g' )
+ssh_ws=$( systemctl status ws | grep Active | awk '{print $3}' | sed 's/(//g' | sed 's/)//g' )
 if [[ $ssh_ws == "running" ]]; then
 status_ws="${COLOR1}ON${NC}"
 else
@@ -434,8 +434,8 @@ res1() {
     systemctl restart noobzvpns
     systemctl restart daemon
     systemctl restart udp-custom
-    systemctl restart ws-dropbear
-    systemctl restart ws-stunnel
+    systemctl restart dropbear
+    systemctl restart ws
     systemctl restart openvpn
     systemctl restart cron
     systemctl restart netfilter-persistent
@@ -443,8 +443,8 @@ res1() {
     systemctl restart badvpn1
     systemctl restart badvpn2
     systemctl restart badvpn3
-#    systemctl restart client
-#    systemctl restart server
+    systemctl restart client
+    systemctl restart server
 }
 clear
 echo -e "$COLOR1 ╭══════════════════════════════════════════╮${NC}"
