@@ -778,8 +778,8 @@ fi
 
 # Terapkan perubahan
 sysctl -p >/dev/null 2>&1
-key2
-CEKIP
+#key2
+#CEKIP
 Installasi
 sudo systemctl disable systemd-resolved
 sudo systemctl stop systemd-resolved
