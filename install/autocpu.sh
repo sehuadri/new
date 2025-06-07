@@ -1,61 +1,28 @@
 #!/bin/bash
 biji=`date +"%Y-%m-%d" -d "$dateFromServer"`
-colornow=$(cat /etc/rmbl/theme/color.conf)
+colornow=$(cat /etc/nbwr/theme/color.conf)
 NC="\e[0m"
 RED="\033[0;31m"
-COLOR1="$(cat /etc/rmbl/theme/$colornow | grep -w "TEXT" | cut -d: -f2|sed 's/ //g')"
-COLBG1="$(cat /etc/rmbl/theme/$colornow | grep -w "BG" | cut -d: -f2|sed 's/ //g')"
+COLOR1="$(cat /etc/nbwr/theme/$colornow | grep -w "TEXT" | cut -d: -f2|sed 's/ //g')"
+COLBG1="$(cat /etc/nbwr/theme/$colornow | grep -w "BG" | cut -d: -f2|sed 's/ //g')"
 WH='\033[1;37m'
 ipsaya=$(wget -qO- ifconfig.me)
-data_server=$(curl -v --insecure --silent https://google.com/ 2>&1 | grep Date | sed -e 's/< Date: //')
-date_list=$(date +"%Y-%m-%d" -d "$data_server")
-data_ip="https://raw.githubusercontent.com/awanklod/izin_new/main/ip"
-checking_sc() {
-useexp=$(curl -sS $data_ip | grep $ipsaya | awk '{print $3}')
-if [[ $date_list < $useexp ]]; then
-echo -ne
-else
-echo -e "$COLOR1┌─────────────────────────────────────────────────┐${NC}"
-echo -e "$COLOR1 ${NC} ${COLBG1}          ${WH}• AUTOSCRIPT PREMIUM •               ${NC} $COLOR1 $NC"
-echo -e "$COLOR1└─────────────────────────────────────────────────┘${NC}"
-echo -e "$COLOR1┌─────────────────────────────────────────────────┐${NC}"
-echo -e "            ${RED}PERMISSION DENIED !${NC}"
-echo -e "   \033[0;33mYour VPS${NC} $ipsaya \033[0;33mHas been Banned${NC}"
-echo -e "     \033[0;33mBuy access permissions for scripts${NC}"
-echo -e "             \033[0;33mContact Your Admin ${NC}"
-echo -e "$COLOR1└─────────────────────────────────────────────────┘${NC}"
-systemctl stop nginx
-systemctl stop kyt
-systemctl stop xray
-systemctl stop ws
-exit
-fi
-}
-checking_sc
-cd
-ipsaya=$(wget -qO- ifconfig.me)
-cd /etc
-nmap -p 22 $ipsaya > cekip
-cpu=$(grep -c -E "open" "cekip")
-if [[ ${cpu} == '0' ]]; then
-apt install nmap -y
-shutdown -r now
-fi
 cd
 today=$(date -d "0 days" +"%Y-%m-%d")
 Exp2=$(curl -sS https://raw.githubusercontent.com/awanklod/izin_new/main/ip | grep $ipsaya | awk '{print $3}')
 d1=$(date -d "$Exp2" +%s)
 d2=$(date -d "$today" +%s)
 certificate=$(( (d1 - d2) / 86400 ))
-echo "$certificate Hari" > /etc/scdurasi
+echo "$certificate Hari" > /etc/masaaktif
 vnstat_profile=$(vnstat | sed -n '3p' | awk '{print $1}' | grep -o '[^:]*')
 vnstat -i ${vnstat_profile} >/etc/t1
 bulan=$(date +%b)
 tahun=$(date +%y)
+ba=$(curl -s https://pastebin.com/raw/kVpeatBA)
 if [ "$(grep -wc ${bulan} /etc/t1)" != '0' ]; then
 bulan=$(date +%b)
-month_tx=$(vnstat -i ${vnstat_profile} | grep "$bulan ,$tahun" | awk '{print $6}')
-month_txv=$(vnstat -i ${vnstat_profile} | grep "$bulan ,$tahun" | awk '{print $7}')
+month_tx=$(vnstat -i ${vnstat_profile} | grep "$bulan $ba$tahun" | awk '{print $6}')
+month_txv=$(vnstat -i ${vnstat_profile} | grep "$bulan $ba$tahun" | awk '{print $7}')
 else
 bulan2=$(date +%Y-%m)
 month_tx=$(vnstat -i ${vnstat_profile} | grep "$bulan2 " | awk '{print $5}')
@@ -85,27 +52,20 @@ else
 systemctl restart kyt
 systemctl start kyt
 fi
-kyt=$( systemctl status kyt | grep "TERM" | wc -l )
-if [[ $kyt == "0" ]]; then
-echo -ne
-else
-systemctl restart kyt
-systemctl start kyt
 fi
-fi
-stunnel=$( systemctl status ws | grep "Errno" | wc -l )
+stunnel=$( systemctl status ws-stunnel | grep "Errno" | wc -l )
 if [[ $stunnel == "0" ]]; then
 echo -ne
 else
-systemctl restart ws
-systemctl start ws
+systemctl restart ws-stunnel
+systemctl start ws-stunnel
 fi
-stunnel2=$( systemctl status ws | grep "TERM" | wc -l )
+stunnel2=$( systemctl status ws-stunnel | grep "TERM" | wc -l )
 if [[ $stunnel2 == "0" ]]; then
 echo -ne
 else
-systemctl restart ws
-systemctl start ws
+systemctl restart ws-stunnel
+systemctl start ws-stunnel
 fi
 xrray=$( systemctl status xray | grep "error" | wc -l )
 if [[ $xrray == "0" ]]; then
@@ -116,7 +76,7 @@ systemctl start xray
 systemctl restart nginx
 systemctl start nginx
 fi
-bash2=$( pgrep bash | wc -l )
-if [[ ,bash2 -gt "20" ]]; then
-killall bash
+bash2=$( top -b -n 1 | grep menu )
+if [[ $bash2 -gt "20" ]]; then
+pkill menu
 fi
