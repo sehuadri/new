@@ -61,7 +61,6 @@ rm -rf helium
 rm -rf cleaner
 rm -rf bench
 rm -rf notramcpu
-rm -rf clearlog
 
 # download menu
 cd /usr/bin
