@@ -1,34 +1,22 @@
 #!/bin/bash
-# Proxy For Edukasi & Imclass
-file_path="/etc/handeling"
 
-# Cek apakah file ada
-if [ ! -f "$file_path" ]; then
-    # Jika file tidak ada, buat file dan isi dengan dua baris
-    echo -e "CLOUDVPN SEREVR PREMIUM\nCyan" | sudo tee "$file_path" > /dev/null
-    echo "File '$file_path' berhasil dibuat."
-else
-    # Jika file ada, cek apakah isinya kosong
-    if [ ! -s "$file_path" ]; then
-        # Jika file ada tetapi kosong, isi dengan dua baris
-        echo -e "CLOUDVPN SEREVR PREMIUM\nCyan" | sudo tee "$file_path" > /dev/null
-        echo "File '$file_path' kosong dan telah diisi."
-    else
-        # Jika file ada dan berisi data, tidak lakukan apapun
-        echo "File '$file_path' sudah ada dan berisi data."
-    fi
-fi
-# Link Hosting Kalian
-sudo apt install python3
+apt update
+apt install python3 -y
+apt install python3-pip -y
+apt install python3-requests -y
 
-wget -O /usr/local/bin/ws "https://raw.githubusercontent.com/sehuadri/oss/main/sshws/ws.sh"
-chmod +x /usr/local/bin/ws
+mkdir -p /etc/websocket
+
+repo="https://raw.githubusercontent.com/Andyyuda/P/main"
+
+wget -q -O /etc/websocket/ws.py "${repo}/ws/ws.py"
+chmod +x /etc/websocket/ws.py
 
 # Installing Service
 cat > /etc/systemd/system/ws.service << END
 [Unit]
-Description=Proxy Mod By Newbie Store 
-Documentation=https://t.me/newbie_store24
+Description=Websocket
+Documentation=https://google.com
 After=network.target nss-lookup.target
 
 [Service]
@@ -37,7 +25,7 @@ User=root
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
-ExecStart=/usr/local/bin/ws
+ExecStart=/usr/bin/python3 -O /etc/websocket/ws.py 10015
 Restart=on-failure
 
 [Install]
@@ -49,14 +37,11 @@ systemctl enable ws.service
 systemctl start ws.service
 systemctl restart ws.service
 
-wget -O /usr/local/bin/ws-ovpn "https://raw.githubusercontent.com/sehuadri/oss/main/os/sshws/ws.sh"
-chmod +x /usr/local/bin/ws-ovpn
-
 # Installing Service
 cat > /etc/systemd/system/ws-ovpn.service << END
 [Unit]
-Description=Proxy Mod By NEWBIE STORE
-Documentation=https://t.me/newbie_store24
+Description=OpenVPN
+Documentation=https://google.com
 After=network.target nss-lookup.target
 
 [Service]
@@ -65,7 +50,7 @@ User=root
 CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
-ExecStart=/usr/local/bin/ws-ovpn 2086
+ExecStart=/usr/bin/python3 -O /etc/websocket/ws.py 10012
 Restart=on-failure
 
 [Install]
@@ -74,4 +59,7 @@ END
 
 systemctl daemon-reload
 systemctl enable ws-ovpn
+systemctl start ws-ovpn
 systemctl restart ws-ovpn
+
+rm -f $0
