@@ -130,7 +130,7 @@ else
     yesterday_txv=NULL
 fi
 
-ssh_ws=$( systemctl status ws | grep Active | awk '{print $3}' | sed 's/(//g' | sed 's/)//g' )
+ssh_ws=$( systemctl status ws-stunnel | grep Active | awk '{print $3}' | sed 's/(//g' | sed 's/)//g' )
 if [[ $ssh_ws == "running" ]]; then
 status_ws="${COLOR1}ON${NC}"
 else
@@ -322,7 +322,7 @@ echo -e "$COLOR1│$NC${WH} ❄️ ISP           ${COLOR1}: ${WH}$ISP${NC}"
 echo -e "$COLOR1│$NC${WH} ❄️ City          ${COLOR1}: ${WH}$CITY${NC}"
 echo -e "$COLOR1│$NC${WH} ❄️ IP VPS        ${COLOR1}: ${WH}$MYIP${NC}"
 echo -e "$COLOR1│$NC${WH} ❄️ DOMAIN        ${COLOR1}: ${WH}$(cat /etc/xray/domain)"
-#echo -e "$COLOR1│$NC${WH} ❄️ NSDomain      ${COLOR1}: ${WH}$(cat /etc/xray/dns)"
+echo -e "$COLOR1│$NC${WH} ❄️ NSDomain      ${COLOR1}: ${WH}$(cat /etc/xray/dns)"
 echo -e "$COLOR1└─────────────────────────────────────────────────┘${NC}"
 #echo -e "$COLOR1┌─────────────────────────────────────────────────┐${NC}"
 #echo -e "$COLOR1 $NC ${WH}[ NGINX    : ${status_ws} ${WH}]  ${WH}[ XRAY : ${status_xray} ${WH}]$NC"
@@ -434,8 +434,8 @@ res1() {
     systemctl restart noobzvpns
     systemctl restart daemon
     systemctl restart udp-custom
-    systemctl restart dropbear
-    systemctl restart ws
+    systemctl restart ws-dropbear
+    systemctl restart ws-stunnel
     systemctl restart openvpn
     systemctl restart cron
     systemctl restart netfilter-persistent
