@@ -805,15 +805,6 @@ TEXT="
 curl -s --max-time $TIMES -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT&parse_mode=html" $URL >/dev/null
 clear
 }
-#install remove log
-#echo "0 5 * * * root reboot" >> /etc/crontab
-#echo "* * * * * root clog" >> /etc/crontab
-#echo "0 3 * * * root clearlog" >> /etc/crontab
-#echo "59 * * * * root pkill 'menu'" >> /etc/crontab
-#echo "0 1 * * * root xp" >> /etc/crontab
-#echo "*/5 * * * * root notramcpu" >> /etc/crontab
-#service cron restart
-#clear
 CEKIP
 Casper3
 cat> /root/.profile << END
