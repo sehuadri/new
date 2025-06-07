@@ -658,7 +658,7 @@ clear
 echo -e "${BIBlue}╭══════════════════════════════════════════╮${NC}"
 echo -e "${BIBlue}│ ${BGCOLOR}          PROCESS INSTALLED OHP         ${NC}${BIBlue} │${NC}"
 echo -e "${BIBlue}╰══════════════════════════════════════════╯${NC}"
-wget https://raw.githubusercontent.com/sehuadri/new/main/sshws/ohp.sh && chmod +x ohp.sh && ./ohp.sh
+#wget https://raw.githubusercontent.com/sehuadri/new/main/sshws/ohp.sh && chmod +x ohp.sh && ./ohp.sh
 clear
 
 echo -e "${BIBlue}╭══════════════════════════════════════════╮${NC}"
@@ -695,7 +695,7 @@ clear
 echo -e "${BIBlue}╭══════════════════════════════════════════╮${NC}"
 echo -e "${BIBlue}│ ${BGCOLOR}    PROCESS INSTALLED LIMIT XRAY        ${NC}${BIBlue} │${NC}"
 echo -e "${BIBlue}╰══════════════════════════════════════════╯${NC}"
-wget https://raw.githubusercontent.com/sehuadri/new/main/bin/limit.sh && chmod +x limit.sh && ./limit.sh
+#wget https://raw.githubusercontent.com/sehuadri/new/main/bin/limit.sh && chmod +x limit.sh && ./limit.sh
 clear
 
 echo -e "${BIBlue}╭══════════════════════════════════════════╮${NC}"
@@ -785,7 +785,7 @@ rm /root/ssh-vpn.sh >/dev/null 2>&1
 rm /root/ins-xray.sh >/dev/null 2>&1
 rm /root/insshws.sh >/dev/null 2>&1
 rm /root/set-br.sh >/dev/null 2>&1
-rm /root/ohp.sh >/dev/null 2>&1
+#rm /root/ohp.sh >/dev/null 2>&1
 rm /root/update.sh >/dev/null 2>&1
 rm /root/slowdns.sh >/dev/null 2>&1
 rm -rf /etc/noobz
