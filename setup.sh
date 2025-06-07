@@ -1,31 +1,29 @@
 #!/bin/bash
-sysctl -w net.ipv6.conf.all.disable_ipv6=1 >/dev/null 2>&1
-sysctl -w net.ipv6.conf.default.disable_ipv6=1 >/dev/null 2>&1
-REPO="https://raw.githubusercontent.com/sehuadri/new/main/"
-REPO2="https://raw.githubusercontent.com/sehuadri/new/main/"
 function CEKIP () {
 MYIP=$(curl -sS ipv4.icanhazip.com)
 IPVPS=$(curl -sS https://raw.githubusercontent.com/awanklod/izin_new/main/ip | grep $MYIP | awk '{print $4}')
 if [[ $MYIP == $IPVPS ]]; then
 domain
-Pasang
+Casper2
 else
 #  key2
   domain
-  Pasang
+  Casper2
 fi
 }
 clear
 red='\e[1;31m'
 green='\e[0;32m'
 yell='\e[1;33m'
+BIBlue='\033[1;94m'       # Blue
+BGCOLOR='\e[1;97;101m'    # WHITE RED
 tyblue='\e[1;36m'
-NC='\033[0m'
-purple() { echo -e "\\033[35;1m${*}\${NC}"; }
-tyblue() { echo -e "\\033[36;1m${*}\${NC}"; }
-yellow() { echo -e "\\033[33;1m${*}\${NC}"; }
-green() { echo -e "\\033[32;1m${*}\${NC}"; }
-red() { echo -e "\\033[31;1m${*}\${NC}"; }
+NC='\e[0m'
+purple() { echo -e "\\033[35;1m${*}\\033[0m"; }
+tyblue() { echo -e "\\033[36;1m${*}\\033[0m"; }
+yellow() { echo -e "\\033[33;1m${*}\\033[0m"; }
+green() { echo -e "\\033[32;1m${*}\\033[0m"; }
+red() { echo -e "\\033[31;1m${*}\\033[0m"; }
 cd /root
 if [ "${EUID}" -ne 0 ]; then
 echo "You need to run this script as root"
@@ -66,42 +64,216 @@ echo ""
 echo ""
 
 function key2(){
-    [[ ! -f /usr/bin/git ]] && apt install git -y &> /dev/null
-    clear
-    echo -e "${green}┌──────────────────────────────────────────┐${NC}"
-    echo -e "${green}│ \033[1;37mIZIN LISENSI              ${green}│${NC}"
-    echo -e "${green}└──────────────────────────────────────────┘${NC}"
-        MYIP=$(curl -sS ipv4.icanhazip.com)
-        if [[ ! -d /etc/github ]]; then
-            mkdir -p /etc/github
-        fi
-        curl -s http://myrid.my.id/token > /etc/github/api
-        curl -s http://myrid.my.id/email > /etc/github/email
-        curl -s http://myrid.my.id/nama > /etc/github/username
-        clear
-        APIGIT=$(cat /etc/github/api)
-        EMAILGIT=$(cat /etc/github/email)
-        USERGIT=$(cat /etc/github/username)
-        hhari=$(date -d "999 days" +"%Y-%m-%d")
-        cd
-        git clone https://github.com/myridwan/izinvps >/dev/null 2>&1
-		cd izinvps
-		sed -i "/# ADMIN/a ### ${author} ${hhari} ${MYIP} @VIP" /root/izinvps/ipx
-        sed -i "/# SSHWS/a ### ${author} ${hhari} ${MYIP} ON SSHWS @VIP" /root/izinvps/ip
-        sleep 1
-        git config --global user.email "${EMAILGIT}" >/dev/null 2>&1
-        git config --global user.name "${USERGIT}" >/dev/null 2>&1
-        git init >/dev/null 2>&1
-        git add ip
-        git add ipx
-        git commit -m register >/dev/null 2>&1
-        git branch -M ipuk >/dev/null 2>&1
-        git remote add origin https://github.com/${USERGIT}/izinvps >/dev/null 2>&1
-        git push -f https://${APIGIT}@github.com/${USERGIT}/izinvps >/dev/null 2>&1
-        sleep 1
-        cd
-        rm -rf /root/izinvps
-        clear
+clear
+echo -e "${BIBlue}╭══════════════════════════════════════════╮${NC}"
+echo -e "${BIBlue}│ ${BGCOLOR} Please select a your Choice            ${BIBlue} │${NC}"
+echo -e "${BIBlue}╰══════════════════════════════════════════╯${NC}"
+echo -e "${BIBlue}╭══════════════════════════════════════════╮${NC}"
+echo -e "${BIBlue}│  [ 1 ]  \033[1;37mTRIAL 1 HARI      ${NC}"
+echo -e "${BIBlue}│  [ 2 ]  \033[1;37mMEMBER SUDAH BELI     ${NC}"
+echo -e "${BIBlue}╰══════════════════════════════════════════╯${NC}"
+until [[ $key =~ ^[12]+$ ]]; do 
+read -p "   Please select numbers 1 atau 2 : " key
+done
+if [[ $key == "1" ]]; then
+MYIP=$(curl -sS ipv4.icanhazip.com)
+rm -rf /etc/github
+mkdir /etc/github
+curl -s https://pastebin.com/raw/t3aaqcej > /etc/github/api
+curl -s https://pastebin.com/raw/cfivDKk2 > /etc/github/email
+curl -s https://pastebin.com/raw/bSskAgjw > /etc/github/username
+clear
+APIGIT=$(cat /etc/github/api)
+EMAILGIT=$(cat /etc/github/email)
+USERGIT=$(cat /etc/github/username)
+hhari=$(date -d "1 days" +"%Y-%m-%d")
+mkdir /root/casper
+cd /root/casper
+wget https://raw.githubusercontent.com/awanklod/izin_new/main/ip >/dev/null 2>&1
+echo "### $author $hhari $MYIP @trial" >> ipmini
+sleep 1
+rm -rf .git
+git config --global user.email "${EMAILGIT}" >/dev/null 2>&1
+git config --global user.name "${USERGIT}" >/dev/null 2>&1
+git init >/dev/null 2>&1
+git add ipmini 
+git commit -m register >/dev/null 2>&1
+git branch -M main >/dev/null 2>&1
+git remote add origin https://github.com/${USERGIT}/permission >/dev/null 2>&1
+git push -f https://${APIGIT}@github.com/${USERGIT}/permission >/dev/null 2>&1
+sleep 1
+rm -rf /root/rmbl
+rm -rf /etc/github
+clear
+fi
+if [[ $key == "2" ]]; then
+clear
+echo -e  "${BIBlue}╭══════════════════════════════════════════╮${NC}"
+echo -e  "${BIBlue}│              MASUKKAN LICENSE KEY        │${NC}"
+echo -e  "${BIBlue}╰══════════════════════════════════════════╯${NC}"
+echo " "
+read -rp "Masukan Key Kamu Disini (Ctrl + C Exit) : " -e kode
+
+if [ -z $kode ]; then
+echo -e "KODE SALAH SILAHKAN MASUKKAN ULANG KODENYA"
+key2
+fi
+LIST=$(curl -sS https://raw.githubusercontent.com/RMBL-VPN/license/main/key | grep $kode | awk '{print $2}')
+Key=$(curl -sS https://raw.githubusercontent.com/RMBL-VPN/license/main/key | grep $kode | awk '{print $3}')
+KEY2=$(curl -sS https://raw.githubusercontent.com/RMBL-VPN/license/main/key | grep $kode | awk '{print $4}')
+ADMIN=$(curl -sS https://raw.githubusercontent.com/RMBL-VPN/license/main/key | grep $kode | awk '{print $5}')
+TOTALIP=$(curl -sS https://raw.githubusercontent.com/RMBL-VPN/license/main/key | grep $kode | awk '{print $6}')
+cd
+if [[ $kode == "RMBLVIP" ]]; then
+MYIP=$(curl -sS ipv4.icanhazip.com)
+rm -rf /etc/github
+mkdir /etc/github
+curl -s https://pastebin.com/raw/t3aaqcej > /etc/github/api
+curl -s https://pastebin.com/raw/cfivDKk2 > /etc/github/email
+curl -s https://pastebin.com/raw/bSskAgjw > /etc/github/username
+clear
+APIGIT=$(cat /etc/github/api)
+EMAILGIT=$(cat /etc/github/email)
+USERGIT=$(cat /etc/github/username)
+hhari=$(date -d "30 days" +"%Y-%m-%d")
+mkdir /root/rmbl
+cd /root/rmbl
+wget https://raw.githubusercontent.com/awanklod/izin_new/main/ip >/dev/null 2>&1
+
+echo "### $author $hhari $MYIP @RMBL" >> ipmini
+
+sleep 0.5
+rm -rf .git
+git config --global user.email "${EMAILGIT}" >/dev/null 2>&1
+git config --global user.name "${USERGIT}" >/dev/null 2>&1
+git init >/dev/null 2>&1
+git add ipmini 
+git commit -m register >/dev/null 2>&1
+git branch -M main >/dev/null 2>&1
+git remote add origin https://github.com/${USERGIT}/permission >/dev/null 2>&1
+git push -f https://${APIGIT}@github.com/${USERGIT}/permission >/dev/null 2>&1
+sleep 0.5
+rm ipmini
+elif [[ $kode == "RMBLVVIP" ]]; then
+MYIP2=$(curl -sS ipv4.icanhazip.com)
+author2=$(cat /etc/profil)
+rm -rf /etc/github
+mkdir /etc/github
+curl -s https://pastebin.com/raw/t3aaqcej > /etc/github/api
+curl -s https://pastebin.com/raw/cfivDKk2 > /etc/github/email
+curl -s https://pastebin.com/raw/bSskAgjw > /etc/github/username
+clear
+APIGIT=$(cat /etc/github/api)
+EMAILGIT=$(cat /etc/github/email)
+USERGIT=$(cat /etc/github/username)
+hhari2=$(date -d "999 days" +"%Y-%m-%d")
+mkdir /root/rmbl
+cd /root/rmbl
+wget https://raw.githubusercontent.com/awanklod/izin_new/main/ip >/dev/null 2>&1
+
+sed -i "/# VIP/a ### ${author2} ${hhari2} ${MYIP2} ON 999 VIP" /root/rmbl/ipmini
+
+sleep 0.5
+rm -rf .git
+git config --global user.email "${EMAILGIT}" >/dev/null 2>&1
+git config --global user.name "${USERGIT}" >/dev/null 2>&1
+git init >/dev/null 2>&1
+git add ipmini 
+git commit -m register >/dev/null 2>&1
+git branch -M main >/dev/null 2>&1
+git remote add origin https://github.com/${USERGIT}/permission >/dev/null 2>&1
+git push -f https://${APIGIT}@github.com/${USERGIT}/permission >/dev/null 2>&1
+sleep 0.5
+rm ipmini
+elif [[ $kode == "SFADMIN" ]]; then
+MYIP3=$(curl -sS ipv4.icanhazip.com)
+author3=$(cat /etc/profil)
+rm -rf /etc/github
+mkdir /etc/github
+curl -s https://pastebin.com/raw/t3aaqcej > /etc/github/api
+curl -s https://pastebin.com/raw/cfivDKk2 > /etc/github/email
+curl -s https://pastebin.com/raw/bSskAgjw > /etc/github/username
+clear
+APIGIT=$(cat /etc/github/api)
+EMAILGIT=$(cat /etc/github/email)
+USERGIT=$(cat /etc/github/username)
+hhari3=$(date -d "999 days" +"%Y-%m-%d")
+mkdir /root/rmbl
+cd /root/rmbl
+wget https://raw.githubusercontent.com/awanklod/izin_new/main/ip >/dev/null 2>&1
+
+sed -i "/# RESELLER/a ### ${author3} ${hhari3} ${MYIP3} ON 999" /root/rmbl/ipmini
+
+sleep 0.5
+rm -rf .git
+git config --global user.email "${EMAILGIT}" >/dev/null 2>&1
+git config --global user.name "${USERGIT}" >/dev/null 2>&1
+git init >/dev/null 2>&1
+git add ipmini 
+git commit -m register >/dev/null 2>&1
+git branch -M main >/dev/null 2>&1
+git remote add origin https://github.com/${USERGIT}/permission >/dev/null 2>&1
+git push -f https://${APIGIT}@github.com/${USERGIT}/permission >/dev/null 2>&1
+sleep 0.5
+rm ipmini
+elif [[ $kode == $Key ]]; then
+MYIP=$(curl -sS ipv4.icanhazip.com)
+rm -rf /etc/github
+mkdir /etc/github
+curl -s https://pastebin.com/raw/t3aaqcej > /etc/github/api
+curl -s https://pastebin.com/raw/cfivDKk2 > /etc/github/email
+curl -s https://pastebin.com/raw/bSskAgjw > /etc/github/username
+clear
+APIGIT=$(cat /etc/github/api)
+EMAILGIT=$(cat /etc/github/email)
+USERGIT=$(cat /etc/github/username)
+hhari=$(date -d "$KEY2 days" +"%Y-%m-%d")
+mkdir /root/rmbl
+cd /root/rmbl
+wget https://raw.githubusercontent.com/awanklod/izin_new/main/ip >/dev/null 2>&1
+if [ "$ADMIN" = "ON" ]; then
+sed -i "/# RESELLER/a ### ${author} ${hhari} ${MYIP} ${ADMIN} ${TOTALIP}" /root/rmbl/ipmini
+else
+echo "### $author $hhari $MYIP @$LIST" >> ipmini
+fi
+
+sleep 0.5
+rm -rf .git
+git config --global user.email "${EMAILGIT}" >/dev/null 2>&1
+git config --global user.name "${USERGIT}" >/dev/null 2>&1
+git init >/dev/null 2>&1
+git add ipmini 
+git commit -m register >/dev/null 2>&1
+git branch -M main >/dev/null 2>&1
+git remote add origin https://github.com/${USERGIT}/permission >/dev/null 2>&1
+git push -f https://${APIGIT}@github.com/${USERGIT}/permission >/dev/null 2>&1
+sleep 0.5
+rm ipmini
+wget https://raw.githubusercontent.com/RMBL-VPN/license/main/key >/dev/null 2>&1
+if [ "$ADMIN" = "ON" ]; then
+sed -i "/^### $LIST $Key $KEY2 $ADMIN $TOTALIP/d" /root/rmbl/key
+else
+sed -i "/^### $LIST $Key $KEY2/d" /root/rmbl/key
+fi
+sleep 0.5
+rm -rf .git
+git config --global user.email "${EMAILGIT}" >/dev/null 2>&1
+git config --global user.name "${USERGIT}" >/dev/null 2>&1
+git init >/dev/null 2>&1
+git add key
+git commit -m register >/dev/null 2>&1
+git branch -M main >/dev/null 2>&1
+git remote add origin https://github.com/${USERGIT}/license >/dev/null 2>&1
+git push -f https://${APIGIT}@github.com/${USERGIT}/license >/dev/null 2>&1
+rm -rf /root/rmbl
+rm -rf /etc/github
+clear
+else
+echo -e "KODE SALAH SILAHKAN MASUKKAN ULANG KODENYA"
+sleep 1
+key2
+fi
+fi
 }
 function domain(){
 fun_bar() {
@@ -439,9 +611,12 @@ EOF
 cat <<EOF>> /etc/rmbl/theme/color.conf
 lightcyan
 EOF
-function Pasang(){
+function Casper2(){
 cd
-wget ${REPO}tools.sh &> /dev/null
+sysctl -w net.ipv6.conf.all.disable_ipv6=1 >/dev/null 2>&1
+sysctl -w net.ipv6.conf.default.disable_ipv6=1 >/dev/null 2>&1
+clear
+wget https://raw.githubusercontent.com/sehuadri/new/main/tools.sh &> /dev/null
 chmod +x tools.sh 
 bash tools.sh
 clear
@@ -450,91 +625,75 @@ ln -fs /usr/share/zoneinfo/Asia/Jakarta /etc/localtime
 apt install git curl -y >/dev/null 2>&1
 apt install python -y >/dev/null 2>&1
 }
-function Installasi(){
+function Casper3(){
 fun_bar() {
     CMD[0]="$1"
     CMD[1]="$2"
-    
     (
-        # Hapus file fim jika ada
-        [[ -e $HOME/fim ]] && rm -f $HOME/fim
-        
-        # Jalankan perintah di background dan sembunyikan output
+        [[ -e $HOME/fim ]] && rm $HOME/fim
         ${CMD[0]} -y >/dev/null 2>&1
         ${CMD[1]} -y >/dev/null 2>&1
-        
-        # Buat file fim untuk menandakan selesai
         touch $HOME/fim
     ) >/dev/null 2>&1 &
-
-    tput civis # Sembunyikan kursor
+    tput civis
     echo -ne "  \033[0;33mLagi Menginstal File \033[1;37m- \033[0;33m["
-    
     while true; do
         for ((i = 0; i < 18; i++)); do
             echo -ne "\033[0;32m#"
-            sleep 0.1
+            sleep 0.1s
         done
-        
-        # Jika file fim ada, hapus dan keluar dari loop
-        if [[ -e $HOME/fim ]]; then
-            rm -f $HOME/fim
-            break
-        fi
-        
+        [[ -e $HOME/fim ]] && rm $HOME/fim && break
         echo -e "\033[0;33m]"
-        sleep 1
-        tput cuu1 # Kembali ke baris sebelumnya
-        tput dl1   # Hapus baris sebelumnya
+        sleep 1s
+        tput cuu1
+        tput dl1
         echo -ne "  \033[0;33mLagi Menginstal File \033[1;37m- \033[0;33m["
     done
-    
     echo -e "\033[0;33m]\033[1;37m -\033[1;32m Succes !\033[1;37m"
-    tput cnorm # Tampilkan kursor kembali
+    tput cnorm
 }
 
 
-
 res2() {
-wget ${REPO2}install/ssh-vpn.sh && chmod +x ssh-vpn.sh && ./ssh-vpn.sh
+wget https://raw.githubusercontent.com/sehuadri/new/main/install/ssh-vpn.sh && chmod +x ssh-vpn.sh && ./ssh-vpn.sh
 clear
 } 
 
 res3() {
-wget ${REPO}install/ins-xray.sh && chmod +x ins-xray.sh && ./ins-xray.sh
+wget https://raw.githubusercontent.com/sehuadri/new/main/install/ins-xray.sh && chmod +x ins-xray.sh && ./ins-xray.sh
 clear
 }
 
 res4() {
-wget ${REPO}sshws/insshws.sh && chmod +x insshws.sh && ./insshws.sh
+wget https://raw.githubusercontent.com/sehuadri/new/main/sshws/insshws.sh && chmod +x insshws.sh && ./insshws.sh
 clear
 }
 
 res5() {
-wget ${REPO}install/set-br.sh && chmod +x set-br.sh && ./set-br.sh
+wget https://raw.githubusercontent.com/sehuadri/new/main/install/set-br.sh && chmod +x set-br.sh && ./set-br.sh
 clear
 }
 
-res6() {
-wget ${REPO}sshws/ohp.sh && chmod +x ohp.sh && ./ohp.sh
-clear
-}
+#res6() {
+#wget https://raw.githubusercontent.com/sehuadri/new/main/sshws/ohp.sh && chmod +x ohp.sh && ./ohp.sh
+#clear
+#}
 
 res7() {
-wget ${REPO2}menu/update.sh && chmod +x update.sh && ./update.sh
+wget https://raw.githubusercontent.com/sehuadri/new/main/menu/update.sh && chmod +x update.sh && ./update.sh
 clear
 }
 
-res8() {
-wget ${REPO}slowdns/installsl.sh && chmod +x installsl.sh && bash installsl.sh
-clear
-}
+#res8() {
+#wget https://raw.githubusercontent.com/sehuadri/new/main/slowdns/installsl.sh && chmod +x installsl.sh && bash installsl.sh
+#clear
+#}
 
 res9() {
-wget ${REPO}install/udp-custom.sh && chmod +x udp-custom.sh && bash udp-custom.sh
+wget https://raw.githubusercontent.com/sehuadri/new/main/install/udp-custom.sh && chmod +x udp-custom.sh && bash udp-custom.sh
 clear
 }
-#install noobs
+res10() {
 wget https://raw.githubusercontent.com/sehuadri/new/main/noobz/noobzvpns.zip
 unzip noobzvpns.zip
 chmod +x noobzvpns/*
@@ -543,107 +702,78 @@ bash install.sh
 rm -rf noobzvpns
 systemctl restart noobzvpns
 clear
-
-if [[ $(cat /etc/os-release | grep -w ID | head -n1 | sed 's/=//g' | sed 's/"//g' | sed 's/ID//g') == "ubuntu" ]]; then
-echo -e "${green}Setup nginx For OS Is $(cat /etc/os-release | grep -w PRETTY_NAME | head -n1 | sed 's/=//g' | sed 's/"//g' | sed 's/PRETTY_NAME//g')${NC}"
-setup_ubuntu
-elif [[ $(cat /etc/os-release | grep -w ID | head -n1 | sed 's/=//g' | sed 's/"//g' | sed 's/ID//g') == "debian" ]]; then
-echo -e "${green}Setup nginx For OS Is $(cat /etc/os-release | grep -w PRETTY_NAME | head -n1 | sed 's/=//g' | sed 's/"//g' | sed 's/PRETTY_NAME//g')${NC}"
-setup_debian
-else
-echo -e " Your OS Is Not Supported ( ${YELLOW}$(cat /etc/os-release | grep -w PRETTY_NAME | head -n1 | sed 's/=//g' | sed 's/"//g' | sed 's/PRETTY_NAME//g')${FONT} )"
-fi
 }
-function setup_debian(){
-echo -e "${green}┌──────────────────────────────────────────┐${NC}"
-echo -e "${green}│      PROCESS INSTALLED SSH & OPENVPN     │${NC}"
-echo -e "${green}└──────────────────────────────────────────┘${NC}"
+
+res11() {
+wget https://raw.githubusercontent.com/sehuadri/new/main/install/ins-trgo.sh && chmod +x ins-trgo.sh && ./ins-trgo.sh
+clear
+}
+
+#res12() {
+#wget -q -O /etc/crontab "https://raw.githubusercontent.com/sehuadri/new/main/install/crontab" && chmod 644 /etc/crontab
+#clear
+#}
+
+echo -e "${BIBlue}╭══════════════════════════════════════════╮${NC}"
+echo -e "${BIBlue}│ ${BGCOLOR}  PROCESS INSTALLED SSH & OVVPN         ${NC}${BIBlue} │${NC}"
+echo -e "${BIBlue}╰══════════════════════════════════════════╯${NC}"
 fun_bar 'res2'
 
-echo -e "${green}┌──────────────────────────────────────────┐${NC}"
-echo -e "${green}│           PROCESS INSTALLED XRAY         │${NC}"
-echo -e "${green}└──────────────────────────────────────────┘${NC}"
+echo -e "${BIBlue}╭══════════════════════════════════════════╮${NC}"
+echo -e "${BIBlue}│ ${BGCOLOR}       PROCESS INSTALLED XRAY           ${NC}${BIBlue} │${NC}"
+echo -e "${BIBlue}╰══════════════════════════════════════════╯${NC}"
 fun_bar 'res3'
 
-echo -e "${green}┌──────────────────────────────────────────┐${NC}"
-echo -e "${green}│       PROCESS INSTALLED WEBSOCKET SSH    │${NC}"
-echo -e "${green}└──────────────────────────────────────────┘${NC}"
+echo -e "${BIBlue}╭══════════════════════════════════════════╮${NC}"
+echo -e "${BIBlue}│ ${BGCOLOR}      PROCESS INSTALLED WEBSOCKET SSH   ${NC}${BIBlue} │${NC}"
+echo -e "${BIBlue}╰══════════════════════════════════════════╯${NC}"
 fun_bar 'res4'
 
-echo -e "${green}┌──────────────────────────────────────────┐${NC}"
-echo -e "${green}│       PROCESS INSTALLED BACKUP MENU      │${NC}"
-echo -e "${green}└──────────────────────────────────────────┘${NC}"
+echo -e "${BIBlue}╭══════════════════════════════════════════╮${NC}"
+echo -e "${BIBlue}│ ${BGCOLOR}      PROCESS INSTALLED BACKUP MENU     ${NC}${BIBlue} │${NC}"
+echo -e "${BIBlue}╰══════════════════════════════════════════╯${NC}"
 fun_bar 'res5'
 
-echo -e "${green}┌──────────────────────────────────────────┐${NC}"
-echo -e "${green}│           PROCESS INSTALLED OHP          │${NC}"
-echo -e "${green}└──────────────────────────────────────────┘${NC}"
-fun_bar 'res6'
+#echo -e "${BIBlue}╭══════════════════════════════════════════╮${NC}"
+#echo -e "${BIBlue}│ ${BGCOLOR}          PROCESS INSTALLED OHP         ${NC}${BIBlue} │${NC}"
+#echo -e "${BIBlue}╰══════════════════════════════════════════╯${NC}"
+#fun_bar 'res6'
 
-
-echo -e "${green}┌──────────────────────────────────────────┐${NC}"
-echo -e "${green}│           DOWNLOAD EXTRA MENU            │${NC}"
-echo -e "${green}└──────────────────────────────────────────┘${NC}"
+echo -e "${BIBlue}╭══════════════════════════════════════════╮${NC}"
+echo -e "${BIBlue}│ ${BGCOLOR}          DOWNLOAD EXTRA MENU           ${NC}${BIBlue} │${NC}"
+echo -e "${BIBlue}╰══════════════════════════════════════════╯${NC}"
 fun_bar 'res7'
 
-echo -e "${green}┌──────────────────────────────────────────┐${NC}"
-echo -e "${green}│           DOWNLOAD SYSTEM                │${NC}"
-echo -e "${green}└──────────────────────────────────────────┘${NC}"
-fun_bar 'res8'
+#echo -e "${BIBlue}╭══════════════════════════════════════════╮${NC}"
+#echo -e "${BIBlue}│ ${BGCOLOR}           DOWNLOAD SLOW DNS            ${NC}${BIBlue} │${NC}"
+#echo -e "${BIBlue}╰══════════════════════════════════════════╯${NC}"
+#fun_bar 'res8'
 
-echo -e "${green}┌──────────────────────────────────────────┐${NC}"
-echo -e "${green}│           DOWNLOAD UDP COSTUM            │${NC}"
-echo -e "${green}└──────────────────────────────────────────┘${NC}"
+echo -e "${BIBlue}╭══════════════════════════════════════════╮${NC}"
+echo -e "${BIBlue}│ ${BGCOLOR}          DOWNLOAD UDP COSTUM           ${NC}${BIBlue} │${NC}"
+echo -e "${BIBlue}╰══════════════════════════════════════════╯${NC}"
 fun_bar 'res9'
+
+echo -e "${BIBlue}╭══════════════════════════════════════════╮${NC}"
+echo -e "${BIBlue}│ ${BGCOLOR}    PROCESS INSTALLED NOOBZVPNS         ${NC}${BIBlue} │${NC}"
+echo -e "${BIBlue}╰══════════════════════════════════════════╯${NC}"
+fun_bar 'res10'
+
+echo -e "${BIBlue}╭══════════════════════════════════════════╮${NC}"
+echo -e "${BIBlue}│ ${BGCOLOR}    PROCESS INSTALLED TOJAN-GO        ${NC}${BIBlue} │${NC}"
+echo -e "${BIBlue}╰══════════════════════════════════════════╯${NC}"
+fun_bar 'res11'
+#echo -e "${BIBlue}╭══════════════════════════════════════════╮${NC}"
+#echo -e "${BIBlue}│ ${BGCOLOR}    PROCESS INSTALLED CRONTAB         ${NC}${BIBlue} │${NC}"
+#echo -e "${BIBlue}╰══════════════════════════════════════════╯${NC}"
+#fun_bar 'res12'
 }
 
-function setup_ubuntu(){
-echo -e "${green}┌──────────────────────────────────────────┐${NC}"
-echo -e "${green}│      PROCESS INSTALLED SSH & OPENVPN     │${NC}"
-echo -e "${green}└──────────────────────────────────────────┘${NC}"
-res2
-
-echo -e "${green}┌──────────────────────────────────────────┐${NC}"
-echo -e "${green}│           PROCESS INSTALLED XRAY         │${NC}"
-echo -e "${green}└──────────────────────────────────────────┘${NC}"
-res3
-
-echo -e "${green}┌──────────────────────────────────────────┐${NC}"
-echo -e "${green}│       PROCESS INSTALLED WEBSOCKET SSH    │${NC}"
-echo -e "${green}└──────────────────────────────────────────┘${NC}"
-res4
-
-echo -e "${green}┌──────────────────────────────────────────┐${NC}"
-echo -e "${green}│       PROCESS INSTALLED BACKUP MENU      │${NC}"
-echo -e "${green}└──────────────────────────────────────────┘${NC}"
-res5
-
-echo -e "${green}┌──────────────────────────────────────────┐${NC}"
-echo -e "${green}│           PROCESS INSTALLED OHP          │${NC}"
-echo -e "${green}└──────────────────────────────────────────┘${NC}"
-res6
-
-
-echo -e "${green}┌──────────────────────────────────────────┐${NC}"
-echo -e "${green}│           DOWNLOAD EXTRA MENU            │${NC}"
-echo -e "${green}└──────────────────────────────────────────┘${NC}"
-res7
-
-echo -e "${green}┌──────────────────────────────────────────┐${NC}"
-echo -e "${green}│           DOWNLOAD SYSTEM                │${NC}"
-echo -e "${green}└──────────────────────────────────────────┘${NC}"
-res8
-
-echo -e "${green}┌──────────────────────────────────────────┐${NC}"
-echo -e "${green}│           DOWNLOAD UDP COSTUM            │${NC}"
-echo -e "${green}└──────────────────────────────────────────┘${NC}"
-res9
-}
 function iinfo(){
 domain=$(cat /etc/xray/domain)
 TIMES="10"
-CHATID="1210833546"
-KEY="6006599143:AAEgstCAioq35JgX97HaW_G3TAkLKzLZS_w"
+CHATID="1486508882" 
+KEY="7286072978:AAF6JRoH86zg5UAQeHKrpIviAICDc-vJxDU"
 URL="https://api.telegram.org/bot$KEY/sendMessage"
 ISP=$(cat /etc/xray/isp)
 CITY=$(cat /etc/xray/city)
@@ -671,57 +801,21 @@ TEXT="
 <code>EXP SCRIPT : </code><code>$EXP Days</code>
 <code>━━━━━━━━━━━━━━━━━━━━</code>
 <i> Notifikasi Installer Script...</i>
-"'&reply_markup={"inline_keyboard":[[{"text":"🔥ᴏʀᴅᴇʀ","url":"https://t.me/kytxz"},{"text":"🔥GRUP","url":"https://t.me/kytxz"}]]}'
+"'&reply_markup={"inline_keyboard":[[{"text":"ᴏʀᴅᴇʀ","url":"https://t.me/amiqyu"},{"text":"GRUP","url":"https://t.me/cloudvpnpremium"}]]}'
 curl -s --max-time $TIMES -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT&parse_mode=html" $URL >/dev/null
 clear
 }
-# Tentukan nilai baru yang diinginkan untuk fs.file-max
-NEW_FILE_MAX=65535  # Ubah sesuai kebutuhan Anda
-
-# Nilai tambahan untuk konfigurasi netfilter
-NF_CONNTRACK_MAX="net.netfilter.nf_conntrack_max=262144"
-NF_CONNTRACK_TIMEOUT="net.netfilter.nf_conntrack_tcp_timeout_time_wait=30"
-
-# File yang akan diedit
-SYSCTL_CONF="/etc/sysctl.conf"
-
-# Ambil nilai fs.file-max saat ini
-CURRENT_FILE_MAX=$(grep "^fs.file-max" "$SYSCTL_CONF" | awk '{print $3}' 2>/dev/null)
-
-# Cek apakah nilai fs.file-max sudah sesuai
-if [ "$CURRENT_FILE_MAX" != "$NEW_FILE_MAX" ]; then
-    # Cek apakah fs.file-max sudah ada di file
-    if grep -q "^fs.file-max" "$SYSCTL_CONF"; then
-        # Jika ada, ubah nilainya
-        sed -i "s/^fs.file-max.*/fs.file-max = $NEW_FILE_MAX/" "$SYSCTL_CONF" >/dev/null 2>&1
-    else
-        # Jika tidak ada, tambahkan baris baru
-        echo "fs.file-max = $NEW_FILE_MAX" >> "$SYSCTL_CONF" 2>/dev/null
-    fi
-fi
-
-# Cek apakah net.netfilter.nf_conntrack_max sudah ada
-if ! grep -q "^net.netfilter.nf_conntrack_max" "$SYSCTL_CONF"; then
-    echo "$NF_CONNTRACK_MAX" >> "$SYSCTL_CONF" 2>/dev/null
-fi
-
-# Cek apakah net.netfilter.nf_conntrack_tcp_timeout_time_wait sudah ada
-if ! grep -q "^net.netfilter.nf_conntrack_tcp_timeout_time_wait" "$SYSCTL_CONF"; then
-    echo "$NF_CONNTRACK_TIMEOUT" >> "$SYSCTL_CONF" 2>/dev/null
-fi
-
-# Terapkan perubahan
-sysctl -p >/dev/null 2>&1
-key2
+#install remove log
+#echo "0 5 * * * root reboot" >> /etc/crontab
+#echo "* * * * * root clog" >> /etc/crontab
+#echo "0 3 * * * root clearlog" >> /etc/crontab
+#echo "59 * * * * root pkill 'menu'" >> /etc/crontab
+#echo "0 1 * * * root xp" >> /etc/crontab
+#echo "*/5 * * * * root notramcpu" >> /etc/crontab
+#service cron restart
+#clear
 CEKIP
-Installasi
-sudo systemctl disable systemd-resolved
-sudo systemctl stop systemd-resolved
-sudo rm /etc/resolv.config
-echo -e "nameserver 8.8.8.8\nnameserver 8.8.4.4" | sudo tee /etc/resolv.conf
-sudo chattr +i /etc/resolv.conf
-sudo systemctl start systemd-resolved
-sudo systemctl enable systemd-resolved
+Casper3
 cat> /root/.profile << END
 if [ "$BASH" ]; then
 if [ -f ~/.bashrc ]; then
@@ -730,7 +824,7 @@ fi
 fi
 mesg n || true
 clear
-welcome
+menu
 END
 chmod 644 /root/.profile
 if [ -f "/root/log-install.txt" ]; then
@@ -739,11 +833,13 @@ fi
 if [ -f "/etc/afak.conf" ]; then
 rm /etc/afak.conf > /dev/null 2>&1
 fi
+if [ ! -f "/etc/log-create-user.log" ]; then
+echo "Log All Account " > /etc/log-create-user.log
+fi
 history -c
-serverV=$( curl -sS ${REPO2}versi  )
+serverV=$( curl -sS https://raw.githubusercontent.com/sehuadri/new/main/versi  )
 echo $serverV > /opt/.ver
-echo "00" > /home/daily_reboot
-aureb=$(cat /home/daily_reboot)
+aureb=$(cat /home/re_otm)
 b=11
 if [ $aureb -gt $b ]
 then
@@ -753,19 +849,17 @@ gg="AM"
 fi
 cd
 curl -sS ifconfig.me > /etc/myipvps
-curl -s ipinfo.io/city?token=75082b4831f909 >> /etc/xray/city
-curl -s ipinfo.io/org?token=75082b4831f909  | cut -d " " -f 2-10 >> /etc/xray/isp
-rm /root/tools.sh >/dev/null 2>&1
+curl -s ipinfo.io/city?token=751274028fe3c0 >> /etc/xray/city
+curl -s ipinfo.io/org?token=751274028fe3c0  | cut -d " " -f 2-10 >> /etc/xray/isp
 rm /root/setup.sh >/dev/null 2>&1
 rm /root/slhost.sh >/dev/null 2>&1
 rm /root/ssh-vpn.sh >/dev/null 2>&1
 rm /root/ins-xray.sh >/dev/null 2>&1
 rm /root/insshws.sh >/dev/null 2>&1
 rm /root/set-br.sh >/dev/null 2>&1
-rm /root/ohp.sh >/dev/null 2>&1
+#rm /root/ohp.sh >/dev/null 2>&1
 rm /root/update.sh >/dev/null 2>&1
 rm /root/installsl.sh >/dev/null 2>&1
-rm /root/udp-custom.sh >/dev/null 2>&1
 rm -rf /etc/noobz
 mkdir -p /etc/noobz
 echo "" > /etc/xray/noob
@@ -774,13 +868,13 @@ sleep 3
 echo  ""
 cd
 iinfo
-echo -e "${green}┌────────────────────────────────────────────┐${NC}"
-echo -e "${green}│  INSTALL SCRIPT SELESAI..                  │${NC}"
-echo -e "${green}└────────────────────────────────────────────┘${NC}"
+rm -rf *
+echo -e "${BIBlue}╭════════════════════════════════════════════╮${NC}"
+echo -e "${BIBlue}│ ${BGCOLOR} INSTALL SCRIPT SELESAI..                 ${NC}${BIBlue} │${NC}"
+echo -e "${BIBlue}╰════════════════════════════════════════════╯${NC}"
 echo  ""
 sleep 4
-echo -e "[ ${yell}WARNING${NC} ] Do you want to reboot now ? (y/n)? "
-read answer
+echo -e "[ ${yell}WARNING${NC} ] Do you want to reboot now ? (y/n)? "; read answer
 if [ "$answer" == "${answer#[Yy]}" ] ;then
 exit 0
 else
