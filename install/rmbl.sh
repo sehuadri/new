@@ -1,11 +1,11 @@
 #!/bin/bash
 apt install jq curl -y
-DOMAIN=cloudvpn.shop
+DOMAIN=satanfusion.cloud
 sub=$(cat /root/subdomainx)
-dns=${sub}.cloudvpn.shop
-dns2=*.${sub}.cloudvpn.shop
-CF_ID=qwqw34207@gmail.com.com
-CF_KEY=266a89fba5c8824b989d663b382ba84f06d17
+dns=${sub}.satanfusion.cloud
+dns2=*.${sub}.satanfusion.cloud
+CF_ID=bangtepllo752@gmail.com
+CF_KEY=d8e5c652e1ddcc6fbfb20b1d7b6364de70c82
 set -euo pipefail
 IP=$(wget -qO- icanhazip.com);
 echo "Updating DNS for ${dns}..."
@@ -41,14 +41,14 @@ RESULT=$(curl -sLX PUT "https://api.cloudflare.com/client/v4/zones/${ZONE}/dns_r
 --data '{"type":"A","name":"'${dns2}'","content":"'${IP}'","ttl":120,"proxied":false}')
 echo $dns > /root/domain
 echo "$dns" > /etc/xray/domain
-echo "$dn!MYIP=$(wget -qO- icanhazip.com);
+echo "$dn!������MYIP=$(wget -qO- icanhazip.com);
 apt install jq curl -y
-DOMAIN=cloudvpn.shop
+DOMAIN=satanfusion.cloud
 sub=$(cat /root/subdomainx)
-dns=${sub}.cloudvpn.shop
-dns2=*.${sub}.cloudvpn.shop
-CF_ID=qwqw34207@gmail.com.com
-CF_KEY=266a89fba5c8824b989d663b382ba84f06d17
+dns=${sub}.satanfusion.cloud
+dns2=*.${sub}.satanfusion.cloud
+CF_ID=bangtepllo752@gmail.com
+CF_KEY=d8e5c652e1ddcc6fbfb20b1d7b6364de70c82
 set -euo pipefail
 IP=$(wget -qO- icanhazip.com);
 echo "Updating DNS for ${dns}..."
