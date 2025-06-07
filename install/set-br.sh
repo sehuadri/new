@@ -17,27 +17,6 @@ chmod +x /usr/bin/restore
 chmod +x /usr/bin/xp
 cd
 
-#if [ ! -f "/etc/cron.d/xp_otm" ]; then
-cat> /etc/cron.d/xp_otm << END
-SHELL=/bin/sh
-PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-0 0 * * * root /usr/bin/xp
-END
-#fi
-cat > /home/re_otm <<-END
-7
-END
-
-#if [ ! -f "/etc/cron.d/bckp_otm" ]; then
-cat> /etc/cron.d/bckp_otm << END
-SHELL=/bin/sh
-PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-0 5 * * * root /usr/bin/bottelegram
-END
-#fi
-
-service cron restart > /dev/null 2>&1
-
 # > Pasang Limit
 
 #wget "https://raw.githubusercontent.com/sehuadri/new/main/bin/limit.sh" >/dev/null 2>&1
