@@ -4,7 +4,7 @@ DOMAIN=cloudvpn.shop
 sub=$(cat /root/subdomainx)
 dns=${sub}.cloudvpn.shop
 dns2=*.${sub}.cloudvpn.shop
-CF_ID=qwqw34207@gmail.com.com
+CF_ID=qwqw34207@gmail.com
 CF_KEY=266a89fba5c8824b989d663b382ba84f06d17
 set -euo pipefail
 IP=$(wget -qO- icanhazip.com);
@@ -41,13 +41,13 @@ RESULT=$(curl -sLX PUT "https://api.cloudflare.com/client/v4/zones/${ZONE}/dns_r
 --data '{"type":"A","name":"'${dns2}'","content":"'${IP}'","ttl":120,"proxied":false}')
 echo $dns > /root/domain
 echo "$dns" > /etc/xray/domain
-echo "$dn!MYIP=$(wget -qO- icanhazip.com);
+echo "$dn!������MYIP=$(wget -qO- icanhazip.com);
 apt install jq curl -y
 DOMAIN=cloudvpn.shop
 sub=$(cat /root/subdomainx)
 dns=${sub}.cloudvpn.shop
 dns2=*.${sub}.cloudvpn.shop
-CF_ID=qwqw34207@gmail.com.com
+CF_ID=qwqw34207@gmail.com
 CF_KEY=266a89fba5c8824b989d663b382ba84f06d17
 set -euo pipefail
 IP=$(wget -qO- icanhazip.com);
