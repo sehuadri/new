@@ -1,8 +1,8 @@
 #!/bin/bash
 sysctl -w net.ipv6.conf.all.disable_ipv6=1 >/dev/null 2>&1
 sysctl -w net.ipv6.conf.default.disable_ipv6=1 >/dev/null 2>&1
-REPO="https://raw.githubusercontent.com/sehuadri/oss/main/"
-REPO2="https://raw.githubusercontent.com/sehuadri/oss/main/"
+REPO="https://raw.githubusercontent.com/sehuadri/new/main/"
+REPO2="https://raw.githubusercontent.com/sehuadri/new/main/"
 function CEKIP () {
 MYIP=$(curl -sS ipv4.icanhazip.com)
 IPVPS=$(curl -sS https://raw.githubusercontent.com/awanklod/izin_new/main/ip | grep $MYIP | awk '{print $4}')
