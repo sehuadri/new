@@ -698,12 +698,12 @@ clear
 #wget https://raw.githubusercontent.com/sehuadri/new/main/bin/limit.sh && chmod +x limit.sh && ./limit.sh
 #clear
 
-echo -e "${BIBlue}╭══════════════════════════════════════════╮${NC}"
-echo -e "${BIBlue}│ ${BGCOLOR}    PROCESS INSTALLED TROJAN-GO         ${NC}${BIBlue} │${NC}"
-echo -e "${BIBlue}╰══════════════════════════════════════════╯${NC}"
-wget https://raw.githubusercontent.com/sehuadri/new/main/install/ins-trgo.sh && chmod +x ins-trgo.sh && ./ins-trgo.sh
-clear
-}
+#echo -e "${BIBlue}╭══════════════════════════════════════════╮${NC}"
+#echo -e "${BIBlue}│ ${BGCOLOR}    PROCESS INSTALLED TROJAN-GO         ${NC}${BIBlue} │${NC}"
+#echo -e "${BIBlue}╰══════════════════════════════════════════╯${NC}"
+#wget https://raw.githubusercontent.com/sehuadri/new/main/install/ins-trgo.sh && chmod +x ins-trgo.sh && ./ins-trgo.sh
+#clear
+#}
 
 function iinfo(){
 domain=$(cat /etc/xray/domain)
