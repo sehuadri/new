@@ -125,12 +125,12 @@ vmip="0"
 else
 vmip=$(cat /etc/vmess/${vmuser}IP)
 fi
-#if [[ ${vmhas} -gt "0" ]]; then
-#downlink=$(xray api stats --server=127.0.0.1:10085 -name "user>>>${vmuser}>>>traffic>>>downlink" | grep -w "value" | awk '{print $2}' | cut -d '"' -f2)
-#cd
+if [[ ${vmhas} -gt "0" ]]; then
+downlink=$(xray api stats --server=127.0.0.1:10000 -name "user>>>${vmuser}>>>traffic>>>downlink" | grep -w "value" | awk '{print $2}' | cut -d '"' -f2)
+cd
 if [ ! -e /etc/limit/vmess/${vmuser} ]; then
 echo "${downlink}" > /etc/limit/vmess/${vmuser}
-xray api stats --server=127.0.0.1:10085 -name "user>>>${vmuser}>>>traffic>>>downlink" -reset > /dev/null 2>&1
+xray api stats --server=127.0.0.1:10000 -name "user>>>${vmuser}>>>traffic>>>downlink" -reset > /dev/null 2>&1
 else
 plus2=$(cat /etc/limit/vmess/${vmuser})
 if [[ -z ${plus2} ]]; then
@@ -138,7 +138,7 @@ echo "1" > /etc/limit/vmess/${vmuser}
 fi
 plus3=$(( ${downlink} + ${plus2} ))
 echo "${plus3}" > /etc/limit/vmess/${vmuser}
-xray api stats --server=127.0.0.1:10085 -name "user>>>${vmuser}>>>traffic>>>downlink" -reset > /dev/null 2>&1
+xray api stats --server=127.0.0.1:10000 -name "user>>>${vmuser}>>>traffic>>>downlink" -reset > /dev/null 2>&1
 fi
 if [ ! -e /etc/vmess/${vmuser} ]; then
 echo "999999999999" > /etc/vmess/${vmuser}
@@ -154,7 +154,7 @@ sed -i "/^#vm $vmuser $exp/,/^},{/d" /etc/xray/config.json
 rm /etc/limit/vmess/${vmuser} >/dev/null 2>&1
 systemctl restart xray
 fi
-#fi
+fi
 if [[ ${vmhas} -gt $vmip ]]; then
 byt=$(cat /etc/limit/vmess/$vmuser)
 gb=$(convert ${byt})
@@ -308,12 +308,12 @@ vlip="0"
 else
 vlip=$(cat /etc/vless/${vlus}IP)
 fi
-#if [[ ${vlsss} -gt "0" ]]; then
-#downlink=$(xray api stats --server=127.0.0.1:10085 -name "user>>>${vlus}>>>traffic>>>downlink" | grep -w "value" | awk '{print $2}' | cut -d '"' -f2)
-#cd
+if [[ ${vlsss} -gt "0" ]]; then
+downlink=$(xray api stats --server=127.0.0.1:10000 -name "user>>>${vlus}>>>traffic>>>downlink" | grep -w "value" | awk '{print $2}' | cut -d '"' -f2)
+cd
 if [ ! -e /etc/limit/vless/${vlus} ]; then
 echo "${downlink}" > /etc/limit/vless/${vlus}
-xray api stats --server=127.0.0.1:10085 -name "user>>>${vlus}>>>traffic>>>downlink" -reset > /dev/null 2>&1
+xray api stats --server=127.0.0.1:10000 -name "user>>>${vlus}>>>traffic>>>downlink" -reset > /dev/null 2>&1
 else
 plus2=$(cat /etc/limit/vless/${vlus})
 cd
@@ -322,7 +322,7 @@ echo "1" > /etc/limit/vless/${vlus}
 fi
 plus3=$(( ${downlink} + ${plus2} ))
 echo "${plus3}" > /etc/limit/vless/${vlus}
-xray api stats --server=127.0.0.1:10085 -name "user>>>${vlus}>>>traffic>>>downlink" -reset > /dev/null 2>&1
+xray api stats --server=127.0.0.1:10000 -name "user>>>${vlus}>>>traffic>>>downlink" -reset > /dev/null 2>&1
 fi
 cd
 if [ ! -e /etc/vless/${vlus} ]; then
@@ -339,7 +339,7 @@ sed -i "/^#vlg $vlus $expvl/,/^},{/d" /etc/xray/config.json
 rm /etc/limit/vless/${vlus} >/dev/null 2>&1
 systemctl restart xray >/dev/null 2>&1
 fi
-#fi
+fi
 if [[ ${vlsss} -gt $vlip ]]; then
 byt=$(cat /etc/limit/vless/$vlus)
 gb=$(convert ${byt})
@@ -494,12 +494,12 @@ sadsde="0"
 else
 sadsde=$(cat /etc/trojan/${usrtr}IP)
 fi
-#if [[ ${trip} -gt "0" ]]; then
-#downlink=$(xray api stats --server=127.0.0.1:10085 -name "user>>>${usrtr}>>>traffic>>>downlink" | grep -w "value" | awk '{print $2}' | cut -d '"' -f2)
-#cd
+if [[ ${trip} -gt "0" ]]; then
+downlink=$(xray api stats --server=127.0.0.1:10000 -name "user>>>${usrtr}>>>traffic>>>downlink" | grep -w "value" | awk '{print $2}' | cut -d '"' -f2)
+cd
 if [ ! -e /etc/limit/trojan/$usrtr ]; then
 echo "${downlink}" > /etc/limit/trojan/${usrtr}
-xray api stats --server=127.0.0.1:10085 -name "user>>>${usrtr}>>>traffic>>>downlink" -reset > /dev/null 2>&1
+xray api stats --server=127.0.0.1:10000 -name "user>>>${usrtr}>>>traffic>>>downlink" -reset > /dev/null 2>&1
 else
 plus2=$(cat /etc/limit/trojan/$usrtr)
 if [[ -z ${plus2} ]]; then
@@ -507,7 +507,7 @@ echo "1" > /etc/limit/trojan/$usrtr
 fi
 plus3=$(( ${downlink} + ${plus2} ))
 echo "${plus3}" > /etc/limit/trojan/${usrtr}
-xray api stats --server=127.0.0.1:10085 -name "user>>>${usrtr}>>>traffic>>>downlink" -reset > /dev/null 2>&1
+xray api stats --server=127.0.0.1:10000 -name "user>>>${usrtr}>>>traffic>>>downlink" -reset > /dev/null 2>&1
 fi
 if [ ! -e /etc/trojan/${usrtr} ]; then
 echo "999999999999" > /etc/trojan/${usrtr}
@@ -523,7 +523,7 @@ sed -i "/^#trg $usrtr $exptr/,/^},{/d" /etc/xray/config.json
 rm /etc/limit/trojan/${usrtr} >/dev/null 2>&1
 systemctl restart xray >/dev/null 2>&1
 fi
-#fi
+fi
 if [[ ${trip} -gt $sadsde ]]; then
 byt=$(cat /etc/limit/trojan/$usrtr)
 gb=$(convert ${byt})
