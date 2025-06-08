@@ -125,9 +125,9 @@ vmip="0"
 else
 vmip=$(cat /etc/vmess/${vmuser}IP)
 fi
-if [[ ${vmhas} -gt "0" ]]; then
-downlink=$(xray api stats --server=127.0.0.1:10085 -name "user>>>${vmuser}>>>traffic>>>downlink" | grep -w "value" | awk '{print $2}' | cut -d '"' -f2)
-cd
+#if [[ ${vmhas} -gt "0" ]]; then
+#downlink=$(xray api stats --server=127.0.0.1:10085 -name "user>>>${vmuser}>>>traffic>>>downlink" | grep -w "value" | awk '{print $2}' | cut -d '"' -f2)
+#cd
 if [ ! -e /etc/limit/vmess/${vmuser} ]; then
 echo "${downlink}" > /etc/limit/vmess/${vmuser}
 xray api stats --server=127.0.0.1:10085 -name "user>>>${vmuser}>>>traffic>>>downlink" -reset > /dev/null 2>&1
@@ -308,9 +308,9 @@ vlip="0"
 else
 vlip=$(cat /etc/vless/${vlus}IP)
 fi
-if [[ ${vlsss} -gt "0" ]]; then
-downlink=$(xray api stats --server=127.0.0.1:10085 -name "user>>>${vlus}>>>traffic>>>downlink" | grep -w "value" | awk '{print $2}' | cut -d '"' -f2)
-cd
+#if [[ ${vlsss} -gt "0" ]]; then
+#downlink=$(xray api stats --server=127.0.0.1:10085 -name "user>>>${vlus}>>>traffic>>>downlink" | grep -w "value" | awk '{print $2}' | cut -d '"' -f2)
+#cd
 if [ ! -e /etc/limit/vless/${vlus} ]; then
 echo "${downlink}" > /etc/limit/vless/${vlus}
 xray api stats --server=127.0.0.1:10085 -name "user>>>${vlus}>>>traffic>>>downlink" -reset > /dev/null 2>&1
@@ -494,9 +494,9 @@ sadsde="0"
 else
 sadsde=$(cat /etc/trojan/${usrtr}IP)
 fi
-if [[ ${trip} -gt "0" ]]; then
-downlink=$(xray api stats --server=127.0.0.1:10085 -name "user>>>${usrtr}>>>traffic>>>downlink" | grep -w "value" | awk '{print $2}' | cut -d '"' -f2)
-cd
+#if [[ ${trip} -gt "0" ]]; then
+#downlink=$(xray api stats --server=127.0.0.1:10085 -name "user>>>${usrtr}>>>traffic>>>downlink" | grep -w "value" | awk '{print $2}' | cut -d '"' -f2)
+#cd
 if [ ! -e /etc/limit/trojan/$usrtr ]; then
 echo "${downlink}" > /etc/limit/trojan/${usrtr}
 xray api stats --server=127.0.0.1:10085 -name "user>>>${usrtr}>>>traffic>>>downlink" -reset > /dev/null 2>&1
