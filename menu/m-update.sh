@@ -59,6 +59,7 @@ rm -rf bantwidth
 rm -rf media
 rm -rf helium
 rm -rf cleaner
+rm -rf clearlog
 rm -rf bench
 rm -rf notramcpu
 
@@ -108,6 +109,7 @@ rm -rf bantwidth
 rm -rf media
 rm -rf helium
 rm -rf cleaner
+rm -rf clearlog
 rm -rf bench
 rm -rf notramcpu
 
@@ -181,6 +183,7 @@ wget -q -O /usr/bin/bantwidth "https://raw.githubusercontent.com/sehuadri/new/ma
 wget -q -O /usr/bin/media "https://raw.githubusercontent.com/sehuadri/new/main/menu/media" && chmod +x /usr/bin/media
 wget -q -O /usr/bin/helium "https://raw.githubusercontent.com/sehuadri/new/main/menu/helium" && chmod +x /usr/bin/helium
 wget -q -O /usr/bin/cleaner "https://raw.githubusercontent.com/sehuadri/new/main/menu/cleaner.sh" && chmod +x /usr/bin/cleaner
+wget -q -O /usr/bin/clearlog "https://raw.githubusercontent.com/Agunxzzz/XrayCol/main/minacantik/clearlog.sh" && chmod +x /usr/bin/clearlog
 wget -q -O /usr/bin/bench "https://raw.githubusercontent.com/sehuadri/new/main/menu/bench.sh" && chmod +x /usr/bin/bench
 wget -q -O /usr/bin/notramcpu "https://raw.githubusercontent.com/sehuadri/new/main/menu/notramcpu" && chmod +x /usr/bin/notramcpu
 chmod +x menu
@@ -222,6 +225,7 @@ chmod +x bantwidth
 chmod +x media
 chmod +x helium
 chmod +x cleaner
+chmod +x clearlog
 chmod +x bench
 chmod +x notramcpu
 clear
