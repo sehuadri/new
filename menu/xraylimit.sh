@@ -339,7 +339,7 @@ sed -i "/^#vlg $vlus $expvl/,/^},{/d" /etc/xray/config.json
 rm /etc/limit/vless/${vlus} >/dev/null 2>&1
 systemctl restart xray >/dev/null 2>&1
 fi
-fi
+#fi
 if [[ ${vlsss} -gt $vlip ]]; then
 byt=$(cat /etc/limit/vless/$vlus)
 gb=$(convert ${byt})
@@ -523,7 +523,7 @@ sed -i "/^#trg $usrtr $exptr/,/^},{/d" /etc/xray/config.json
 rm /etc/limit/trojan/${usrtr} >/dev/null 2>&1
 systemctl restart xray >/dev/null 2>&1
 fi
-fi
+#fi
 if [[ ${trip} -gt $sadsde ]]; then
 byt=$(cat /etc/limit/trojan/$usrtr)
 gb=$(convert ${byt})
