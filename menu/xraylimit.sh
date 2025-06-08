@@ -154,7 +154,7 @@ sed -i "/^#vm $vmuser $exp/,/^},{/d" /etc/xray/config.json
 rm /etc/limit/vmess/${vmuser} >/dev/null 2>&1
 systemctl restart xray
 fi
-fi
+#fi
 if [[ ${vmhas} -gt $vmip ]]; then
 byt=$(cat /etc/limit/vmess/$vmuser)
 gb=$(convert ${byt})
