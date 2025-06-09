@@ -107,7 +107,7 @@ if [[ ${c} != "0" ]]; then
 echo "${d}" >/etc/trojan/${user}
 fi
 echo "${iplim}" >/etc/trojan/${user}IP
-sed -i '/#trojanws$/a\#trg '"$user $exp $uuid"'\
+sed -i '/#trojanws$/a\#tr '"$user $exp $uuid"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
 sed -i '/#trojangrpc$/a\#trg '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
@@ -309,7 +309,7 @@ echo "${d}" >/etc/trojan/${user}
 fi
 echo "${iplim}" > /etc/trojan/${user}IP
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
-sed -i '/#trojanws$/a\#trg '"$user $exp $uuid"'\
+sed -i '/#trojanws$/a\#tr '"$user $exp $uuid"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
 sed -i '/#trojangrpc$/a\#trg '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
@@ -457,7 +457,7 @@ echo " Select the existing client you want to renew"
 echo " ketik [0] kembali kemenu"
 echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 echo "     No  User   Expired"
-grep -E "^#trg " "/etc/xray/config.json" | cut -d ' ' -f 2-3 | nl -s ') '
+grep -E "^#tr " "/etc/xray/config.json" | cut -d ' ' -f 2-3 | nl -s ') '
 until [[ ${CLIENT_NUMBER} -ge 1 && ${CLIENT_NUMBER} -le ${NUMBER_OF_CLIENTS} ]]; do
 if [[ ${CLIENT_NUMBER} == '1' ]]; then
 read -rp "Select one client [1]: " CLIENT_NUMBER
@@ -469,15 +469,15 @@ fi
 fi
 done
 read -p "Expired (days): " masaaktif
-user=$(grep -E "^#trg " "/etc/xray/config.json" | cut -d ' ' -f 2 | sed -n "${CLIENT_NUMBER}"p)
-exp=$(grep -E "^#trg " "/etc/xray/config.json" | cut -d ' ' -f 3 | sed -n "${CLIENT_NUMBER}"p)
+user=$(grep -E "^#tr " "/etc/xray/config.json" | cut -d ' ' -f 2 | sed -n "${CLIENT_NUMBER}"p)
+exp=$(grep -E "^#tr " "/etc/xray/config.json" | cut -d ' ' -f 3 | sed -n "${CLIENT_NUMBER}"p)
 now=$(date +%Y-%m-%d)
 d1=$(date -d "$exp" +%s)
 d2=$(date -d "$now" +%s)
 exp2=$(( (d1 - d2) / 86400 ))
 exp3=$(($exp2 + $masaaktif))
 exp4=`date -d "$exp3 days" +"%Y-%m-%d"`
-sed -i "s/#trg $user $exp/#trg $user $exp4/g" /etc/xray/config.json
+sed -i "s/#tr $user $exp/#tr $user $exp4/g" /etc/xray/config.json
 sed -i "s/#trg $user $exp/#trg $user $exp4/g" /etc/xray/config.json
 clear
 TEXT="
@@ -551,7 +551,7 @@ echo "     No  User   Expired"
 echo " Select the existing client you want to change ip"
 echo " ketik [0] kembali kemenu"
 echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-grep -E "^#trg " "/etc/xray/config.json" | cut -d ' ' -f 2-3 | nl -s ') '
+grep -E "^#tr " "/etc/xray/config.json" | cut -d ' ' -f 2-3 | nl -s ') '
 until [[ ${CLIENT_NUMBER} -ge 1 && ${CLIENT_NUMBER} -le ${NUMBER_OF_CLIENTS} ]]; do
 if [[ ${CLIENT_NUMBER} == '1' ]]; then
 read -rp "Select one client [1]: " CLIENT_NUMBER
@@ -578,7 +578,7 @@ fi
 if [ ${Quota} = '0' ]; then
 Quota="9999"
 fi
-user=$(grep -E "^#trg " "/etc/xray/config.json" | cut -d ' ' -f 2 | sed -n "${CLIENT_NUMBER}"p)
+user=$(grep -E "^#tr " "/etc/xray/config.json" | cut -d ' ' -f 2 | sed -n "${CLIENT_NUMBER}"p)
 echo "${iplim}" >/etc/trojan/${user}IP
 c=$(echo "${Quota}" | sed 's/[^0-9]*//g')
 d=$((${c} * 1024 * 1024 * 1024))
@@ -641,7 +641,7 @@ echo " Select the existing client you want to remove"
 echo " ketik [0] kembali kemenu"
 echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 echo "     No  User   Expired"
-grep -E "^#trg " "/etc/xray/config.json" | cut -d ' ' -f 2-3 | nl -s ') '
+grep -E "^#tr " "/etc/xray/config.json" | cut -d ' ' -f 2-3 | nl -s ') '
 until [[ ${CLIENT_NUMBER} -ge 1 && ${CLIENT_NUMBER} -le ${NUMBER_OF_CLIENTS} ]]; do
 if [[ ${CLIENT_NUMBER} == '1' ]]; then
 read -rp "Select one client [1]: " CLIENT_NUMBER
@@ -652,9 +652,9 @@ m-trojan2
 fi
 fi
 done
-user=$(grep -E "^#trg " "/etc/xray/config.json" | cut -d ' ' -f 2 | sed -n "${CLIENT_NUMBER}"p)
-exp=$(grep -E "^#trg " "/etc/xray/config.json" | cut -d ' ' -f 3 | sed -n "${CLIENT_NUMBER}"p)
-uuid=$(grep -E "^#trg " "/etc/xray/config.json" | cut -d ' ' -f 4 | sed -n "${CLIENT_NUMBER}"p)
+user=$(grep -E "^#tr " "/etc/xray/config.json" | cut -d ' ' -f 2 | sed -n "${CLIENT_NUMBER}"p)
+exp=$(grep -E "^#tr " "/etc/xray/config.json" | cut -d ' ' -f 3 | sed -n "${CLIENT_NUMBER}"p)
+uuid=$(grep -E "^#tr " "/etc/xray/config.json" | cut -d ' ' -f 4 | sed -n "${CLIENT_NUMBER}"p)
 if [ ! -e /etc/trojan/akundelete ]; then
 echo "" > /etc/trojan/akundelete
 fi
@@ -809,7 +809,7 @@ echo " Select the existing client to view the config"
 echo " ketik [0] kembali kemenu"
 echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 echo "     No  User   Expired"
-grep -E "^#trg " "/etc/xray/config.json" | cut -d ' ' -f 2-3 | nl -s ') '
+grep -E "^#tr " "/etc/xray/config.json" | cut -d ' ' -f 2-3 | nl -s ') '
 until [[ ${CLIENT_NUMBER} -ge 1 && ${CLIENT_NUMBER} -le ${NUMBER_OF_CLIENTS} ]]; do
 if [[ ${CLIENT_NUMBER} == '1' ]]; then
 read -rp "Select one client [1]: " CLIENT_NUMBER
@@ -820,7 +820,7 @@ m-trojan2
 fi
 fi
 done
-user=$(grep -E "^#trg " "/etc/xray/config.json" | cut -d ' ' -f 2 | sed -n "${CLIENT_NUMBER}"p)
+user=$(grep -E "^#tr " "/etc/xray/config.json" | cut -d ' ' -f 2 | sed -n "${CLIENT_NUMBER}"p)
 clear
 cat /etc/trojan/akun/log-create-${user}.log
 cat /etc/trojan/akun/log-create-${user}.log > /etc/notifakun
@@ -906,7 +906,7 @@ done
 user=$(grep -E "^### " "/etc/trojan/listlock" | cut -d ' ' -f 2 | sed -n "${CLIENT_NUMBER}"p)
 exp=$(grep -E "^### " "/etc/trojan/listlock" | cut -d ' ' -f 3 | sed -n "${CLIENT_NUMBER}"p)
 uuid=$(grep -E "^### " "/etc/trojan/listlock" | cut -d ' ' -f 4 | sed -n "${CLIENT_NUMBER}"p)
-sed -i '/#trojanws$/a\#trg '"$user $exp $uuid"'\
+sed -i '/#trojanws$/a\#tr '"$user $exp $uuid"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
 sed -i '/#trojangrpc$/a\#trg '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
@@ -1004,7 +1004,7 @@ fi
 user=$(grep -E "^### " "/etc/trojan/akundelete" | cut -d ' ' -f 2 | sed -n "${CLIENT_NUMBER}"p)
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 uuid=$(grep -E "^### " "/etc/trojan/akundelete" | cut -d ' ' -f 4 | sed -n "${CLIENT_NUMBER}"p)
-sed -i '/#trojanws$/a\#trg '"$user $exp $uuid"'\
+sed -i '/#trojanws$/a\#tr '"$user $exp $uuid"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
 sed -i '/#trojangrpc$/a\#trg '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
@@ -1097,7 +1097,7 @@ done
 user=$(grep -E "^### " "/etc/trojan/userQuota" | cut -d ' ' -f 2 | sed -n "${CLIENT_NUMBER}"p)
 exp=$(grep -E "^### " "/etc/trojan/userQuota" | cut -d ' ' -f 3 | sed -n "${CLIENT_NUMBER}"p)
 uuid=$(grep -E "^### " "/etc/trojan/userQuota" | cut -d ' ' -f 4 | sed -n "${CLIENT_NUMBER}"p)
-sed -i '/#trojanws$/a\#trg '"$user $exp $uuid"'\
+sed -i '/#trojanws$/a\#tr '"$user $exp $uuid"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
 sed -i '/#trojangrpc$/a\#trg '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
