@@ -1,6 +1,6 @@
 #!/bin/bash
 biji=`date +"%Y-%m-%d" -d "$dateFromServer"`
-MYIP=$(curl -sS ipv4.icanhazip.com)
+MYIP=$(wget -qO- ifconfig.me)
 colornow=$(cat /etc/rmbl/theme/color.conf)
 export NC="\e[0m"
 export yl='\033[0;33m';
@@ -16,7 +16,7 @@ author=$(cat /etc/profil)
 DAY=$(date +%A)
 DATE=$(date +%m/%d/%Y)
 DATE2=$(date -R | cut -d " " -f -5)
-MYIP=$(curl -sS ipv4.icanhazip.com)
+MYIP=$(wget -qO- ifconfig.me)
 Isadmin=$(curl -sS https://raw.githubusercontent.com/awanklod/izin_new/main/ip | grep $MYIP | awk '{print $5}')
 Exp2=$(curl -sS https://raw.githubusercontent.com/awanklod/izin_new/main/ip | grep $MYIP | awk '{print $3}')
 export RED='\033[0;31m'
