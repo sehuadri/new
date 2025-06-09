@@ -804,7 +804,7 @@ d2=$(date -d "$now" +%s)
 exp2=$(( (d1 - d2) / 86400 ))
 exp3=$(($exp2 + $masaaktif))
 exp4=`date -d "$exp3 days" +"%Y-%m-%d"`
-sed -i "s/#vm $user $exp/#vm $user $exp4/g" /etc/xray/config.json
+sed -i "s/#vmg $user $exp/#vmg $user $exp4/g" /etc/xray/config.json
 sed -i "s/#vmg $user $exp/#vmg $user $exp4/g" /etc/xray/config.json
 clear
 TEXT="
