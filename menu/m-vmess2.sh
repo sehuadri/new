@@ -110,7 +110,7 @@ echo "${d}" >/etc/vmess/${user}
 fi
 echo "${iplim}" >/etc/vmess/${user}IP
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
-sed -i '/#vmess$/a\#vmg '"$user $exp"'\
+sed -i '/#vmess$/a\#vm '"$user $exp"'\
 },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/config.json
 sed -i '/#vmessgrpc$/a\#vmg '"$user $exp $uuid"'\
 },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/config.json
@@ -484,7 +484,7 @@ echo "${d}" >/etc/vmess/${user}
 fi
 echo "${iplim}" > /etc/vmess/${user}IP
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
-sed -i '/#vmess$/a\#vmg '"$user $exp"'\
+sed -i '/#vmess$/a\#vm '"$user $exp"'\
 },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/config.json
 sed -i '/#vmessgrpc$/a\#vmg '"$user $exp $uuid"'\
 },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/config.json
@@ -819,7 +819,7 @@ d2=$(date -d "$now" +%s)
 exp2=$(( (d1 - d2) / 86400 ))
 exp3=$(($exp2 + $masaaktif))
 exp4=`date -d "$exp3 days" +"%Y-%m-%d"`
-sed -i "s/#vmg $user $exp/#vmg $user $exp4/g" /etc/xray/config.json
+sed -i "s/#vm $user $exp/#vm $user $exp4/g" /etc/xray/config.json
 sed -i "s/#vmg $user $exp/#vmg $user $exp4/g" /etc/xray/config.json
 clear
 TEXT="
@@ -1003,7 +1003,7 @@ fi
 clear
 echo "### $user $exp $uuid" >> /etc/vmess/akundelete
 sed -i "/^#vmg $user $exp/,/^},{/d" /etc/xray/config.json
-sed -i "/^#vmg $user $exp/,/^},{/d" /etc/xray/config.json
+sed -i "/^#vm $user $exp/,/^},{/d" /etc/xray/config.json
 rm /etc/vmess/${user}IP
 clear
 rm /home/vps/public_html/vmess-$user.txt >/dev/null 2>&1
@@ -1341,7 +1341,7 @@ done
 user=$(grep -E "^### " "/etc/vmess/listlock" | cut -d ' ' -f 2 | sed -n "${CLIENT_NUMBER}"p)
 exp=$(grep -E "^### " "/etc/vmess/listlock" | cut -d ' ' -f 3 | sed -n "${CLIENT_NUMBER}"p)
 uuid=$(grep -E "^### " "/etc/vmess/listlock" | cut -d ' ' -f 4 | sed -n "${CLIENT_NUMBER}"p)
-sed -i '/#vmess$/a\#vmg '"$user $exp"'\
+sed -i '/#vmess$/a\#vm '"$user $exp"'\
 },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/config.json
 sed -i '/#vmessgrpc$/a\#vmg '"$user $exp $uuid"'\
 },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/config.json
@@ -1438,7 +1438,7 @@ fi
 user=$(grep -E "^### " "/etc/vmess/akundelete" | cut -d ' ' -f 2 | sed -n "${CLIENT_NUMBER}"p)
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 uuid=$(grep -E "^### " "/etc/vmess/akundelete" | cut -d ' ' -f 4 | sed -n "${CLIENT_NUMBER}"p)
-sed -i '/#vmess$/a\#vmg '"$user $exp"'\
+sed -i '/#vmess$/a\#vm '"$user $exp"'\
 },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/config.json
 sed -i '/#vmessgrpc$/a\#vmg '"$user $exp $uuid"'\
 },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/config.json
@@ -1531,7 +1531,7 @@ done
 user=$(grep -E "^### " "/etc/vmess/userQuota" | cut -d ' ' -f 2 | sed -n "${CLIENT_NUMBER}"p)
 exp=$(grep -E "^### " "/etc/vmess/userQuota" | cut -d ' ' -f 3 | sed -n "${CLIENT_NUMBER}"p)
 uuid=$(grep -E "^### " "/etc/vmess/userQuota" | cut -d ' ' -f 4 | sed -n "${CLIENT_NUMBER}"p)
-sed -i '/#vmess$/a\#vmg '"$user $exp"'\
+sed -i '/#vmess$/a\#vm '"$user $exp"'\
 },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/config.json
 sed -i '/#vmessgrpc$/a\#vmg '"$user $exp $uuid"'\
 },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/config.json
