@@ -112,7 +112,7 @@ echo "${iplim}" >/etc/vmess/${user}IP
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 sed -i '/#vmess$/a\#vm '"$user $exp"'\
 },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/config.json
-sed -i '/#vmessgrpc$/a\#vmg '"$user $exp $uuid"'\
+sed -i '/#vmessgrpc$/a\#vm '"$user $exp $uuid"'\
 },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/config.json
 asu=`cat<<EOF
 {
@@ -486,7 +486,7 @@ echo "${iplim}" > /etc/vmess/${user}IP
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 sed -i '/#vmess$/a\#vm '"$user $exp"'\
 },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/config.json
-sed -i '/#vmessgrpc$/a\#vmg '"$user $exp $uuid"'\
+sed -i '/#vmessgrpc$/a\#vm '"$user $exp $uuid"'\
 },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/config.json
 cat> /etc/cron.d/trialvmess${user} << EOF
 SHELL=/bin/sh
@@ -778,7 +778,7 @@ menu
 }
 function renew-vmess(){
 clear
-NUMBER_OF_CLIENTS=$(grep -c -E "^#vmg " "/etc/xray/config.json")
+NUMBER_OF_CLIENTS=$(grep -c -E "^#vm " "/etc/xray/config.json")
 if [[ ${NUMBER_OF_CLIENTS} == '0' ]]; then
 clear
 echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
@@ -799,7 +799,7 @@ echo " Select the existing client you want to renew"
 echo " ketik [0] kembali kemenu"
 echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 echo "     No  User   Expired"
-grep -E "^#vmg " "/etc/xray/config.json" | cut -d ' ' -f 2-3 | nl -s ') '
+grep -E "^#vm " "/etc/xray/config.json" | cut -d ' ' -f 2-3 | nl -s ') '
 until [[ ${CLIENT_NUMBER} -ge 1 && ${CLIENT_NUMBER} -le ${NUMBER_OF_CLIENTS} ]]; do
 if [[ ${CLIENT_NUMBER} == '1' ]]; then
 read -rp "Select one client [1]: " CLIENT_NUMBER
@@ -811,8 +811,8 @@ fi
 fi
 done
 read -p "Expired (days): " masaaktif
-user=$(grep -E "^#vmg " "/etc/xray/config.json" | cut -d ' ' -f 2 | sed -n "${CLIENT_NUMBER}"p)
-exp=$(grep -E "^#vmg " "/etc/xray/config.json" | cut -d ' ' -f 3 | sed -n "${CLIENT_NUMBER}"p)
+user=$(grep -E "^#vm " "/etc/xray/config.json" | cut -d ' ' -f 2 | sed -n "${CLIENT_NUMBER}"p)
+exp=$(grep -E "^#vm " "/etc/xray/config.json" | cut -d ' ' -f 3 | sed -n "${CLIENT_NUMBER}"p)
 now=$(date +%Y-%m-%d)
 d1=$(date -d "$exp" +%s)
 d2=$(date -d "$now" +%s)
@@ -820,7 +820,7 @@ exp2=$(( (d1 - d2) / 86400 ))
 exp3=$(($exp2 + $masaaktif))
 exp4=`date -d "$exp3 days" +"%Y-%m-%d"`
 sed -i "s/#vm $user $exp/#vm $user $exp4/g" /etc/xray/config.json
-sed -i "s/#vmg $user $exp/#vmg $user $exp4/g" /etc/xray/config.json
+sed -i "s/#vm $user $exp/#vm $user $exp4/g" /etc/xray/config.json
 clear
 TEXT="
 <code>◇━━━━━━━━━━━━━━◇</code>
@@ -872,7 +872,7 @@ m-vmess2
 }
 function limit-vmess(){
 clear
-NUMBER_OF_CLIENTS=$(grep -c -E "^#vmg " "/etc/xray/config.json")
+NUMBER_OF_CLIENTS=$(grep -c -E "^#vm " "/etc/xray/config.json")
 if [[ ${NUMBER_OF_CLIENTS} == '0' ]]; then
 clear
 echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
@@ -893,7 +893,7 @@ echo " Select the existing client you want to change ip"
 echo " ketik [0] kembali kemenu"
 echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 echo "     No  User   Expired"
-grep -E "^#vmg " "/etc/xray/config.json" | cut -d ' ' -f 2-3 | nl -s ') '
+grep -E "^#vm " "/etc/xray/config.json" | cut -d ' ' -f 2-3 | nl -s ') '
 until [[ ${CLIENT_NUMBER} -ge 1 && ${CLIENT_NUMBER} -le ${NUMBER_OF_CLIENTS} ]]; do
 if [[ ${CLIENT_NUMBER} == '1' ]]; then
 read -rp "Select one client [1]: " CLIENT_NUMBER
@@ -920,7 +920,7 @@ fi
 if [ ${Quota} = '0' ]; then
 Quota="9999"
 fi
-user=$(grep -E "^#vmg " "/etc/xray/config.json" | cut -d ' ' -f 2 | sed -n "${CLIENT_NUMBER}"p)
+user=$(grep -E "^#vm " "/etc/xray/config.json" | cut -d ' ' -f 2 | sed -n "${CLIENT_NUMBER}"p)
 echo "${iplim}" >/etc/vmess/${user}IP
 c=$(echo "${Quota}" | sed 's/[^0-9]*//g')
 d=$((${c} * 1024 * 1024 * 1024))
@@ -963,7 +963,7 @@ m-vmess2
 }
 function del-vmess(){
 clear
-NUMBER_OF_CLIENTS=$(grep -c -E "^#vmg " "/etc/xray/config.json")
+NUMBER_OF_CLIENTS=$(grep -c -E "^#vm " "/etc/xray/config.json")
 if [[ ${NUMBER_OF_CLIENTS} == '0' ]]; then
 echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 echo -e "$COLOR1 ${NC}${COLBG1}    ${WH}⇱ Delete Vmess Account ⇲     ${NC} $COLOR1 $NC"
@@ -983,7 +983,7 @@ echo " Select the existing client you want to remove"
 echo " ketik [0] kembali kemenu"
 echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 echo "     No  User   Expired"
-grep -E "^#vmg " "/etc/xray/config.json" | cut -d ' ' -f 2-3 | nl -s ') '
+grep -E "^#vm " "/etc/xray/config.json" | cut -d ' ' -f 2-3 | nl -s ') '
 until [[ ${CLIENT_NUMBER} -ge 1 && ${CLIENT_NUMBER} -le ${NUMBER_OF_CLIENTS} ]]; do
 if [[ ${CLIENT_NUMBER} == '1' ]]; then
 read -rp "Select one client [1]: " CLIENT_NUMBER
@@ -994,15 +994,15 @@ m-vmess2
 fi
 fi
 done
-user=$(grep -E "^#vmg " "/etc/xray/config.json" | cut -d ' ' -f 2 | sed -n "${CLIENT_NUMBER}"p)
-exp=$(grep -E "^#vmg " "/etc/xray/config.json" | cut -d ' ' -f 3 | sed -n "${CLIENT_NUMBER}"p)
-uuid=$(grep -E "^#vmg " "/etc/xray/config.json" | cut -d ' ' -f 4 | sed -n "${CLIENT_NUMBER}"p)
+user=$(grep -E "^#vm " "/etc/xray/config.json" | cut -d ' ' -f 2 | sed -n "${CLIENT_NUMBER}"p)
+exp=$(grep -E "^#vm " "/etc/xray/config.json" | cut -d ' ' -f 3 | sed -n "${CLIENT_NUMBER}"p)
+uuid=$(grep -E "^#vm " "/etc/xray/config.json" | cut -d ' ' -f 4 | sed -n "${CLIENT_NUMBER}"p)
 if [ ! -e /etc/vmess/akundelete ]; then
 echo "" > /etc/vmess/akundelete
 fi
 clear
 echo "### $user $exp $uuid" >> /etc/vmess/akundelete
-sed -i "/^#vmg $user $exp/,/^},{/d" /etc/xray/config.json
+sed -i "/^#vm $user $exp/,/^},{/d" /etc/xray/config.json
 sed -i "/^#vm $user $exp/,/^},{/d" /etc/xray/config.json
 rm /etc/vmess/${user}IP
 clear
@@ -1083,7 +1083,7 @@ echo -e "$COLOR1╭════════════════════�
 echo -e "$COLOR1│${NC} ${COLBG1}            ${WH}• VMESS USER ONLINE •              ${NC} $COLOR1│ $NC"
 echo -e "$COLOR1╰═════════════════════════════════════════════════╯${NC}"
 echo -e "$COLOR1╭═══════════════════════════════════════════════════╮${NC}"
-vmdat=($(cat /etc/xray/config.json | grep "^#vmg" | awk '{print $2}' | sort -u))
+vmdat=($(cat /etc/xray/config.json | grep "^#vm" | awk '{print $2}' | sort -u))
 echo -n >/tmp/vm
 for db1 in ${vmdat[@]}; do
 logvm=$(cat /var/log/xray/access.log | grep -w "email: ${db1}" | tail -n 100)
@@ -1133,7 +1133,7 @@ m-vmess2
 }
 function list-vmess(){
 clear
-NUMBER_OF_CLIENTS=$(grep -c -E "^#vmg " "/etc/xray/config.json")
+NUMBER_OF_CLIENTS=$(grep -c -E "^#vm " "/etc/xray/config.json")
 if [[ ${NUMBER_OF_CLIENTS} == '0' ]]; then
 clear
 echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
@@ -1155,7 +1155,7 @@ echo " Select the existing client to view the config"
 echo " ketik [0] kembali kemenu"
 echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 echo "     No  User   Expired"
-grep -E "^#vmg " "/etc/xray/config.json" | cut -d ' ' -f 2-3 | nl -s ') '
+grep -E "^#vm " "/etc/xray/config.json" | cut -d ' ' -f 2-3 | nl -s ') '
 until [[ ${CLIENT_NUMBER} -ge 1 && ${CLIENT_NUMBER} -le ${NUMBER_OF_CLIENTS} ]]; do
 if [[ ${CLIENT_NUMBER} == '1' ]]; then
 read -rp "Select one client [1]: " CLIENT_NUMBER
@@ -1167,7 +1167,7 @@ fi
 fi
 done
 clear
-user=$(grep -E "^#vmg " "/etc/xray/config.json" | cut -d ' ' -f 2 | sed -n "${CLIENT_NUMBER}"p)
+user=$(grep -E "^#vm " "/etc/xray/config.json" | cut -d ' ' -f 2 | sed -n "${CLIENT_NUMBER}"p)
 cat /etc/vmess/akun/log-create-${user}.log
 cat /etc/vmess/akun/log-create-${user}.log > /etc/notifakun
 sed -i 's/\x1B\[1;37m//g' /etc/notifakun
@@ -1343,7 +1343,7 @@ exp=$(grep -E "^### " "/etc/vmess/listlock" | cut -d ' ' -f 3 | sed -n "${CLIENT
 uuid=$(grep -E "^### " "/etc/vmess/listlock" | cut -d ' ' -f 4 | sed -n "${CLIENT_NUMBER}"p)
 sed -i '/#vmess$/a\#vm '"$user $exp"'\
 },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/config.json
-sed -i '/#vmessgrpc$/a\#vmg '"$user $exp $uuid"'\
+sed -i '/#vmessgrpc$/a\#vm '"$user $exp $uuid"'\
 },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/config.json
 sed -i "/^### $user $exp $uuid/d" /etc/vmess/listlock
 systemctl restart xray
@@ -1440,7 +1440,7 @@ exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 uuid=$(grep -E "^### " "/etc/vmess/akundelete" | cut -d ' ' -f 4 | sed -n "${CLIENT_NUMBER}"p)
 sed -i '/#vmess$/a\#vm '"$user $exp"'\
 },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/config.json
-sed -i '/#vmessgrpc$/a\#vmg '"$user $exp $uuid"'\
+sed -i '/#vmessgrpc$/a\#vm '"$user $exp $uuid"'\
 },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/config.json
 echo "${iplim}" >/etc/vmess/${user}IP
 c=$(echo "${Quota}" | sed 's/[^0-9]*//g')
@@ -1533,7 +1533,7 @@ exp=$(grep -E "^### " "/etc/vmess/userQuota" | cut -d ' ' -f 3 | sed -n "${CLIEN
 uuid=$(grep -E "^### " "/etc/vmess/userQuota" | cut -d ' ' -f 4 | sed -n "${CLIENT_NUMBER}"p)
 sed -i '/#vmess$/a\#vm '"$user $exp"'\
 },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/config.json
-sed -i '/#vmessgrpc$/a\#vmg '"$user $exp $uuid"'\
+sed -i '/#vmessgrpc$/a\#vm '"$user $exp $uuid"'\
 },{"id": "'""$uuid""'","alterId": '"0"',"email": "'""$user""'"' /etc/xray/config.json
 sed -i "/^### $user $exp $uuid/d" /etc/vmess/userQuota
 systemctl restart xray
