@@ -91,7 +91,7 @@ cd
 if [[ ! -e /etc/limit/vmess ]]; then
 mkdir -p /etc/limit/vmess
 fi
-vmdat=($(cat /etc/xray/config.json | grep "^#vmg" | awk '{print $2}' | sort -u))
+vmdat=($(cat /etc/xray/config.json | grep "^#vm" | awk '{print $2}' | sort -u))
 echo -n >/tmp/vm
 for db1 in ${vmdat[@]}; do
 logvm=$(cat /var/log/xray/access.log | grep -w "email: ${db1}" | tail -n 150)
@@ -146,10 +146,10 @@ fi
 limit=$(cat /etc/vmess/${vmuser})
 usage=$(cat /etc/limit/vmess/${vmuser})
 if [ $usage -gt $limit ]; then
-exp=$(grep -wE "^#vmg $vmuser" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
-uuid=$(grep -wE "^#vmg $vmuser" "/etc/xray/config.json" | cut -d ' ' -f 4 | sort | uniq)
+exp=$(grep -wE "^#vm $vmuser" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
+uuid=$(grep -wE "^#vm $vmuser" "/etc/xray/config.json" | cut -d ' ' -f 4 | sort | uniq)
 echo "### $vmuser $exp $uuid" >> /etc/vmess/userQuota
-sed -i "/^#vmg $vmuser $exp/,/^},{/d" /etc/xray/config.json
+sed -i "/^#vm $vmuser $exp/,/^},{/d" /etc/xray/config.json
 sed -i "/^#vm $vmuser $exp/,/^},{/d" /etc/xray/config.json
 rm /etc/limit/vmess/${vmuser} >/dev/null 2>&1
 systemctl restart xray
@@ -189,10 +189,10 @@ TEXT2="
 echo "" > /tmp/vm
 sed -i "/${vmuser}/d" /var/log/xray/access.log
 curl -s --max-time $TIMES -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT2&parse_mode=html" $URL >/dev/null
-exp=$(grep -wE "^#vmg $vmuser" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
-uuid=$(grep -wE "^#vmg $vmuser" "/etc/xray/config.json" | cut -d ' ' -f 4 | sort | uniq)
+exp=$(grep -wE "^#vm $vmuser" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
+uuid=$(grep -wE "^#vm $vmuser" "/etc/xray/config.json" | cut -d ' ' -f 4 | sort | uniq)
 echo "### $vmuser $exp $uuid" >> /etc/vmess/listlock
-sed -i "/^#vmg $vmuser $exp/,/^},{/d" /etc/xray/config.json
+sed -i "/^#vm $vmuser $exp/,/^},{/d" /etc/xray/config.json
 sed -i "/^#vm $vmuser $exp/,/^},{/d" /etc/xray/config.json
 rm /etc/vmess/${vmuser}login >/dev/null 2>&1
 cat> /etc/cron.d/vmess${vmuser} << EOF
@@ -225,10 +225,10 @@ TEXT2="
 echo "" > /tmp/vm
 sed -i "/${vmuser}/d" /var/log/xray/access.log
 curl -s --max-time $TIMES -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT2&parse_mode=html" $URL >/dev/null
-exp=$(grep -wE "^#vmg $vmuser" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
-uuid=$(grep -wE "^#vmg $vmuser" "/etc/xray/config.json" | cut -d ' ' -f 4 | sort | uniq)
+exp=$(grep -wE "^#vm $vmuser" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
+uuid=$(grep -wE "^#vm $vmuser" "/etc/xray/config.json" | cut -d ' ' -f 4 | sort | uniq)
 echo "### $vmuser $exp $uuid" >> /etc/vmess/listlock
-sed -i "/^#vmg $vmuser $exp/,/^},{/d" /etc/xray/config.json
+sed -i "/^#vm $vmuser $exp/,/^},{/d" /etc/xray/config.json
 sed -i "/^#vm $vmuser $exp/,/^},{/d" /etc/xray/config.json
 rm /etc/vmess/${vmuser}login >/dev/null 2>&1
 systemctl restart xray
@@ -257,10 +257,10 @@ sed -i "/${vmuser}/d" /var/log/xray/access.log
 curl -s --max-time $TIMES -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT&parse_mode=html" $URL >/dev/null
 fi
 if [ $vmessip -gt $ssvmess ]; then
-exp=$(grep -wE "^#vmg $vmuser" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
-uuid=$(grep -wE "^#vmg $vmuser" "/etc/xray/config.json" | cut -d ' ' -f 4 | sort | uniq)
+exp=$(grep -wE "^#vm $vmuser" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
+uuid=$(grep -wE "^#vm $vmuser" "/etc/xray/config.json" | cut -d ' ' -f 4 | sort | uniq)
 echo "### $vmuser $exp $uuid" >> /etc/vmess/listlock
-sed -i "/^#vmg $vmuser $exp/,/^},{/d" /etc/xray/config.json
+sed -i "/^#vm $vmuser $exp/,/^},{/d" /etc/xray/config.json
 sed -i "/^#vm $vmuser $exp/,/^},{/d" /etc/xray/config.json
 rm /etc/vmess/${vmuser}login >/dev/null 2>&1
 systemctl restart xray
@@ -274,7 +274,7 @@ cd
 if [[ ! -e /etc/limit/vless ]]; then
 mkdir -p /etc/limit/vless
 fi
-vldat=($(cat /etc/xray/config.json | grep "^#vlg" | awk '{print $2}' | sort -u))
+vldat=($(cat /etc/xray/config.json | grep "^#vl" | awk '{print $2}' | sort -u))
 echo -n >/tmp/vl
 for db2 in ${vldat[@]}; do
 logvl=$(cat /var/log/xray/access.log | grep -w "email: ${db2}" | tail -n 150)
@@ -335,7 +335,7 @@ expvl=$(grep -wE "^#vl $vlus" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort |
 uuidvl=$(grep -wE "^#vl $vlus" "/etc/xray/config.json" | cut -d ' ' -f 4 | sort | uniq)
 echo "### $vlus $expvl $uuidvl" >> /etc/vless/userQuota
 sed -i "/^#vl $vlus $expvl/,/^},{/d" /etc/xray/config.json
-sed -i "/^#vlg $vlus $expvl/,/^},{/d" /etc/xray/config.json
+sed -i "/^#vl $vlus $expvl/,/^},{/d" /etc/xray/config.json
 rm /etc/limit/vless/${vlus} >/dev/null 2>&1
 systemctl restart xray >/dev/null 2>&1
 fi
@@ -379,7 +379,7 @@ expvl=$(grep -wE "^#vl $vlus" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort |
 uuidvl=$(grep -wE "^#vl $vlus" "/etc/xray/config.json" | cut -d ' ' -f 4 | sort | uniq)
 echo "### $vlus $expvl $uuidvl" >> /etc/vless/listlock
 sed -i "/^#vl $vlus $expvl/,/^},{/d" /etc/xray/config.json
-sed -i "/^#vlg $vlus $expvl/,/^},{/d" /etc/xray/config.json
+sed -i "/^#vl $vlus $expvl/,/^},{/d" /etc/xray/config.json
 rm /etc/vless/${vlus}login >/dev/null 2>&1
 systemctl restart xray >/dev/null 2>&1
 fi
@@ -409,7 +409,7 @@ expvl=$(grep -wE "^#vl $vlus" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort |
 uuidvl=$(grep -wE "^#vl $vlus" "/etc/xray/config.json" | cut -d ' ' -f 4 | sort | uniq)
 echo "### $vlus $expvl $uuidvl" >> /etc/vless/listlock
 sed -i "/^#vl $vlus $expvl/,/^},{/d" /etc/xray/config.json
-sed -i "/^#vlg $vlus $expvl/,/^},{/d" /etc/xray/config.json
+sed -i "/^#vl $vlus $expvl/,/^},{/d" /etc/xray/config.json
 rm /etc/vless/${vlus}login >/dev/null 2>&1
 cat> /etc/cron.d/vless${vlus} << EOF
 SHELL=/bin/sh
@@ -447,7 +447,7 @@ expvl=$(grep -wE "^#vl $vlus" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort |
 uuidvl=$(grep -wE "^#vl $vlus" "/etc/xray/config.json" | cut -d ' ' -f 4 | sort | uniq)
 echo "### $vlus $expvl $uuidvl" >> /etc/vless/listlock
 sed -i "/^#vl $vlus $expvl/,/^},{/d" /etc/xray/config.json
-sed -i "/^#vlg $vlus $expvl/,/^},{/d" /etc/xray/config.json
+sed -i "/^#vl $vlus $expvl/,/^},{/d" /etc/xray/config.json
 rm /etc/vless/${vlus}login >/dev/null 2>&1
 systemctl restart xray >/dev/null 2>&1
 fi
@@ -460,7 +460,7 @@ cd
 if [[ ! -e /etc/limit/trojan ]]; then
 mkdir -p /etc/limit/trojan
 fi
-trda=($(cat /etc/xray/config.json | grep "^#trg" | awk '{print $2}' | sort -u))
+trda=($(cat /etc/xray/config.json | grep "^#tr" | awk '{print $2}' | sort -u))
 echo -n >/tmp/tr
 for db3 in ${trda[@]}; do
 logtr=$(cat /var/log/xray/access.log | grep -w "email: ${db3}" | tail -n 150)
@@ -519,7 +519,7 @@ exptr=$(grep -wE "^#tr $usrtr" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort 
 uuidtr=$(grep -wE "^#tr $usrtr" "/etc/xray/config.json" | cut -d ' ' -f 4 | sort | uniq)
 echo "### $usrtr $exptr $uuidtr" >> /etc/trojan/userQuota
 sed -i "/^#tr $usrtr $exptr/,/^},{/d" /etc/xray/config.json
-sed -i "/^#trg $usrtr $exptr/,/^},{/d" /etc/xray/config.json
+sed -i "/^#tr $usrtr $exptr/,/^},{/d" /etc/xray/config.json
 rm /etc/limit/trojan/${usrtr} >/dev/null 2>&1
 systemctl restart xray >/dev/null 2>&1
 fi
@@ -563,7 +563,7 @@ exptr=$(grep -wE "^#tr $usrtr" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort 
 uuidtr=$(grep -wE "^#tr $usrtr" "/etc/xray/config.json" | cut -d ' ' -f 4 | sort | uniq)
 echo "### $usrtr $exptr $uuidtr" >> /etc/trojan/listlock
 sed -i "/^#tr $usrtr $exptr/,/^},{/d" /etc/xray/config.json
-sed -i "/^#trg $usrtr $exptr/,/^},{/d" /etc/xray/config.json
+sed -i "/^#tr $usrtr $exptr/,/^},{/d" /etc/xray/config.json
 rm /etc/trojan/${usrtr}login >/dev/null 2>&1
 systemctl restart xray >/dev/null 2>&1
 fi
@@ -593,7 +593,7 @@ exptr=$(grep -wE "^#tr $usrtr" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort 
 uuidtr=$(grep -wE "^#tr $usrtr" "/etc/xray/config.json" | cut -d ' ' -f 4 | sort | uniq)
 echo "### $usrtr $exptr $uuidtr" >> /etc/trojan/listlock
 sed -i "/^#tr $usrtr $exptr/,/^},{/d" /etc/xray/config.json
-sed -i "/^#trg $usrtr $exptr/,/^},{/d" /etc/xray/config.json
+sed -i "/^#tr $usrtr $exptr/,/^},{/d" /etc/xray/config.json
 rm /etc/trojan/${usrtr}login >/dev/null 2>&1
 cat> /etc/cron.d/trojan${usrtr} << EOF
 SHELL=/bin/sh
@@ -631,7 +631,7 @@ exptr=$(grep -wE "^#tr $usrtr" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort 
 uuidtr=$(grep -wE "^#tr $usrtr" "/etc/xray/config.json" | cut -d ' ' -f 4 | sort | uniq)
 echo "### $usrtr $exptr $uuidtr" >> /etc/trojan/listlock
 sed -i "/^#tr $usrtr $exptr/,/^},{/d" /etc/xray/config.json
-sed -i "/^#trg $usrtr $exptr/,/^},{/d" /etc/xray/config.json
+sed -i "/^#tr $usrtr $exptr/,/^},{/d" /etc/xray/config.json
 rm /etc/trojan/${usrtr}login >/dev/null 2>&1
 systemctl restart xray >/dev/null 2>&1
 fi
