@@ -213,11 +213,11 @@ else
     sts="${Error}"
 fi
 # TOTAL CREATE ACC VMESS
-vmess=$(grep -c -E "^#vmg " "/etc/xray/config.json")
+vmess=$(grep -c -E "^#vm " "/etc/xray/config.json")
 # TOTAL CREATE ACC VLESS
-vless=$(grep -c -E "^#vlg " "/etc/xray/config.json")
+vless=$(grep -c -E "^#vl " "/etc/xray/config.json")
 # TOTAL CREATE ACC TROJAN
-trtls=$(grep -c -E "^#trg " "/etc/xray/config.json")
+trtls=$(grep -c -E "^#tr " "/etc/xray/config.json")
 # TOTAL CREATE ACC SSH
 total_ssh=$(grep -c -E "^### " "/etc/xray/ssh")
 # TOTAL CREATE ACC NOOBZ
