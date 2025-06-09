@@ -95,7 +95,6 @@ else
     systemctl restart kyt
     systemctl start kyt
 fi
-END
 
 cat > /etc/systemd/system/kyt.service << END
 [Unit]
