@@ -94,7 +94,7 @@ fi
 echo "${iplim}" >/etc/trojan/${user}IP
 sed -i '/#trojanws$/a\#tr '"$user $exp $uuid"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
-sed -i '/#trojangrpc$/a\#trg '"$user $exp"'\
+sed -i '/#trojangrpc$/a\#tr '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
 trojanlink1="trojan://${uuid}@${domain}:443?mode=gun&security=tls&type=grpc&serviceName=trojan-grpc&sni=${domain}#${user}"
 trojanlink="trojan://${uuid}@${domain}:443?path=%2Ftrojan-ws&security=tls&host=${domain}&type=ws&sni=${domain}#${user}"
@@ -296,7 +296,7 @@ echo "${iplim}" > /etc/trojan/${user}IP
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 sed -i '/#trojanws$/a\#tr '"$user $exp $uuid"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
-sed -i '/#trojangrpc$/a\#trg '"$user $exp"'\
+sed -i '/#trojangrpc$/a\#tr '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
 trojanlink1="trojan://${uuid}@${domain}:443?mode=gun&security=tls&type=grpc&serviceName=trojan-grpc&sni=bug.com#${user}"
 trojanlink="trojan://${uuid}@${domain}:443?path=%2Ftrojan-ws&security=tls&host=${domain}&type=ws&sni=${domain}#${user}"
@@ -463,7 +463,7 @@ exp2=$(( (d1 - d2) / 86400 ))
 exp3=$(($exp2 + $masaaktif))
 exp4=`date -d "$exp3 days" +"%Y-%m-%d"`
 sed -i "s/#tr $user $exp/#tr $user $exp4/g" /etc/xray/config.json
-sed -i "s/#trg $user $exp/#trg $user $exp4/g" /etc/xray/config.json
+sed -i "s/#tr $user $exp/#tr $user $exp4/g" /etc/xray/config.json
 clear
 TEXT="
 <code>◇━━━━━━━━━━━━━━◇</code>
@@ -646,7 +646,7 @@ fi
 clear
 echo "### $user $exp $uuid" >> /etc/trojan/akundelete
 sed -i "/^#tr $user $exp/,/^},{/d" /etc/xray/config.json
-sed -i "/^#trg $user $exp/,/^},{/d" /etc/xray/config.json
+sed -i "/^#tr $user $exp/,/^},{/d" /etc/xray/config.json
 rm  /etc/trojan/${user}IP >/dev/null 2>&1
 clear
 rm /home/vps/public_html/trojan-$user.txt >/dev/null 2>&1
@@ -725,7 +725,7 @@ echo -e "$COLOR1╭════════════════════�
 echo -e "$COLOR1│${NC}${COLBG1}             ${WH}• TROJAN USER ONLINE •              ${NC}$COLOR1│ $NC"
 echo -e "$COLOR1╰═════════════════════════════════════════════════╯${NC}"
 echo -e "$COLOR1╭═════════════════════════════════════════════════╮${NC}"
-trda=($(cat /etc/xray/config.json | grep "^#trg" | awk '{print $2}' | sort -u))
+trda=($(cat /etc/xray/config.json | grep "^#tr" | awk '{print $2}' | sort -u))
 echo -n >/tmp/tr
 for db1 in ${trda[@]}; do
 logtr=$(cat /var/log/xray/access.log | grep -w "email: ${db1}" | tail -n 100)
@@ -893,7 +893,7 @@ exp=$(grep -E "^### " "/etc/trojan/listlock" | cut -d ' ' -f 3 | sed -n "${CLIEN
 uuid=$(grep -E "^### " "/etc/trojan/listlock" | cut -d ' ' -f 4 | sed -n "${CLIENT_NUMBER}"p)
 sed -i '/#trojanws$/a\#tr '"$user $exp $uuid"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
-sed -i '/#trojangrpc$/a\#trg '"$user $exp"'\
+sed -i '/#trojangrpc$/a\#tr '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
 sed -i "/^### $user $exp $uuid/d" /etc/trojan/listlock
 systemctl restart xray
@@ -991,7 +991,7 @@ exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 uuid=$(grep -E "^### " "/etc/trojan/akundelete" | cut -d ' ' -f 4 | sed -n "${CLIENT_NUMBER}"p)
 sed -i '/#trojanws$/a\#tr '"$user $exp $uuid"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
-sed -i '/#trojangrpc$/a\#trg '"$user $exp"'\
+sed -i '/#trojangrpc$/a\#tr '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
 echo "${iplim}" >/etc/trojan/${user}IP
 c=$(echo "${Quota}" | sed 's/[^0-9]*//g')
@@ -1084,7 +1084,7 @@ exp=$(grep -E "^### " "/etc/trojan/userQuota" | cut -d ' ' -f 3 | sed -n "${CLIE
 uuid=$(grep -E "^### " "/etc/trojan/userQuota" | cut -d ' ' -f 4 | sed -n "${CLIENT_NUMBER}"p)
 sed -i '/#trojanws$/a\#tr '"$user $exp $uuid"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
-sed -i '/#trojangrpc$/a\#trg '"$user $exp"'\
+sed -i '/#trojangrpc$/a\#tr '"$user $exp"'\
 },{"password": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
 sed -i "/^### $user $exp $uuid/d" /etc/trojan/userQuota
 systemctl restart xray
