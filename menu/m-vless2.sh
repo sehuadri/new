@@ -109,7 +109,7 @@ echo "${iplim}" >/etc/vless/${user}IP
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 sed -i '/#vless$/a\#vl '"$user $exp $uuid"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
-sed -i '/#vlessgrpc$/a\#vlg '"$user $exp"'\
+sed -i '/#vlessgrpc$/a\#vl '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
 vlesslink1="vless://${uuid}@${domain}:443?path=/vless&security=tls&encryption=none&host=${domain}&type=ws&sni=${domain}#${user}"
 vlesslink2="vless://${uuid}@${domain}:80?path=/vless&security=none&encryption=none&host=${domain}&type=ws#${user}"
@@ -351,7 +351,7 @@ echo "${iplim}" > /etc/vless/${user}IP
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 sed -i '/#vless$/a\#vl '"$user $exp $uuid"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
-sed -i '/#vlessgrpc$/a\#vlg '"$user $exp"'\
+sed -i '/#vlessgrpc$/a\#vl '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
 vlesslink1="vless://${uuid}@${domain}:443?path=/vless&security=tls&encryption=none&host=${domain}&type=ws&sni=${domain}#${user}"
 vlesslink2="vless://${uuid}@${domain}:80?path=/vless&security=none&encryption=none&host=${domain}&type=ws#${user}"
@@ -514,7 +514,7 @@ menu
 }
 function limit-vless(){
 clear
-NUMBER_OF_CLIENTS=$(grep -c -E "^#vlg " "/etc/xray/config.json")
+NUMBER_OF_CLIENTS=$(grep -c -E "^#vl " "/etc/xray/config.json")
 if [[ ${NUMBER_OF_CLIENTS} == '0' ]]; then
 clear
 echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
@@ -535,7 +535,7 @@ echo "Select the existing client you want to change ip"
 echo " ketik [0] kembali kemenu"
 echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 echo "     No  User   Expired"
-grep -E "^#vlg " "/etc/xray/config.json" | cut -d ' ' -f 2-3 | nl -s ') '
+grep -E "^#vl " "/etc/xray/config.json" | cut -d ' ' -f 2-3 | nl -s ') '
 until [[ ${CLIENT_NUMBER} -ge 1 && ${CLIENT_NUMBER} -le ${NUMBER_OF_CLIENTS} ]]; do
 if [[ ${CLIENT_NUMBER} == '1' ]]; then
 read -rp "Select one client [1]: " CLIENT_NUMBER
@@ -562,7 +562,7 @@ fi
 if [ ${Quota} = '0' ]; then
 Quota="9999"
 fi
-user=$(grep -E "^#vlg " "/etc/xray/config.json" | cut -d ' ' -f 2 | sed -n "${CLIENT_NUMBER}"p)
+user=$(grep -E "^#vl " "/etc/xray/config.json" | cut -d ' ' -f 2 | sed -n "${CLIENT_NUMBER}"p)
 c=$(echo "${Quota}" | sed 's/[^0-9]*//g')
 d=$((${c} * 1024 * 1024 * 1024))
 echo "${iplim}" >/etc/vless/${user}IP
@@ -647,7 +647,7 @@ exp2=$(( (d1 - d2) / 86400 ))
 exp3=$(($exp2 + $masaaktif))
 exp4=`date -d "$exp3 days" +"%Y-%m-%d"`
 sed -i "s/#vl $user $exp/#vl $user $exp4/g" /etc/xray/config.json
-sed -i "s/#vlg $user $exp/#vlg $user $exp4/g" /etc/xray/config.json
+sed -i "s/#vl $user $exp/#vl $user $exp4/g" /etc/xray/config.json
 clear
 TEXT="
 <code>◇━━━━━━━━━━━━━━◇</code>
@@ -739,7 +739,7 @@ fi
 clear
 echo "### $user $exp $uuid" >> /etc/vless/akundelete
 sed -i "/^#vl $user $exp/,/^},{/d" /etc/xray/config.json
-sed -i "/^#vlg $user $exp/,/^},{/d" /etc/xray/config.json
+sed -i "/^#vl $user $exp/,/^},{/d" /etc/xray/config.json
 clear
 clear
 rm /etc/vless/${user}IP >/dev/null 2>&1
@@ -819,7 +819,7 @@ echo -e "$COLOR1╭════════════════════�
 echo -e "$COLOR1│${NC} ${COLBG1}            ${WH}• VLESS USER ONLINE •              ${NC} $COLOR1│ $NC"
 echo -e "$COLOR1╰═════════════════════════════════════════════════╯${NC}"
 echo -e "$COLOR1╭═════════════════════════════════════════════════╮${NC}"
-vldat=($(cat /etc/xray/config.json | grep "^#vlg" | awk '{print $2}' | sort -u))
+vldat=($(cat /etc/xray/config.json | grep "^#vl" | awk '{print $2}' | sort -u))
 echo -n >/tmp/vl
 for db1 in ${vldat[@]}; do
 logvl=$(cat /var/log/xray/access.log | grep -w "email: ${db1}" | tail -n 100)
@@ -986,7 +986,7 @@ exp=$(grep -E "^### " "/etc/vless/listlock" | cut -d ' ' -f 3 | sed -n "${CLIENT
 uuid=$(grep -E "^### " "/etc/vless/listlock" | cut -d ' ' -f 4 | sed -n "${CLIENT_NUMBER}"p)
 sed -i '/#vless$/a\#vl '"$user $exp $uuid"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
-sed -i '/#vlessgrpc$/a\#vlg '"$user $exp"'\
+sed -i '/#vlessgrpc$/a\#vl '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
 sed -i "/^### $user $exp $uuid/d" /etc/vless/listlock
 systemctl restart xray
@@ -1082,7 +1082,7 @@ exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 uuid=$(grep -E "^### " "/etc/vless/akundelete" | cut -d ' ' -f 4 | sed -n "${CLIENT_NUMBER}"p)
 sed -i '/#vless$/a\#vl '"$user $exp $uuid"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
-sed -i '/#vlessgrpc$/a\#vlg '"$user $exp"'\
+sed -i '/#vlessgrpc$/a\#vl '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
 echo "${iplim}" >/etc/vless/${user}IP
 c=$(echo "${Quota}" | sed 's/[^0-9]*//g')
@@ -1171,7 +1171,7 @@ exp=$(grep -E "^### " "/etc/vless/userQuota" | cut -d ' ' -f 3 | sed -n "${CLIEN
 uuid=$(grep -E "^### " "/etc/vless/userQuota" | cut -d ' ' -f 4 | sed -n "${CLIENT_NUMBER}"p)
 sed -i '/#vless$/a\#vl '"$user $exp $uuid"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
-sed -i '/#vlessgrpc$/a\#vlg '"$user $exp"'\
+sed -i '/#vlessgrpc$/a\#vl '"$user $exp"'\
 },{"id": "'""$uuid""'","email": "'""$user""'"' /etc/xray/config.json
 sed -i "/^### $user $exp $uuid/d" /etc/vless/userQuota
 systemctl restart xray
