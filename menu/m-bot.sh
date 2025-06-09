@@ -88,19 +88,6 @@ echo "$bottoken" > /etc/perlogin/token
 echo "$admin" > /etc/perlogin/id
 clear
 
-echo "SHELL=/bin/sh" >/etc/cron.d/cekbot
-echo "PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin" >>/etc/cron.d/cekbot
-echo "*/1 * * * * root /usr/bin/cekbot" >>/etc/cron.d/cekbot
-
-cat > /usr/bin/cekbot << END
-nginx=$( systemctl status kyt | grep Active | awk '{print $3}' | sed 's/(//g' | sed 's/)//g' )
-if [[ $nginx == "running" ]]; then
-    echo -ne
-else
-    systemctl restart kyt
-    systemctl start kyt
-fi
-
 kyt=$( systemctl status kyt | grep "TERM" | wc -l )
 if [[ $kyt == "0" ]]; then
 echo -ne
