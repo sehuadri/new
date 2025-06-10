@@ -318,8 +318,8 @@ echo -e "[\e[36m•3\e[0m] Set Auto-Reboot Setiap 12 Jam"
 echo -e "[\e[36m•4\e[0m] Set Auto-Reboot Setiap 1 Hari"
 echo -e "[\e[36m•5\e[0m] Set Auto-Reboot Setiap 1 Minggu"
 echo -e "[\e[36m•6\e[0m] Set Auto-Reboot Setiap 1 Bulan"
-echo -e "[\e[36m•7\e[0m] Set Auto-Rebooot CPU 100%"
-echo -e "[\e[36m•8\e[0m] Matikan Auto-Reboot & Auto-Reboot CPU 100%"
+#echo -e "[\e[36m•7\e[0m] Set Auto-Rebooot CPU 100%"
+#echo -e "[\e[36m•8\e[0m] Matikan Auto-Reboot & Auto-Reboot CPU 100%"
 echo -e "[\e[36m•9\e[0m] View reboot log"
 echo -e "[\e[36m•10\e[0m] Remove reboot log"
 echo -e ""
@@ -366,21 +366,21 @@ echo "10 $wkt3 1 * * root /usr/local/bin/reboot_otomatis" > /etc/cron.d/reboot_o
 echo "Auto-Reboot has been successfully set once a month."
 sleep 2
 menu
-elif test $x -eq 7; then
-cat> /etc/cron.d/autocpu << END
-SHELL=/bin/sh
-PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-* * * * * root /usr/bin/autocpu
-END
-echo "Auto-Reboot CPU 100% TURN ON."
-sleep 2
-menu
-elif test $x -eq 8; then
-rm -f /etc/cron.d/reboot_otomatis
-rm -f /etc/cron.d/autocpu
-echo "Auto-Reboot successfully TURNED OFF."
-sleep 2
-menu
+#elif test $x -eq 7; then
+#cat> /etc/cron.d/autocpu << END
+#SHELL=/bin/sh
+#PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+#* * * * * root /usr/bin/autocpu
+#END
+#echo "Auto-Reboot CPU 100% TURN ON."
+#sleep 2
+#menu
+#elif test $x -eq 8; then
+#rm -f /etc/cron.d/reboot_otomatis
+#rm -f /etc/cron.d/autocpu
+#echo "Auto-Reboot successfully TURNED OFF."
+#sleep 2
+#menu
 elif test $x -eq 9; then
 if [ ! -e /etc/log-reboot.txt ]; then
 clear
