@@ -6,7 +6,7 @@ RED="\033[0;31m"
 COLOR1="$(cat /etc/nbwr/theme/$colornow | grep -w "TEXT" | cut -d: -f2|sed 's/ //g')"
 COLBG1="$(cat /etc/nbwr/theme/$colornow | grep -w "BG" | cut -d: -f2|sed 's/ //g')"
 WH='\033[1;37m'
-ipsaya=$(wget -qO- ifconfig.me)
+ipsaya=$(curl -sS ipv4.icanhazip.com)
 cd
 today=$(date -d "0 days" +"%Y-%m-%d")
 Exp2=$(curl -sS https://raw.githubusercontent.com/awanklod/izin_new/main/ip | grep $ipsaya | awk '{print $3}')
