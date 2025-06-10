@@ -1253,7 +1253,7 @@ echo -e "${COLOR1}│ $NC SILAHKAN TULIS JUMLAH WAKTU UNTUK USER YANG MULTI LOGI
 echo -e "${COLOR1}│ $NC TIAP MENIT JADI NOTIF TIAP BEBERAPA MENIT. ${NC}"
 echo -e "$COLOR1╰═══════════════════════════════════════════════╯${NC}"
 read -rp "   Jika Mau 3menit baru keNotif tulis 3, dst: " -e notif2
-echo "# Autokill" >/etc/cron.d/xraylimit
+echo "Autokill" >/etc/cron.d/xraylimit
 echo "SHELL=/bin/sh" >>/etc/cron.d/xraylimit
 echo "PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin" >>/etc/cron.d/xraylimit
 echo "*/$notif2 * * * *  root /usr/bin/xraylimit" >>/etc/cron.d/xraylimit
