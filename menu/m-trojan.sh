@@ -824,28 +824,6 @@ fi
 read -n 1 -s -r -p "Press any key to back on menu"
 m-trojan
 }
-function login-tr(){
-clear
-echo -e "$COLOR1┌───────────────────────────────────────────────┐${NC}"
-echo -e "$COLOR1│${NC}${COLBG1}           ${WH}• SETTING MULTI LOGIN •             ${NC}$COLOR1│ $NC"
-echo -e "$COLOR1╰══════════════════════════════════════════╯${NC}"
-echo -e "$COLOR1┌───────────────────────────────────────────────┐${NC}"
-echo -e "${COLOR1}│ $NC SILAHKAN TULIS JUMLAH NOTIFIKASI UNTUK LOCK    ${NC}"
-echo -e "${COLOR1}│ $NC AKUN USER YANG MULTI LOGIN     ${NC}"
-echo -e "$COLOR1╰══════════════════════════════════════════╯${NC}"
-read -rp "   Jika Mau 3x Notif baru kelock tulis 3, dst: " -e notif
-cd /etc/trojan
-echo "$notif" > notif
-clear
-echo -e "$COLOR1┌───────────────────────────────────────────────┐${NC}"
-echo -e "$COLOR1│${NC}${COLBG1}           ${WH}• SETTING MULTI LOGIN •             ${NC}$COLOR1│ $NC"
-echo -e "$COLOR1╰══════════════════════════════════════════╯${NC}"
-echo -e "$COLOR1┌───────────────────────────────────────────────┐${NC}"
-echo -e "${COLOR1}│ $NC SUCCES GANTI NOTIF LOCK JADI $notif $NC "
-echo -e "$COLOR1╰══════════════════════════════════════════╯${NC}"
-read -n 1 -s -r -p "Press any key to back on menu"
-m-trojan
-}
 function lock-tr(){
 clear
 cd
@@ -1144,7 +1122,7 @@ case $opt in
 05 | 5) clear ; cek-tr ;;
 06 | 6) clear ; list-trojan ;;
 07 | 7) clear ; limit-tr ;;
-08 | 8) clear ; login-tr ;;
+#08 | 8) clear ; login-tr ;;
 09 | 9) clear ; lock-tr ;;
 10 | 10) clear ; quota-user ;;
 11 | 11) clear ; res-user ;;
