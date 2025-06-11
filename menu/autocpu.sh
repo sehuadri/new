@@ -76,7 +76,3 @@ systemctl start xray
 systemctl restart nginx
 systemctl start nginx
 fi
-bash2=$( top -b -n 1 | grep menu )
-if [[ $bash2 -gt "20" ]]; then
-pkill menu
-fi
