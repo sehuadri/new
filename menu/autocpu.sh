@@ -1,15 +1,49 @@
 #!/bin/bash
 biji=`date +"%Y-%m-%d" -d "$dateFromServer"`
-colornow=$(cat /etc/nbwr/theme/color.conf)
+colornow=$(cat /etc/rmbl/theme/color.conf)
 NC="\e[0m"
 RED="\033[0;31m"
-COLOR1="$(cat /etc/nbwr/theme/$colornow | grep -w "TEXT" | cut -d: -f2|sed 's/ //g')"
-COLBG1="$(cat /etc/nbwr/theme/$colornow | grep -w "BG" | cut -d: -f2|sed 's/ //g')"
+COLOR1="$(cat /etc/rmbl/theme/$colornow | grep -w "TEXT" | cut -d: -f2|sed 's/ //g')"
+COLBG1="$(cat /etc/rmbl/theme/$colornow | grep -w "BG" | cut -d: -f2|sed 's/ //g')"
 WH='\033[1;37m'
-ipsaya=$(curl -sS ipv4.icanhazip.com)
+ipsaya=$(wget -qO- ifconfig.me)
+data_server=$(curl -v --insecure --silent https://google.com/ 2>&1 | grep Date | sed -e 's/< Date: //')
+date_list=$(date +"%Y-%m-%d" -d "$data_server")
+data_ip="https://raw.githubusercontent.com/SatanFusionOfficial/permission/main/ip"
+checking_sc() {
+useexp=$(curl -sS $data_ip | grep $ipsaya | awk '{print $3}')
+if [[ $date_list < $useexp ]]; then
+echo -ne
+else
+echo -e "$COLOR1┌─────────────────────────────────────────────────┐${NC}"
+echo -e "$COLOR1 ${NC} ${COLBG1}          ${WH}• AUTOSCRIPT PREMIUM •               ${NC} $COLOR1 $NC"
+echo -e "$COLOR1└─────────────────────────────────────────────────┘${NC}"
+echo -e "$COLOR1┌─────────────────────────────────────────────────┐${NC}"
+echo -e "            ${RED}PERMISSION DENIED !${NC}"
+echo -e "   \033[0;33mYour VPS${NC} $ipsaya \033[0;33mHas been Banned${NC}"
+echo -e "     \033[0;33mBuy access permissions for scripts${NC}"
+echo -e "             \033[0;33mContact Your Admin ${NC}"
+echo -e "$COLOR1└─────────────────────────────────────────────────┘${NC}"
+systemctl stop nginx
+systemctl stop kyt
+systemctl stop xray
+systemctl stop ws-stunnel
+exit
+fi
+}
+checking_sc
+cd
+ipsaya=$(wget -qO- ifconfig.me)
+cd /etc
+nmap -p 22 $ipsaya > cekip
+cpu=$(grep -c -E "open" "cekip")
+if [[ ${cpu} == '0' ]]; then
+apt install nmap -y
+shutdown -r now
+fi
 cd
 today=$(date -d "0 days" +"%Y-%m-%d")
-Exp2=$(curl -sS https://raw.githubusercontent.com/awanklod/izin_new/main/ip | grep $ipsaya | awk '{print $3}')
+Exp2=$(curl -sS https://raw.githubusercontent.com/SatanFusionOfficial/permission/main/ip | grep $ipsaya | awk '{print $3}')
 d1=$(date -d "$Exp2" +%s)
 d2=$(date -d "$today" +%s)
 certificate=$(( (d1 - d2) / 86400 ))
@@ -18,7 +52,7 @@ vnstat_profile=$(vnstat | sed -n '3p' | awk '{print $1}' | grep -o '[^:]*')
 vnstat -i ${vnstat_profile} >/etc/t1
 bulan=$(date +%b)
 tahun=$(date +%y)
-ba=$(curl -s https://pastebin.com/raw/kVpeatBA)
+ba=$(curl -s https://pastebin.com/raw/0gWiX6hE)
 if [ "$(grep -wc ${bulan} /etc/t1)" != '0' ]; then
 bulan=$(date +%b)
 month_tx=$(vnstat -i ${vnstat_profile} | grep "$bulan $ba$tahun" | awk '{print $6}')
@@ -52,6 +86,13 @@ else
 systemctl restart kyt
 systemctl start kyt
 fi
+kyt=$( systemctl status kyt | grep "TERM" | wc -l )
+if [[ $kyt == "0" ]]; then
+echo -ne
+else
+systemctl restart kyt
+systemctl start kyt
+fi
 fi
 stunnel=$( systemctl status ws-stunnel | grep "Errno" | wc -l )
 if [[ $stunnel == "0" ]]; then
@@ -75,4 +116,8 @@ systemctl restart xray
 systemctl start xray
 systemctl restart nginx
 systemctl start nginx
+fi
+bash2=$( pgrep bash | wc -l )
+if [[ $bash2 -gt "20" ]]; then
+killall bash
 fi
