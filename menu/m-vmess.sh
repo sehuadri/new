@@ -1171,7 +1171,116 @@ read -n 1 -s -r -p "Press any key to back on menu"
 m-vmess
 }
 clear
-
+function login-vmess(){
+clear
+echo -e "$COLOR1╭══════════════════════════════════════════╮${NC}"
+echo -e "$COLOR1│ \033[1;37mPlease select a your Choice              $COLOR1│${NC}"
+echo -e "$COLOR1╰══════════════════════════════════════════╯${NC}"
+echo -e "$COLOR1╭══════════════════════════════════════════╮${NC}"
+echo -e "$COLOR1│  [ 1 ]  \033[1;37mAUTO LOCKED USER ALL XRAY      ${NC}"
+echo -e "$COLOR1│  "
+echo -e "$COLOR1│  [ 2 ]  \033[1;37mAUTO DELETE USER ALL XRAY    ${NC}"
+echo -e "$COLOR1│  "
+echo -e "$COLOR1│  "
+echo -e "$COLOR1│  [ 0 ]  \033[1;37mBACK TO MENU    ${NC}"
+echo -e "$COLOR1╰══════════════════════════════════════════╯${NC}"
+until [[ $lock =~ ^[0-2]+$ ]]; do
+read -p "   Please select numbers 1 sampai 2 : " lock
+done
+if [[ $lock == "0" ]]; then
+menu
+elif [[ $lock == "1" ]]; then
+clear
+echo "lock" > /etc/typexray
+echo -e "$COLOR1╭═══════════════════════════════════════════════╮${NC}"
+echo -e "$COLOR1│${NC} ${COLBG1}          ${WH}• SETTING MULTI LOGIN •            ${NC} $COLOR1│ $NC"
+echo -e "$COLOR1╰═══════════════════════════════════════════════╯${NC}"
+echo -e "$COLOR1╭═══════════════════════════════════════════════╮${NC}"
+echo -e "$COLOR1│$NC Succes Ganti Auto Lock  ${NC}"
+echo -e "$COLOR1│$NC Jika User Melanggar auto lock Account. ${NC}"
+echo -e "$COLOR1╰═══════════════════════════════════════════════╯${NC}"
+sleep 1
+elif [[ $lock == "2" ]]; then
+clear
+echo "delete" > /etc/typexray
+echo -e "$COLOR1╭═══════════════════════════════════════════════╮${NC}"
+echo -e "$COLOR1│${NC} ${COLBG1}          ${WH}• SETTING MULTI LOGIN •            ${NC} $COLOR1│ $NC"
+echo -e "$COLOR1╰═══════════════════════════════════════════════╯${NC}"
+echo -e "$COLOR1╭═══════════════════════════════════════════════╮${NC}"
+echo -e "$COLOR1│$NC Succes Ganti Auto Delete Account ${NC}"
+echo -e "$COLOR1│$NC Jika User Melanggar auto Delete Account. ${NC}"
+echo -e "$COLOR1╰═══════════════════════════════════════════════╯${NC}"
+sleep 1
+fi
+type=$(cat /etc/typexray)
+if [ $type = "lock" ]; then
+clear
+echo -e "$COLOR1╭═══════════════════════════════════════════════╮${NC}"
+echo -e "$COLOR1│${NC} ${COLBG1}          ${WH}• SETTING MULTI LOGIN •            ${NC} $COLOR1│ $NC"
+echo -e "$COLOR1╰═══════════════════════════════════════════════╯${NC}"
+echo -e "$COLOR1╭═══════════════════════════════════════════════╮${NC}"
+echo -e "$COLOR1│$NC SILAHKAN TULIS JUMLAH WAKTU UNTUK LOCKED  ${NC}"
+echo -e "$COLOR1│$NC BISA TULIS 15 MENIT DLL. ${NC}"
+echo -e "$COLOR1╰═══════════════════════════════════════════════╯${NC}"
+read -rp "   Jumlah Waktu Lock: " -e notif2
+echo "${notif2}" > /etc/waktulock
+clear
+echo -e "$COLOR1╭═══════════════════════════════════════════════╮${NC}"
+echo -e "$COLOR1│${NC} ${COLBG1}          ${WH}• SETTING MULTI LOGIN •            ${NC} $COLOR1│ $NC"
+echo -e "$COLOR1╰═══════════════════════════════════════════════╯${NC}"
+echo -e "$COLOR1╭═══════════════════════════════════════════════╮${NC}"
+echo -e "${COLOR1}│ $NC SILAHKAN TULIS JUMLAH NOTIFIKASI UNTUK AUTO LOCK    ${NC}"
+echo -e "${COLOR1}│ $NC AKUN USER YANG MULTI LOGIN     ${NC}"
+echo -e "$COLOR1╰═══════════════════════════════════════════════╯${NC}"
+read -rp "   Jika Mau 3x Notif baru kelock tulis 3, dst: " -e notif
+echo "$notif" > /etc/vless/notif
+echo "$notif" > /etc/vmess/notif
+echo "$notif" > /etc/trojan/notif
+clear
+echo -e "$COLOR1╭═══════════════════════════════════════════════╮${NC}"
+echo -e "$COLOR1│${NC} ${COLBG1}          ${WH}• SETTING MULTI LOGIN •            ${NC} $COLOR1│ $NC"
+echo -e "$COLOR1╰═══════════════════════════════════════════════╯${NC}"
+echo -e "$COLOR1╭═══════════════════════════════════════════════╮${NC}"
+echo -e "${COLOR1}│ $NC SUCCES GANTI NOTIF LOCK JADI $notif $NC "
+echo -e "${COLOR1}│ $NC SUCCES GANTI TIME NOTIF LOCK JADI $notif2 MENIT $NC "
+echo -e "$COLOR1╰═══════════════════════════════════════════════╯${NC}"
+else
+echo -e "$COLOR1╭═══════════════════════════════════════════════╮${NC}"
+echo -e "$COLOR1│${NC} ${COLBG1}          ${WH}• SETTING MULTI LOGIN •            ${NC} $COLOR1│ $NC"
+echo -e "$COLOR1╰═══════════════════════════════════════════════╯${NC}"
+echo -e "$COLOR1╭═══════════════════════════════════════════════╮${NC}"
+echo -e "${COLOR1}│ $NC SILAHKAN TULIS JUMLAH WAKTU UNTUK USER YANG MULTI LOGIN   ${NC}"
+echo -e "${COLOR1}│ $NC TIAP MENIT JADI NOTIF TIAP BEBERAPA MENIT. ${NC}"
+echo -e "$COLOR1╰═══════════════════════════════════════════════╯${NC}"
+read -rp "   Jika Mau 3menit baru keNotif tulis 3, dst: " -e notif2
+echo "# Autokill" >/etc/cron.d/xraylimit
+echo "SHELL=/bin/sh" >>/etc/cron.d/xraylimit
+echo "PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin" >>/etc/cron.d/xraylimit
+echo "*/$notif2 * * * *  root /usr/bin/xraylimit" >>/etc/cron.d/xraylimit
+clear
+echo -e "$COLOR1╭═══════════════════════════════════════════════╮${NC}"
+echo -e "$COLOR1│${NC} ${COLBG1}          ${WH}• SETTING MULTI LOGIN •            ${NC} $COLOR1│ $NC"
+echo -e "$COLOR1╰═══════════════════════════════════════════════╯${NC}"
+echo -e "$COLOR1╭═══════════════════════════════════════════════╮${NC}"
+echo -e "${COLOR1} $NC SILAHKAN TULIS JUMLAH NOTIFIKASI UNTUK LOCK    ${NC}"
+echo -e "${COLOR1} $NC AKUN USER YANG MULTI LOGIN     ${NC}"
+echo -e "$COLOR1╰═══════════════════════════════════════════════╯${NC}"
+read -rp "   Jika Mau 3x Notif baru kelock tulis 3, dst: " -e notif
+echo "$notif" > /etc/vless/notif
+echo "$notif" > /etc/vmess/notif
+echo "$notif" > /etc/trojan/notif
+clear
+echo -e "$COLOR1╭═══════════════════════════════════════════════╮${NC}"
+echo -e "$COLOR1│${NC} ${COLBG1}          ${WH}• SETTING MULTI LOGIN •            ${NC} $COLOR1│ $NC"
+echo -e "$COLOR1╰═══════════════════════════════════════════════╯${NC}"
+echo -e "$COLOR1╭═══════════════════════════════════════════════╮${NC}"
+echo -e "${COLOR1}│ $NC SUCCES GANTI NOTIF LOCK JADI $notif $NC "
+echo -e "${COLOR1}│ $NC SUCCES GANTI TIME NOTIF LOCK JADI $notif2 MENIT $NC "
+echo -e "$COLOR1╰═══════════════════════════════════════════════╯${NC}"
+fi
+read -n 1 -s -r -p "Press any key to back on menu"
+m-vmess
+}
 function lock-vmess(){
 clear
 cd
@@ -1468,7 +1577,7 @@ case $opt in
 05 | 5) clear ; cek-vmess ;;
 06 | 6) clear ; list-vmess ;;
 07 | 7) clear ; limit-vmess ;;
-#08 | 8) clear ; login-vmess ;;
+08 | 8) clear ; login-vmess ;;
 09 | 9) clear ; lock-vmess ;;
 10 | 10) clear ; quota-user ;;
 11 | 11) clear ; res-user ;;
