@@ -18,7 +18,7 @@ echo -e "$COLOR1└────────────────────�
 #hapus menu
 rm -rf restore
 rm -rf m-trgo
-rm -rf m-trgo2
+#rm -rf m-trgo2
 rm -rf backup
 rm -rf menu
 rm -rf addnoobz
@@ -67,7 +67,7 @@ rm -rf notramcpu
 cd /usr/bin
 rm -rf restore
 rm -rf m-trgo
-rm -rf m-trgo2
+#rm -rf m-trgo2
 rm -rf backup
 rm -rf menu
 rm -rf m-tcp
@@ -145,7 +145,7 @@ res1() {
 wget -q -O /usr/bin/menu "https://raw.githubusercontent.com/sehuadri/new/main/menu/menu.sh" && chmod +x /usr/bin/menu
 wget -q -O /usr/bin/m-tcp "https://raw.githubusercontent.com/sehuadri/new/main/menu/m-tcp.sh" && chmod +x /usr/bin/m-tcp
 wget -q -O /usr/bin/m-trgo "https://raw.githubusercontent.com/sehuadri/new/main/menu/m-trgo.sh" && chmod +x /usr/bin/m-trgo
-wget -q -O /usr/bin/m-trgo2 "https://raw.githubusercontent.com/sehuadri/new/main/menu/m-trgo2.sh" && chmod +x /usr/bin/m-trgo2
+#wget -q -O /usr/bin/m-trgo2 "https://raw.githubusercontent.com/sehuadri/new/main/menu/m-trgo2.sh" && chmod +x /usr/bin/m-trgo2
 wget -q -O /usr/bin/restore "https://raw.githubusercontent.com/sehuadri/new/main/menu/restore.sh" && chmod +x /usr/bin/restore
 wget -q -O /usr/bin/backup "https://raw.githubusercontent.com/sehuadri/new/main/menu/backup.sh" && chmod +x /usr/bin/backup
 wget -q -O /usr/bin/addnoobz "https://raw.githubusercontent.com/sehuadri/new/main/bot/addnoobz.sh" && chmod +x /usr/bin/addnoobz
@@ -155,14 +155,14 @@ wget -q -O /usr/bin/m-ip "https://raw.githubusercontent.com/sehuadri/new/main/me
 wget -q -O /usr/bin/m-bot "https://raw.githubusercontent.com/sehuadri/new/main/menu/m-bot.sh" && chmod +x /usr/bin/m-bot
 wget -q -O /usr/bin/update "https://raw.githubusercontent.com/sehuadri/new/main/menu/update.sh" && chmod +x /usr/bin/update
 wget -q -O /usr/bin/m-theme "https://raw.githubusercontent.com/sehuadri/new/main/menu/m-theme.sh" && chmod +x /usr/bin/m-theme
-#wget -q -O /usr/bin/m-vmess2 "https://raw.githubusercontent.com/sehuadri/new/main/menu/m-vmess2.sh" && chmod +x /usr/bin/m-vmess2
+wget -q -O /usr/bin/m-vmess2 "https://raw.githubusercontent.com/sehuadri/new/main/menu/m-vmess2.sh" && chmod +x /usr/bin/m-vmess2
 wget -q -O /usr/bin/m-vmess "https://raw.githubusercontent.com/sehuadri/new/main/menu/m-vmess.sh" && chmod +x /usr/bin/m-vmess
-#wget -q -O /usr/bin/m-vless2 "https://raw.githubusercontent.com/sehuadri/new/main/menu/m-vless2.sh" && chmod +x /usr/bin/m-vless2
+wget -q -O /usr/bin/m-vless2 "https://raw.githubusercontent.com/sehuadri/new/main/menu/m-vless2.sh" && chmod +x /usr/bin/m-vless2
 wget -q -O /usr/bin/m-vless "https://raw.githubusercontent.com/sehuadri/new/main/menu/m-vless.sh" && chmod +x /usr/bin/m-vless
-#wget -q -O /usr/bin/m-trojan2 "https://raw.githubusercontent.com/sehuadri/new/main/menu/m-trojan2.sh" && chmod +x /usr/bin/m-trojan2
+wget -q -O /usr/bin/m-trojan2 "https://raw.githubusercontent.com/sehuadri/new/main/menu/m-trojan2.sh" && chmod +x /usr/bin/m-trojan2
 wget -q -O /usr/bin/m-trojan "https://raw.githubusercontent.com/sehuadri/new/main/menu/m-trojan.sh" && chmod +x /usr/bin/m-trojan
 wget -q -O /usr/bin/m-system "https://raw.githubusercontent.com/sehuadri/new/main/menu/m-system.sh" && chmod +x /usr/bin/m-system
-#wget -q -O /usr/bin/m-sshovpn2 "https://raw.githubusercontent.com/sehuadri/new/main/menu/m-sshovpn2.sh" && chmod +x /usr/bin/m-sshovpn2
+wget -q -O /usr/bin/m-sshovpn2 "https://raw.githubusercontent.com/sehuadri/new/main/menu/m-sshovpn2.sh" && chmod +x /usr/bin/m-sshovpn2
 wget -q -O /usr/bin/m-sshovpn "https://raw.githubusercontent.com/sehuadri/new/main/menu/m-sshovpn.sh" && chmod +x /usr/bin/m-sshovpn
 wget -q -O /usr/bin/m-ssws "https://raw.githubusercontent.com/sehuadri/new/main/menu/m-ssws.sh" && chmod +x /usr/bin/m-ssws
 wget -q -O /usr/bin/running "https://raw.githubusercontent.com/sehuadri/new/main/menu/running.sh" && chmod +x /usr/bin/running
