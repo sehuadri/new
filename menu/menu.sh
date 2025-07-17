@@ -380,21 +380,6 @@ echo -e "$COLOR1 $NC Expiry In   : $(( (d1 - d2) / 86400 )) Days"
 #sleep 1
 #menu
 #}
-function newx(){
-clear
-until [[ $usagee =~ ^[0-9]+$ ]]; do
-read -p "kuota user format angka 1, 2 atau 3 (TERA): " usagee
-done
-echo "$usagee" > /etc/usagee
-cat> /etc/cron.d/bantwidth << END
-SHELL=/bin/sh
-PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-*/10 * * * * root /usr/bin/bantwidth
-END
-echo "Auto-Shutdown $usagee TERA TURN ON."
-sleep 1
-menu
-}
 d1=$(date -d "$Exp2" +%s)
 d2=$(date -d "$today" +%s)
 certificate=$(( (d1 - d2) / 86400 ))
@@ -492,7 +477,7 @@ case $opt in
 16 | 23) clear ; passwd ;;
 89 | 89) clear ; bannner ;;
 #88 | 88) clear ; new ;;
-77 | 77) clear ; newx ;;
+#77 | 77) clear ; newx ;;
 100) clear ; $up2u ;;
 00 | 0) clear ; menu ;;
 *) clear ; menu ;;
