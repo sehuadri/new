@@ -413,20 +413,6 @@ PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
     && truncate -s 0 /var/log/xray/access.log
 END
 
-cat> /etc/cron.d/clearlog << END
-SHELL=/bin/sh
-PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-0 */4 * * * root /usr/bin/clearlog
-END
-
-#if [ ! -f "/etc/cron.d/cleaner_otm" ]; then
-cat> /etc/cron.d/cleaner << END
-SHELL=/bin/sh
-PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-*/2 * * * * root /usr/bin/cleaner
-END
-#fi
-
 cat >/etc/cron.d/daily_reboot <<-END
 SHELL=/bin/sh
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
