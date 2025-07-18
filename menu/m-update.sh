@@ -58,8 +58,8 @@ rm -rf trialssh
 rm -rf bantwidth
 rm -rf media
 rm -rf helium
-rm -rf cleaner
-rm -rf clearlog
+#rm -rf cleaner
+#rm -rf clearlog
 rm -rf bench
 rm -rf notramcpu
 
@@ -108,8 +108,8 @@ rm -rf autocpu
 rm -rf bantwidth
 rm -rf media
 rm -rf helium
-rm -rf cleaner
-rm -rf clearlog
+#rm -rf cleaner
+#rm -rf clearlog
 rm -rf bench
 rm -rf notramcpu
 
@@ -182,8 +182,8 @@ wget -q -O /usr/bin/autocpu "https://raw.githubusercontent.com/sehuadri/new/main
 wget -q -O /usr/bin/bantwidth "https://raw.githubusercontent.com/sehuadri/new/main/install/bantwidth" && chmod +x /usr/bin/bantwidth
 wget -q -O /usr/bin/media "https://raw.githubusercontent.com/sehuadri/new/main/menu/media" && chmod +x /usr/bin/media
 wget -q -O /usr/bin/helium "https://raw.githubusercontent.com/sehuadri/new/main/menu/helium" && chmod +x /usr/bin/helium
-wget -q -O /usr/bin/cleaner "https://raw.githubusercontent.com/sehuadri/new/main/menu/cleaner.sh" && chmod +x /usr/bin/cleaner
-wget -q -O /usr/bin/clearlog "https://raw.githubusercontent.com/Agunxzzz/XrayCol/main/minacantik/clearlog.sh" && chmod +x /usr/bin/clearlog
+#wget -q -O /usr/bin/cleaner "https://raw.githubusercontent.com/sehuadri/new/main/menu/cleaner.sh" && chmod +x /usr/bin/cleaner
+#wget -q -O /usr/bin/clearlog "https://raw.githubusercontent.com/Agunxzzz/XrayCol/main/minacantik/clearlog.sh" && chmod +x /usr/bin/clearlog
 wget -q -O /usr/bin/bench "https://raw.githubusercontent.com/sehuadri/new/main/menu/bench.sh" && chmod +x /usr/bin/bench
 wget -q -O /usr/bin/notramcpu "https://raw.githubusercontent.com/sehuadri/new/main/menu/notramcpu" && chmod +x /usr/bin/notramcpu
 chmod +x menu
