@@ -224,8 +224,8 @@ chmod +x autocpu
 chmod +x bantwidth
 chmod +x media
 chmod +x helium
-chmod +x cleaner
-chmod +x clearlog
+#chmod +x cleaner
+#chmod +x clearlog
 chmod +x bench
 chmod +x notramcpu
 clear
