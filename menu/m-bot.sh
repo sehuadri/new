@@ -2,7 +2,7 @@
 ipsaya=$(curl -sS ipinfo.io/ip)
 data_server=$(curl -v --insecure --silent https://google.com/ 2>&1 | grep Date | sed -e 's/< Date: //')
 date_list=$(date +"%Y-%m-%d" -d "$data_server")
-data_ip="https://raw.githubusercontent.com/awanklod/izin_oss/main/ip"
+data_ip="https://raw.githubusercontent.com/awanklod/izin_new/main/ip"
 checking_sc() {
     useexp=$(curl -sS $data_ip | grep $ipsaya | awk '{print $3}')
     if [[ $date_list < $useexp ]]; then
@@ -36,13 +36,13 @@ apt install python3-pip
 sudo apt-get install -y p7zip-full
 cd /usr/bin
 clear
-wget https://raw.githubusercontent.com/sehuadri/oss/main/bot.zip
+wget https://raw.githubusercontent.com/sehuadri/new/main/bot.zip
 unzip bot.zip
 mv bot/* /usr/bin
 chmod +x /usr/bin/*
 rm -rf bot.zip
 clear
-wget https://raw.githubusercontent.com/sehuadri/oss/main/kyt.zip
+wget https://raw.githubusercontent.com/sehuadri/new/main/kyt.zip
 unzip kyt.zip
 pip3 install -r kyt/requirements.txt
 clear
@@ -201,13 +201,13 @@ rm -rf /usr/bin/kyt.zip
 rm -rf /usr/bin/kyt
 sleep 2
 cd /usr/bin
-wget https://raw.githubusercontent.com/sehuadri/oss/main/bot.zip
+wget https://raw.githubusercontent.com/sehuadri/new/main/bot.zip
 unzip bot.zip
 mv bot/* /usr/bin
 chmod +x /usr/bin/*
 rm -rf bot.zip
 clear
-wget https://raw.githubusercontent.com/sehuadri/oss/main/kyt.zip
+wget https://raw.githubusercontent.com/sehuadri/new/main/kyt.zip
 unzip kyt.zip
 cd kyt
 pip3 install -r kyt/requirements.txt
