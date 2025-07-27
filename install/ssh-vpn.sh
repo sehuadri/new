@@ -7,7 +7,8 @@ apt dist-upgrade -y
 apt install netfilter-persistent -y
 apt-get remove --purge ufw firewalld -y
 apt install -y screen curl jq bzip2 gzip vnstat coreutils iftop zip unzip git apt-transport-https build-essential -y
-
+REPO="https://raw.githubusercontent.com/sehuadri/sehuadri/main/"
+REPO2="https://raw.githubusercontent.com/sehuadri/sehuadri/main/"
 # initializing var
 export DEBIAN_FRONTEND=noninteractive
 MYIP=$(wget -qO- ipinfo.io/ip);
